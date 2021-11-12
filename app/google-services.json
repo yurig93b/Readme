@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "459035697055",
+    "project_id": "readme-33c9e",
+    "storage_bucket": "readme-33c9e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:459035697055:android:00dd4da0b41178b8f7a7aa",
+        "android_client_info": {
+          "package_name": "com.ariel.readme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "459035697055-jd4satqcace2frckqrfsq5envvmoeke0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhK6bFsDkkluf0zx3zDCGaEakWDNbSLF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "459035697055-jd4satqcace2frckqrfsq5envvmoeke0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
