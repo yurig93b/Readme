@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".settings">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="?attr/actionModeCloseDrawable"
+        app:title="Settings"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <Button
+        android:id="@+id/hot_words_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_setting"
+        android:text="hot words"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+
+    <ImageView
+        android:id="@+id/bell_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@id/hot_words_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_notifications"/>
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/notification_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:checked="true"
+        android:minWidth="48dp"
+        app:layout_constraintEnd_toStartOf="@id/bell_icon"
+        app:layout_constraintTop_toBottomOf="@id/hot_words_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
