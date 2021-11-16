@@ -18,7 +18,7 @@
         app:navigationIcon="?attr/actionModeCloseDrawable"
         app:title="Hot Words"
         app:titleMargin="4dp"
-        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"></androidx.appcompat.widget.Toolbar>
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"/>
 
     <Button
         android:id="@+id/add_words"
