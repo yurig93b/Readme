@@ -4,42 +4,74 @@ import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 
 class hotWords : AppCompatActivity() {
 
-    private fun removeAllAlert(){
+    private fun removeAll(){   //TODO: empty the hot word file
         val clearAlert = AlertDialog.Builder(this)
         clearAlert.setTitle("Warning")
         clearAlert.setMessage("removing all your hot words is irreversible, are you sure you want to proceed?")
         clearAlert.setCancelable(false)
-        clearAlert.setPositiveButton("Yes", { dialogInterface: DialogInterface, i: Int -> })
-        clearAlert.setNegativeButton("Cancel", { dialogInterface: DialogInterface, i: Int -> })
+        clearAlert.setPositiveButton("Yes") { dialogInterface: DialogInterface, i: Int -> }
+        clearAlert.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
         clearAlert.show()
     }
 
-    private fun addWord(){
+    private fun addWord(){    //TODO add the word to hot word file
         val addAlert = AlertDialog.Builder(this)
         addAlert.setTitle("add new word")
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.edit_text_layout, null)
-        addAlert.setView(dialogLayout)
-        addAlert.setCancelable(false)
-        addAlert.setPositiveButton("Submit", { dialogInterface: DialogInterface, i: Int -> })
-        addAlert.setNegativeButton("Cancel", { dialogInterface: DialogInterface, i: Int -> })
-        addAlert.show()
+        val editText : EditText = dialogLayout.findViewById(R.id.edit_text_add)
+        with(addAlert){
+            setView(dialogLayout)
+            setCancelable(false)
+            setPositiveButton("Submit") { dialog, which -> checkText(editText.text.toString()) }
+            setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
+            show()
+        }
     }
 
-    fun removeWord(){
+    private fun checkText(text : String){    //check for bad input mainly code injections
+        if(text.length <= 24 && text != "") {
+            val badChars: List<Char> = listOf(
+                ' ', ';', '$', '|', '&',
+                '(', ')', '[', ']', '{',
+                '}', '<', '>', '\\', '/',
+                '\n', '\t', '\r'
+            )
+            for (char in badChars) {
+                if (char in text) {
+                    Toast.makeText(this,"invalid word", Toast.LENGTH_LONG).show()
+                    return
+                }
+            }
+            Toast.makeText(this,"$text was added", Toast.LENGTH_LONG).show()
+            return
+        }
+        Toast.makeText(this,"invalid word", Toast.LENGTH_LONG).show()
+    }
+
+    private fun removeWord(){   //TODO remove a word from hot word file
         val removeAlert = AlertDialog.Builder(this)
         removeAlert.setTitle("remove word")
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.edit_text_layout, null)
-        removeAlert.setView(dialogLayout)
-        removeAlert.setCancelable(false)
-        removeAlert.setPositiveButton("Remove", { dialogInterface: DialogInterface, i: Int -> })
-        removeAlert.setNegativeButton("Cancel", { dialogInterface: DialogInterface, i: Int -> })
-        removeAlert.show()
+        val editText : EditText = dialogLayout.findViewById(R.id.edit_text_add)
+        with(removeAlert){
+            setView(dialogLayout)
+            setCancelable(false)
+            setPositiveButton("Remove") { dialogInterface: DialogInterface, i: Int -> }
+            setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
+            show()
+        }
+    }
+
+    private fun viewWords() {     //TODO show scrollable list of all the hot words
+        TODO("Not yet implemented")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,10 +83,13 @@ class hotWords : AppCompatActivity() {
 
         val addWordButton : Button = findViewById(R.id.add_words)
         val removeWordButton : Button = findViewById(R.id.remove_words)
+        val viewAllButton : Button = findViewById(R.id.view_words)
         val removeAllButton : Button = findViewById(R.id.clear_all_words)
 
         addWordButton.setOnClickListener{addWord()}
         removeWordButton.setOnClickListener{removeWord()}
-        removeAllButton.setOnClickListener{ removeAllAlert()}
+        //viewAllButton.setOnClickListener{viewWords()}
+        removeAllButton.setOnClickListener{ removeAll() }
     }
+
 }

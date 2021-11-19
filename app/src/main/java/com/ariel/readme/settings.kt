@@ -11,8 +11,10 @@ class settings : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         setSupportActionBar(findViewById(R.id.toolbar_setting))
-        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true)       //TODO when main page is implemented
 
+
+        //move to hot words activity
         val hotWordsButton : Button = findViewById(R.id.hot_words_button)
         hotWordsButton.setOnClickListener{
             val intent = Intent(this, hotWords::class.java)
