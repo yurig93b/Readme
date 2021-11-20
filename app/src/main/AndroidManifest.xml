@@ -17,7 +17,8 @@
         <activity
             android:name=".settings"
             android:exported="true"
-            android:theme="@style/Theme.Readme.NoActionBar" />
+            android:theme="@style/Theme.Readme.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
