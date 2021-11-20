@@ -7,5 +7,4 @@ class UserProfileViewModel(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     val userId : String = savedStateHandle["uid"] ?:  throw IllegalArgumentException("missing user id")
-    val user : User = TODO()
 }
