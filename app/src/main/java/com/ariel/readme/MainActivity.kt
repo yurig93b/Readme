@@ -10,6 +10,19 @@ import com.ariel.readme.data.repo.MessageRepository
 import com.ariel.readme.data.repo.UserRepository
 import com.google.firebase.Timestamp.now
 import com.google.firebase.auth.FirebaseAuth
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.TextView
+import com.firebase.ui.auth.AuthUI
+
+import android.content.Intent
+import androidx.activity.result.ActivityResultCallback
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+
+import androidx.activity.result.ActivityResultLauncher
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.firebase.auth.FirebaseAuth
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
