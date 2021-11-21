@@ -1,19 +1,11 @@
 package com.ariel.readme
 
-import android.content.ContentValues.TAG
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-
-import android.util.Log
-import com.ariel.readme.data.domain.User
-
-import com.ariel.readme.data.repo.FirebaseRepository
+import androidx.appcompat.app.AppCompatActivity
+import com.ariel.readme.data.model.User
 import com.ariel.readme.data.repo.UserRepository
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,37 +13,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val txtview :TextView = findViewById(R.id.myKoteret);
-        txtview.text ="Yuri";
 
         val rpo = UserRepository()
 
-        class mmm  :FirebaseRepository.FirebaseDatabaseRepositoryCallback<User>{
-            override fun onSuccess(result: List<User>?) {
-                Log.d(TAG, "heyy")
-
+        rpo.getUsersByFirstName("Yuri").addOnSuccessListener { docs ->
+            for (doc in docs) {
+                val us: User = doc.toObject(User::class.java)
             }
+        }
 
-            override fun onError(e: Exception?) {
-                Log.d(TAG, "bye")
-
-                TODO("Not yet implemented")
-            }
+        rpo.listenOnUsersChanges { doc, e ->
+            val d = doc
+            val uuuu = d!!.documentChanges[0].document.toObject(User::class.java)
 
 
         }
 
-        val list:FirebaseRepository.FirebaseDatabaseRepositoryCallback<User> = mmm()
-        rpo.addListener(list)
 
-        val userauth = FirebaseAuth.getInstance().currentUser
-        val db = Firebase.firestore
-        // Create a new user with a first and last name
-        val user = hashMapOf(
-            "first" to "Ada",
-            "last" to "Lovelace",
-            "born" to 1815
-        )
+        val user2 = FirebaseAuth.getInstance().currentUser
+
+        var newuser = User(user2!!.uid,"phone", "fff", "llll")
+
+        rpo.registerUser(newuser)
 
 //// Add a new document with a generated ID
 //        db.collection("users")
@@ -73,12 +56,11 @@ class MainActivity : AppCompatActivity() {
 //                FirebaseAuthUIActivityResultContract()
 //            ) { result: FirebaseAuthUIAuthenticationResult? ->
 //
-//                val user2 = FirebaseAuth.getInstance().currentUser
+//        val user2 = FirebaseAuth.getInstance().currentUser
 //
 //
 //            }
 //        }
-
 
 
 // ...
