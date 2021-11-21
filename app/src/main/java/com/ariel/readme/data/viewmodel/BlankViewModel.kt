@@ -1,11 +1,10 @@
-package com.ariel.readme
+package com.ariel.readme.data.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ariel.readme.data.model.User
 import com.ariel.readme.data.repo.UserRepository
-import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.auth.FirebaseAuth
 
 class BlankViewModel : ViewModel() {
 
@@ -13,13 +12,14 @@ class BlankViewModel : ViewModel() {
 
     init {
         lastUser = MutableLiveData()
-        UserRepository().listenOnUserChanges{dcs, e ->
-            for(dc in dcs!!.documentChanges){
-                val user = dc.document.toObject(User::class.java)
+
+        UserRepository().listenOnUserChanges(FirebaseAuth.getInstance().currentUser!!.uid){ dcs, e ->
+                val user = dcs!!.toObject(User::class.java)
                 lastUser.value = user
-            }
         }
 
     }
     // TODO: Implement the ViewModel
 }
+
+//BlankFragment -> BlankViewModel -> lastUser

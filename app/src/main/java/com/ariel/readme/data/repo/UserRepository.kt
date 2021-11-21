@@ -9,8 +9,12 @@ class UserRepository : FirebaseRepository<User>() {
     override val rootNode: String
         get() = "users"
 
-    fun getUsersByFirstName(name: String): Task<QuerySnapshot> {
-        return collectionReference.whereEqualTo(User::first_name.name, name).get()
+    fun getUserByPhone(phone: String): Task<QuerySnapshot> {
+        return collectionReference.whereEqualTo(User::phone.name, phone).get()
+    }
+
+    fun getAllManagers(): Task<QuerySnapshot> {
+        return collectionReference.whereEqualTo(User::manager.name, true).get()
     }
 
     fun getCurrentUser(user: FirebaseUser): Task<DocumentSnapshot> {
@@ -32,5 +36,7 @@ class UserRepository : FirebaseRepository<User>() {
     fun registerUser(user:User): Task<Void> {
         return collectionReference.document(user.uid!!).set(user)
     }
+
+
 }
 

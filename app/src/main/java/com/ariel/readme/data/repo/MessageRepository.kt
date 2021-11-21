@@ -2,16 +2,15 @@ package com.ariel.readme.data.repo
 
 import com.ariel.readme.data.model.Chat
 import com.ariel.readme.data.model.Message
-import com.ariel.readme.data.model.User
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.QuerySnapshot
 
 class MessageRepository : FirebaseRepository<Chat>() {
     override val rootNode: String
         get() = "messages"
 
-    fun createMessage(msg: MessageRepository): Task<DocumentReference> {
+    fun createMessage(msg: Message): Task<DocumentReference> {
         return collectionReference.add(msg)
     }
 

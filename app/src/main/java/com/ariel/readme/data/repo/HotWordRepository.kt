@@ -4,10 +4,9 @@ import com.ariel.readme.data.model.Chat
 import com.ariel.readme.data.model.HotWord
 import com.ariel.readme.data.model.User
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
 
-class HotWordRepository : FirebaseRepository<Chat>() {
+class HotWordRepository : FirebaseRepository<HotWord>() {
     override val rootNode: String
         get() = "hotwords"
 
@@ -19,10 +18,9 @@ class HotWordRepository : FirebaseRepository<Chat>() {
         return getHotWords(user.uid!!)
     }
 
-    fun createHotWord(chat:Chat): Task<DocumentReference> {
-        return collectionReference.add(chat)
+    fun createHotWord(hotword:HotWord): Task<DocumentReference> {
+        return collectionReference.add(hotword)
     }
-
 
     fun listenOnHotWords(uid: String, listener: EventListener<QuerySnapshot>): ListenerRegistration {
         return collectionReference.whereEqualTo(HotWord::uid.name, uid).addSnapshotListener(listener)

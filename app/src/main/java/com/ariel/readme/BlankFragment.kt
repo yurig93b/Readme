@@ -1,13 +1,13 @@
 package com.ariel.readme
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.ariel.readme.data.model.User
+import androidx.lifecycle.ViewModelProvider
+import com.ariel.readme.data.viewmodel.BlankViewModel
 import com.ariel.readme.databinding.BlankFragmentBinding
 
 class BlankFragment : Fragment() {
@@ -31,7 +31,7 @@ class BlankFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.lastUser.observe(viewLifecycleOwner, Observer { item ->
-            binding.fraView.setText(item!!.first_name)
+            binding.fraView.text = item!!.first_name
         })
     }
 

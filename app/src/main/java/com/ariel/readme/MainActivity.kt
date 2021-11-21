@@ -1,10 +1,14 @@
 package com.ariel.readme
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.ariel.readme.data.model.Chat
+import com.ariel.readme.data.model.Message
 import com.ariel.readme.data.model.User
+import com.ariel.readme.data.repo.ChatRepository
+import com.ariel.readme.data.repo.MessageRepository
 import com.ariel.readme.data.repo.UserRepository
+import com.google.firebase.Timestamp.now
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -14,27 +18,57 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val rpo = UserRepository()
+        val user_repo = UserRepository()
+        val chat_repo = ChatRepository()
+        val msg_repo = MessageRepository()
 
-        rpo.getUsersByFirstName("Yuri").addOnSuccessListener { docs ->
-            for (doc in docs) {
-                val us: User = doc.toObject(User::class.java)
-            }
-        }
+        val myNewUser: User = User(null, "+97258456789", "my first", "my last")
+        val firebase_user = FirebaseAuth.getInstance().currentUser
 
-        rpo.listenOnUsersChanges { doc, e ->
-            val d = doc
-            val uuuu = d!!.documentChanges[0].document.toObject(User::class.java)
+//        user_repo.getCurrentUser(firebase_user!!).addOnSuccessListener{doc ->
+//            val converted_user: User? = doc.toObject(User::class.java)
+//
+//            user_repo.listenOnUserChanges(converted_user!!, { value, e ->
+//                value.toObject()
+//            })
+//        }
 
+//        user_repo.listenOnUsersChanges({docs, e ->{
+//            docs.
+//        }})
+//
 
-        }
+//        user_repo.getCurrentUser(firebase_user!!).addOnSuccessListener{doc ->
+//            val converted_user: User? = doc.toObject(User::class.java)
+//        }
+//
+//        user_repo.getAllManagers().addOnSuccessListener{ docs ->
+//            for(doc in docs.documents){
+//                val manager :User? = doc.toObject(User::class.java)
+//                val aaa = null
+//        }}
+//        val user2 = FirebaseAuth.getInstance().currentUser
+//
+//        // Get current user by FirebaseUser object
+//        user_repo.getCurrentUser(user2!!).addOnSuccessListener{ docs ->
+//            // Cast Map to object
+//            val u = docs.toObject(User::class.java)
+//            // Create a Chat
+//            chat_repo.createChat(Chat(null, listOf(u!!.uid!!))).addOnSuccessListener{ dref ->
+//
+//                // Get Chat by ID returned by firebase
+//                chat_repo.getChat(dref.id).addOnSuccessListener{ chatDoc ->
+//                    // Cast to Chat Object
+//                    val created_chat = chatDoc.toObject(Chat::class.java)
+//
+//                    val put_msg = Message(null, created_chat!!.cid!!, u.uid!!, now(), text = "This is my msg")
+//                    msg_repo.createMessage(put_msg).addOnSuccessListener { mref ->
+//
+//                    }
+//                }
+//            }
+//        }
 
-
-        val user2 = FirebaseAuth.getInstance().currentUser
-
-        var newuser = User(user2!!.uid,"phone", "fff", "llll")
-
-        rpo.registerUser(newuser)
 
 //// Add a new document with a generated ID
 //        db.collection("users")
