@@ -4,8 +4,7 @@ package com.ariel.readme.data.repo
 import com.ariel.readme.data.repo.ModeledDocumentChange.Companion.fromDocumentChanges
 import com.ariel.readme.data.repo.interfaces.IGetChangedModel
 import com.ariel.readme.data.repo.interfaces.IGetChangedModels
-import com.ariel.readme.data.repo.interfaces.IGetDocRef
-import com.ariel.readme.data.repo.interfaces.IGetModel
+import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
@@ -19,25 +18,31 @@ abstract class FirebaseRepository<Model> {
     protected abstract val rootNode: String
 
     protected fun HookGetDocumentSnapshot(
-        t: Task<DocumentSnapshot>,
-        models: IGetModel<Model>
-    ): Task<DocumentSnapshot> {
-        return t.addOnSuccessListener { value ->
-            models.onSuccess(value.toObject(getModelClass())!!, value, value.reference)
-        }.addOnFailureListener { e ->
-            models.onFailure(e)
-        }
+        t: Task<DocumentSnapshot>
+    ): Task<ModeledDocument<Model>> {
+        return t.continueWith(object: Continuation<DocumentSnapshot, ModeledDocument<Model>>{
+            override fun then(tres: Task<DocumentSnapshot>): ModeledDocument<Model> {
+               if(tres.exception != null) { throw tres.exception!!}
+
+                val res = if (tres.getResult() != null) tres.getResult()!!.toObject(getModelClass()) else null
+                return ModeledDocument(res, t.getResult())
+            }
+        })
     }
 
     protected inline fun <reified Model> HookQuery(
         t: Task<QuerySnapshot>,
-        listener: IGetChangedModels<Model>
-    ): Task<QuerySnapshot> {
-        return t.addOnSuccessListener { value ->
-            listener.onSuccess(fromDocumentChanges(value.documentChanges), value)
-        }.addOnFailureListener { e ->
-            listener.onFailure(e)
-        }
+    ): Task<ModeledChangedDocuments<Model>> {
+
+        return t.continueWith(object: Continuation<QuerySnapshot, ModeledChangedDocuments<Model>>{
+            override fun then(tres: Task<QuerySnapshot>): ModeledChangedDocuments<Model> {
+                if(tres.exception != null) { throw tres.exception!!}
+
+                val docChanges = if (tres.result != null ) tres.result!!.documentChanges else null
+                return ModeledChangedDocuments(fromDocumentChanges(docChanges), tres.getResult())
+
+            }
+        })
     }
 
     protected inline fun <reified Model> HookListenQuery(
@@ -68,7 +73,7 @@ abstract class FirebaseRepository<Model> {
     }
 
 
-    protected inline fun <reified Model> HookDocumentListen(
+    protected inline fun <reified Model> HookListenDocument(
         dRef: DocumentReference,
         listener: IGetChangedModel<Model>
     ): ListenerRegistration {
@@ -78,18 +83,6 @@ abstract class FirebaseRepository<Model> {
                 return@addSnapshotListener
             }
             listener.onSuccess(value!!.toObject(Model::class.java), value)
-        }
-    }
-
-
-    protected fun HookDocumentAddOrSet(
-        t: Task<*>,
-        listener: IGetDocRef
-    ): Task<out Any> {
-        return t.addOnSuccessListener { value ->
-            listener.onSuccess(value as DocumentReference?)
-        }.addOnFailureListener { e ->
-            listener.onFailure(e)
         }
     }
 

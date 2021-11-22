@@ -10,12 +10,12 @@ class HotWordRepository : FirebaseRepository<HotWord>() {
     override val rootNode: String
         get() = "hotwords"
 
-    fun getHotWords(uid: String, listener: IGetChangedModels<HotWord>): Task<QuerySnapshot> {
-        return HookQuery(collRef.whereEqualTo(HotWord::uid.name, uid).get(), listener)
+    fun getHotWords(uid: String): Task<QuerySnapshot> {
+        return collRef.whereEqualTo(HotWord::uid.name, uid).get()
     }
 
-    fun getHotWords(user: User, listener: IGetChangedModels<HotWord>): Task<QuerySnapshot> {
-        return getHotWords(user.uid!!, listener)
+    fun getHotWords(user: User): Task<QuerySnapshot> {
+        return getHotWords(user.uid!!)
     }
 
     fun createHotWord(hotword:HotWord): Task<DocumentReference> {
