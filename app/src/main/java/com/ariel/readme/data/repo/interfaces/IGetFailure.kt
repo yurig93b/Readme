@@ -1,5 +1,5 @@
 package com.ariel.readme.data.repo.interfaces
 
 interface IGetFailure{
-    fun onFailure(d: Exception)
+    fun onFailure(e: Exception)
 }

@@ -18,7 +18,7 @@ class UserRepository : FirebaseRepository<User>() {
     }
 
     fun getAllManagers(listener: IGetChangedModels<User>): Task<QuerySnapshot> {
-        return HookQuery(collRef.whereEqualTo(User::manager.name, false).get(), listener)
+        return HookQuery(collRef.whereEqualTo(User::manager.name, true).get(), listener)
     }
 
     fun getCurrentUser(user: FirebaseUser, listener: IGetModel<User>): Task<DocumentSnapshot> {
@@ -35,10 +35,6 @@ class UserRepository : FirebaseRepository<User>() {
 
     fun listenOnUserChanges(user: User, listener: IGetChangedModel<User>): ListenerRegistration {
         return listenOnUserChanges(user.uid!!, listener)
-    }
-
-    fun addUser(user:User, listener: IGetDocRef): Task<out Any> {
-        return HookDocumentAddOrSet(collRef.add(user), listener)
     }
 
     fun registerUser(user:User, listener: IGetDocRef): Task<out Any> {
