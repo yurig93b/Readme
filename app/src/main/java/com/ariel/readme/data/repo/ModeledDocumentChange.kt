@@ -15,7 +15,8 @@ class ModeledDocumentChange<Model>
             }
 
             @RequiresApi(Build.VERSION_CODES.N)
-            inline fun <reified Model> fromDocumentChanges(changes: List<DocumentChange>): List<ModeledDocumentChange<Model>> {
+            inline fun <reified Model> fromDocumentChanges(changes: List<DocumentChange>?): List<ModeledDocumentChange<Model>> {
+                if(changes == null){ return emptyList() }
                 return changes.stream().map { v -> fromDocumentChange<Model>(v) }.toList()
             }
         }

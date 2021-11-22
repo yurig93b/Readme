@@ -13,12 +13,12 @@ class ChatRepository : FirebaseRepository<Chat>() {
         return collRef.add(chat)
     }
 
-    fun getChat(cid: String): Task<DocumentSnapshot> {
-        return collRef.document(cid).get()
+    fun getChat(cid: String): Task<ModeledDocument<Chat>> {
+        return HookGetDocumentSnapshot(collRef.document(cid).get())
     }
 
-    fun getChatsByUser(user:User): Task<QuerySnapshot> {
-        return collRef.whereArrayContains(Chat::participants.name, user.uid!!).get()
+    fun getChatsByUser(user:User): Task<ModeledChangedDocuments<Chat>> {
+        return HookQuery(collRef.whereArrayContains(Chat::participants.name, user.uid!!).get())
     }
 
     fun listenOnChats(user: User, listener: EventListener<QuerySnapshot>): ListenerRegistration {
