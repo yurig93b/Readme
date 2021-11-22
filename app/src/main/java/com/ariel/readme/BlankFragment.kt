@@ -31,7 +31,7 @@ class BlankFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.lastUser.observe(viewLifecycleOwner, Observer { item ->
-            binding.fraView.text = item!!.first_name
+            binding.fraView.text = item!!.firstName
         })
     }
 

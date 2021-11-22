@@ -2,28 +2,14 @@ package com.ariel.readme
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.ariel.readme.data.model.Chat
-import com.ariel.readme.data.model.Message
 import com.ariel.readme.data.model.User
-import com.ariel.readme.data.repo.ChatRepository
-import com.ariel.readme.data.repo.MessageRepository
-import com.ariel.readme.data.repo.UserRepository
-import com.google.firebase.Timestamp.now
+import com.ariel.readme.data.repo.*
+import com.ariel.readme.data.repo.interfaces.IGetDocRef
+import com.ariel.readme.data.repo.interfaces.IGetModel
 import com.google.firebase.auth.FirebaseAuth
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.widget.TextView
-import com.firebase.ui.auth.AuthUI
-
-import android.content.Intent
-import androidx.activity.result.ActivityResultCallback
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-
-import androidx.activity.result.ActivityResultLauncher
-import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.google.firebase.auth.FirebaseAuth
-import java.util.*
-
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,10 +20,35 @@ class MainActivity : AppCompatActivity() {
         val user_repo = UserRepository()
         val chat_repo = ChatRepository()
         val msg_repo = MessageRepository()
-
-        val myNewUser: User = User(null, "+97258456789", "my first", "my last")
         val firebase_user = FirebaseAuth.getInstance().currentUser
 
+        val myNewUser: User = User(firebase_user!!.uid, "+97258456789", "my first", "my last")
+
+
+//        user_repo.getAllManagers(object: IChangedModelListener<User>{
+//            override fun onSuccess(d: List<ModeledDocumentChange<User>>, raw: QuerySnapshot?) {
+//                d[0].document
+//            }
+//
+//            override fun onFailure(d: Exception) {
+//            }
+//        })
+
+//        user_repo.registerUser(myNewUser).addOnSuccessListener { e ->
+//
+//
+//
+//        }
+
+//        user_repo.getCurrentUserModeled(firebase_user!!, object : IDocumentModelListener<User> {
+//            override fun onSuccess(d: User, raw: DocumentSnapshot) {
+//            }
+//
+//            override fun onFailure(d: Exception) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
 //        user_repo.getCurrentUser(firebase_user!!).addOnSuccessListener{doc ->
 //            val converted_user: User? = doc.toObject(User::class.java)
 //

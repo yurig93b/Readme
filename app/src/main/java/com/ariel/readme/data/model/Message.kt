@@ -2,6 +2,7 @@ package com.ariel.readme.data.model
 
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId
+import com.google.firebase.firestore.PropertyName
 
 data class Message(
     @DocumentId val mid: String? = null,
@@ -10,6 +11,6 @@ data class Message(
     val ts: Timestamp = Timestamp.now(),
     val text: String = "",
     val translation: String? = null,
-    val is_voice: Boolean = false,
-    val translation_status: TranslationStatus = TranslationStatus.PENDING
+    val voice: Boolean = false,
+    val translationStatus: TranslationStatus = TranslationStatus.PENDING
 )

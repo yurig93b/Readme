@@ -10,19 +10,19 @@ class ChatRepository : FirebaseRepository<Chat>() {
         get() = "chats"
 
     fun createChat(chat:Chat): Task<DocumentReference> {
-        return collectionReference.add(chat)
+        return collRef.add(chat)
     }
 
     fun getChat(cid: String): Task<DocumentSnapshot> {
-        return collectionReference.document(cid).get()
+        return collRef.document(cid).get()
     }
 
     fun getChatsByUser(user:User): Task<QuerySnapshot> {
-        return collectionReference.whereArrayContains(Chat::participants.name, user.uid!!).get()
+        return collRef.whereArrayContains(Chat::participants.name, user.uid!!).get()
     }
 
     fun listenOnChats(user: User, listener: EventListener<QuerySnapshot>): ListenerRegistration {
-        return collectionReference.whereArrayContains(Chat::participants.name, user.uid!!).addSnapshotListener(listener)
+        return collRef.whereArrayContains(Chat::participants.name, user.uid!!).addSnapshotListener(listener)
     }
 
 }
