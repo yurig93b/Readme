@@ -41,7 +41,8 @@ class hotWords : AppCompatActivity() {
                 ' ', ';', '$', '|', '&',
                 '(', ')', '[', ']', '{',
                 '}', '<', '>', '\\', '/',
-                '\n', '\t', '\r'
+                '\n', '\t', '\r','+','-',
+                '#','$'
             )
             for (char in badChars) {
                 if (char in text) {
