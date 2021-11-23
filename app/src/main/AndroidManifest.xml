@@ -10,15 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Readme">
         <activity
-            android:name=".hotWords"
-            android:exported="false"
-            android:theme="@style/Theme.Readme.NoActionBar"
-            android:parentActivityName=".settings"/>
-        <activity
-            android:name=".settings"
-            android:exported="true"
-            android:theme="@style/Theme.Readme.NoActionBar"
-            android:parentActivityName=".MainActivity"/>
+            android:name=".ExampleActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -28,6 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".services.MessageHandlingService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
