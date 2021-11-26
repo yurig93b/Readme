@@ -13,4 +13,4 @@ data class Message(
     val translation: String? = null,
     val voice: Boolean = false,
     val translationStatus: TranslationStatus = TranslationStatus.PENDING
-)
+): ManagedModel()

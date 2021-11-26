@@ -14,7 +14,7 @@ import java.lang.reflect.Type
 
 
 abstract class FirebaseRepository<Model> {
-    val collRef: CollectionReference
+    protected val collRef: CollectionReference
     protected abstract val rootNode: String
 
     protected fun HookGetDocumentSnapshot(
