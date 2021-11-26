@@ -1,6 +1,7 @@
 package com.ariel.readme
 
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -71,10 +72,6 @@ class hotWords : AppCompatActivity() {
         }
     }
 
-    private fun viewWords() {     //TODO show scrollable list of all the hot words
-        TODO("Not yet implemented")
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hot_words)
@@ -89,7 +86,10 @@ class hotWords : AppCompatActivity() {
 
         addWordButton.setOnClickListener{addWord()}
         removeWordButton.setOnClickListener{removeWord()}
-        //viewAllButton.setOnClickListener{viewWords()}
+        viewAllButton.setOnClickListener{
+            val intent = Intent(this, HotWordsList::class.java)
+            startActivity(intent)
+        }
         removeAllButton.setOnClickListener{ removeAll() }
     }
 

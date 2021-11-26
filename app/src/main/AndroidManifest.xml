@@ -10,15 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Readme">
         <activity
-            android:name=".hotWords"
+            android:name=".HotWordsList"
             android:exported="false"
             android:theme="@style/Theme.Readme.NoActionBar"
-            android:parentActivityName=".settings"/>
+            android:parentActivityName=".hotWords"/>
+        <activity
+            android:name=".hotWords"
+            android:exported="false"
+            android:parentActivityName=".settings"
+            android:theme="@style/Theme.Readme.NoActionBar" />
         <activity
             android:name=".settings"
             android:exported="true"
-            android:theme="@style/Theme.Readme.NoActionBar"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.Readme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
