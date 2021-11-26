@@ -22,13 +22,16 @@
         app:titleMargin="4dp"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <fragment
+        android:name="com.ariel.readme.HotWordFragment"
+        android:id="@+id/hot_words_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_hotWordsList" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_hotWordsList"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout="@layout/fragment_hot_word" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
