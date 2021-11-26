@@ -6,4 +6,4 @@ data class HotWord(
     @DocumentId val hwid: String? = null,
     val uid: String,
     val word: String,
-)
+): ManagedModel()
