@@ -8,6 +8,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.ariel.readme.data.model.HotWord
+import com.ariel.readme.data.repo.HotWordRepository
+import com.google.firebase.auth.FirebaseAuth
 
 class hotWords : AppCompatActivity() {
 
@@ -21,7 +24,7 @@ class hotWords : AppCompatActivity() {
         clearAlert.show()
     }
 
-    private fun addWord(){    //TODO add the word to hot word file
+    private fun addWord(){
         val addAlert = AlertDialog.Builder(this)
         addAlert.setTitle("add new word")
         val inflater = layoutInflater
@@ -36,14 +39,14 @@ class hotWords : AppCompatActivity() {
         }
     }
 
-    private fun checkText(text : String){    //check for bad input mainly code injections
+    private fun checkText(text : String) {    //check for bad input mainly code injections
         if(text.length <= 24 && text != "") {
             val badChars: List<Char> = listOf(
                 ' ', ';', '$', '|', '&',
                 '(', ')', '[', ']', '{',
                 '}', '<', '>', '\\', '/',
                 '\n', '\t', '\r','+','-',
-                '#','$'
+                '$','.'
             )
             for (char in badChars) {
                 if (char in text) {
@@ -52,6 +55,8 @@ class hotWords : AppCompatActivity() {
                 }
             }
             Toast.makeText(this,"$text was added", Toast.LENGTH_LONG).show()
+            //HotWordRepository().createHotWord(HotWord(null, FirebaseAuth.getInstance().currentUser!!.uid , text))
+            HotWordRepository().createHotWord(HotWord(null, "1234" , text))
             return
         }
         Toast.makeText(this,"invalid word", Toast.LENGTH_LONG).show()
