@@ -28,7 +28,7 @@ class HotWordFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val wordList : MutableList<String> =  mutableListOf()
         viewModel.hotWords.observe(viewLifecycleOwner, Observer { item ->
-            item!!.forEach { w -> wordList.add(w.word)}
+                item!!.forEach { w -> wordList.add(w.word)}
         })
         if(wordList.size == 0){ wordList.add("empty list, try adding something")}
         binding.wordList.adapter = RecyclerAdapter(wordList)
