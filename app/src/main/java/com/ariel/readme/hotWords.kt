@@ -12,6 +12,7 @@ import com.ariel.readme.data.model.HotWord
 import com.ariel.readme.data.repo.HotWordRepository
 import com.google.firebase.auth.FirebaseAuth
 
+
 class hotWords : AppCompatActivity() {
 
     private fun removeAll(){   //TODO: empty the hot word file
@@ -56,7 +57,7 @@ class hotWords : AppCompatActivity() {
             }
             Toast.makeText(this,"$text was added", Toast.LENGTH_LONG).show()
             //HotWordRepository().createHotWord(HotWord(null, FirebaseAuth.getInstance().currentUser!!.uid , text))
-            HotWordRepository().createHotWord(HotWord(null, "1234" , text))
+            HotWordRepository().createHotWord(HotWord("null", "1234" , text))
             return
         }
         Toast.makeText(this,"invalid word", Toast.LENGTH_LONG).show()
