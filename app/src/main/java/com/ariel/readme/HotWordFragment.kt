@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.ariel.readme.data.repo.HotWordRepository
 import com.ariel.readme.data.viewmodel.HotWordViewModel
 import com.ariel.readme.databinding.FragmentHotWordBinding
 
@@ -27,7 +26,6 @@ class HotWordFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        //val wordList : MutableList<String> =  mutableListOf()
         viewModel.hotWords.observe(viewLifecycleOwner, Observer { item ->
             binding.wordList.adapter = RecyclerAdapter(item!!)
         })

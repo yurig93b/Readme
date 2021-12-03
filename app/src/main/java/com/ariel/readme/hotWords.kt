@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.ariel.readme.data.model.HotWord
 import com.ariel.readme.data.repo.HotWordRepository
-import com.google.firebase.auth.FirebaseAuth
 
 
 class hotWords : AppCompatActivity() {
@@ -47,7 +46,7 @@ class hotWords : AppCompatActivity() {
                 '(', ')', '[', ']', '{',
                 '}', '<', '>', '\\', '/',
                 '\n', '\t', '\r','+','-',
-                '$','.'
+                '.','!','=','?'
             )
             for (char in badChars) {
                 if (char in text) {
