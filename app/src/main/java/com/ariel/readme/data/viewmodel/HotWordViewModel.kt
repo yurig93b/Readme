@@ -15,9 +15,12 @@ import com.google.firebase.firestore.QuerySnapshot
 
 class HotWordViewModel : ViewModel() {
 
-    val hotWords : MutableLiveData<MutableList<HotWord>> = MutableLiveData()
+    val hotWords : MutableLiveData<MutableList<HotWord>>
 
     init {
+        hotWords = MutableLiveData()
+        hotWords.value = mutableListOf()
+
         //val wordsDoc = HotWordRepository().getHotWords("1234")
         //val wordsDoc = HotWordRepository().getHotWords(FirebaseAuth.getInstance().currentUser!!.uid)
         //wordsDoc.addOnSuccessListener { doc -> doc.changes.forEach { word -> hotWords.value!!.add(word.obj) } }
@@ -25,6 +28,7 @@ class HotWordViewModel : ViewModel() {
 
             override fun onSuccess(d: List<ModeledDocumentChange<HotWord>>, raw: QuerySnapshot?) {
                 d!!.forEach { word -> hotWords.value!!.add(word.obj) }
+                hotWords.value = hotWords.value
             }
 
             override fun onFailure(e: Exception) {
