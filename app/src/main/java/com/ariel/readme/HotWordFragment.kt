@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ariel.readme.data.viewmodel.HotWordViewModel
 import com.ariel.readme.databinding.FragmentHotWordBinding
 
@@ -28,6 +29,7 @@ class HotWordFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel.hotWords.observe(viewLifecycleOwner, Observer { item ->
             binding.wordList.adapter = RecyclerAdapter(item!!)
+            binding.wordList.layoutManager = LinearLayoutManager(HotWordsList())
         })
     }
 

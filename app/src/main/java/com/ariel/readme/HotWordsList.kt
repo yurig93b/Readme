@@ -17,8 +17,7 @@ class HotWordsList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hot_words_list)
 
-        val recycler : RecyclerView = findViewById(R.id.word_list)
-        recycler.layoutManager = LinearLayoutManager(this)
+        //val recycler : RecyclerView = findViewById(R.id.word_list)
 
         setSupportActionBar(findViewById(R.id.toolbar_hotWordsList))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

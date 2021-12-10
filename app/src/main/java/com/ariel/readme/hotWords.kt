@@ -19,7 +19,9 @@ class hotWords : AppCompatActivity() {
         clearAlert.setTitle("Warning")
         clearAlert.setMessage("removing all your hot words is irreversible, are you sure you want to proceed?")
         clearAlert.setCancelable(false)
-        clearAlert.setPositiveButton("Yes") { dialogInterface: DialogInterface, i: Int -> }
+        clearAlert.setPositiveButton("Yes") { dialogInterface: DialogInterface, i: Int ->
+            HotWordRepository().clearHotWords()
+        }
         clearAlert.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
         clearAlert.show()
     }
@@ -56,13 +58,13 @@ class hotWords : AppCompatActivity() {
             }
             Toast.makeText(this,"$text was added", Toast.LENGTH_LONG).show()
             //HotWordRepository().createHotWord(HotWord(null, FirebaseAuth.getInstance().currentUser!!.uid , text))
-            HotWordRepository().createHotWord(HotWord("null", "1234" , text))
+            HotWordRepository().addHotWord(HotWord("null", "1234" , text))
             return
         }
         Toast.makeText(this,"invalid word", Toast.LENGTH_LONG).show()
     }
 
-    private fun removeWord(){   //TODO remove a word from hot word file
+    private fun removeWord(){
         val removeAlert = AlertDialog.Builder(this)
         removeAlert.setTitle("remove word")
         val inflater = layoutInflater
@@ -71,7 +73,8 @@ class hotWords : AppCompatActivity() {
         with(removeAlert){
             setView(dialogLayout)
             setCancelable(false)
-            setPositiveButton("Remove") { dialogInterface: DialogInterface, i: Int -> }
+            setPositiveButton("Remove") { dialogInterface: DialogInterface, i: Int ->
+                HotWordRepository().removeHotWord(editText.text.toString())}
             setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
             show()
         }
