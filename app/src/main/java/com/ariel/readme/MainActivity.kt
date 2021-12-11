@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.ariel.readme.profile.UserProfileActivity
 import com.ariel.readme.services.AuthService
 import com.ariel.readme.services.MessageHandlingService
 import com.firebase.ui.auth.AuthUI
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         MessageHandlingService().ensureUserTokenIsSet()
 
-        val intent = Intent(this, ExampleActivity::class.java)
+        val intent = Intent(this, UserProfileActivity::class.java)
         startActivity(intent)
     }
 
