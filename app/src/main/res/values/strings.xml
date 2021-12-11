@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Readme</string>
     <string name="frag">Fragment</string>
+    <string name="title_profile">Profile</string>
+    <string name="err_failed_profile_save">Failed saving profile!</string>
+    <string name="success_save_profile">Saved profile!</string>
+    <string name="err_public_image_upload">Failed upload image.</string>
 
 </resources>

@@ -25,7 +25,7 @@ class ExampleActivity : AppCompatActivity() {
         }
 
 //      Get current User from DB by FirebaseUser
-        userRepo.getCurrentUser(AuthService.getCurrentUser()!!).addOnSuccessListener { user ->
+        userRepo.getCurrentUser(AuthService.getCurrentFirebaseUser()!!).addOnSuccessListener { user ->
             Toast.makeText(
                 getApplicationContext(),
                 "Got user from DB! ${user.obj!!.firstName}",
