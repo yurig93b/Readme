@@ -13,14 +13,18 @@ import com.google.firebase.firestore.QuerySnapshot
 class HotWordViewModel : ViewModel() {
 
     val hotWords : MutableLiveData<MutableList<String>> = MutableLiveData()
+    //val uid : String = FirebaseAuth.getInstance().currentUser!!.uid
 
     init {
         hotWords.value = mutableListOf()
-        //HotWordRepository().listenOnHotWords(FirebaseAuth.getInstance().currentUser!!.uid, object : IGetChangedModels<HotWord> {
+        //HotWordRepository().listenOnHotWords(uid, object : IGetChangedModels<HotWord> {
         HotWordRepository().listenOnHotWords("1234", object : IGetChangedModels<HotWord> {
 
             override fun onSuccess(d: List<ModeledDocumentChange<HotWord>>, raw: QuerySnapshot?) {
-                d!!.forEach { word -> hotWords.value!!.add(word.obj.word) }
+                d!!.forEach {
+                    word -> if(word.obj.word in hotWords.value!!){ hotWords.value!!.remove(word.obj.word)}
+                    else{ hotWords.value!!.add(word.obj.word)}
+                }
                 hotWords.value = hotWords.value
                 hotWords.value!!.sort()
             }

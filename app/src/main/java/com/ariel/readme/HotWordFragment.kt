@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +28,10 @@ class HotWordFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        updateView()
+    }
+
+    fun updateView(){
         viewModel.hotWords.observe(viewLifecycleOwner, Observer { item ->
             binding.wordList.adapter = RecyclerAdapter(item!!)
             binding.wordList.layoutManager = LinearLayoutManager(HotWordsList())

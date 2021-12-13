@@ -8,7 +8,10 @@ import com.ariel.readme.data.repo.interfaces.IHotWordRepository
 import com.ariel.readme.hotWords
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 import com.squareup.okhttp.Dispatcher
 import kotlinx.coroutines.CoroutineScope

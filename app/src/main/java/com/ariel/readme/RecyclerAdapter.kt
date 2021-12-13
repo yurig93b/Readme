@@ -3,8 +3,10 @@ package com.ariel.readme
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.ariel.readme.data.repo.HotWordRepository
 
 class RecyclerAdapter(private val list : List<String>) : RecyclerView.Adapter<RecyclerAdapter.Holder>() {
 
@@ -22,6 +24,18 @@ class RecyclerAdapter(private val list : List<String>) : RecyclerView.Adapter<Re
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val textView : TextView = itemView.findViewById(R.id.recycler_text)
+        val textView : TextView
+        val imageView : ImageView
+
+        init{
+            textView  = itemView.findViewById(R.id.recycler_text)
+            imageView = itemView.findViewById(R.id.remove_word)
+
+            imageView.setOnClickListener{
+                val position : Int = adapterPosition
+                val text : String = list[position]
+                HotWordRepository().removeHotWord(text)
+            }
+        }
     }
 }

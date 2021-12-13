@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.ariel.readme.data.model.HotWord
 import com.ariel.readme.data.repo.HotWordRepository
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class hotWords : AppCompatActivity() {
@@ -58,13 +59,13 @@ class hotWords : AppCompatActivity() {
             }
             Toast.makeText(this,"$text was added", Toast.LENGTH_LONG).show()
             //HotWordRepository().createHotWord(HotWord(null, FirebaseAuth.getInstance().currentUser!!.uid , text))
-            HotWordRepository().addHotWord(HotWord("null", "1234" , text))
+            HotWordRepository().addHotWord(HotWord(null, "1234" , text))
             return
         }
         Toast.makeText(this,"invalid word", Toast.LENGTH_LONG).show()
     }
 
-    private fun removeWord(){
+    fun removeWord(){
         val removeAlert = AlertDialog.Builder(this)
         removeAlert.setTitle("remove word")
         val inflater = layoutInflater
