@@ -23,7 +23,7 @@ class HotWordViewModel : ViewModel() {
             override fun onSuccess(d: List<ModeledDocumentChange<HotWord>>, raw: QuerySnapshot?) {
                 d!!.forEach {
                     word -> if(word.obj.word in hotWords.value!!){ hotWords.value!!.remove(word.obj.word)}
-                    else{ hotWords.value!!.add(word.obj.word)}
+                            else{ hotWords.value!!.add(word.obj.word)}
                 }
                 hotWords.value = hotWords.value
                 hotWords.value!!.sort()

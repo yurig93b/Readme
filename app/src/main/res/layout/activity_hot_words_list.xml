@@ -22,6 +22,30 @@
         app:titleMargin="4dp"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large" />
 
+    <ImageView
+        android:id="@+id/image_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@id/toolbar_hotWordsList"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar_hotWordsList"
+        app:layout_constraintTop_toTopOf="@id/toolbar_hotWordsList"
+        app:srcCompat="@drawable/baseline_add_24" />
+
+    <ImageView
+        android:id="@+id/image_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toStartOf="@id/image_add"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar_hotWordsList"
+        app:layout_constraintTop_toTopOf="@id/toolbar_hotWordsList"
+        app:srcCompat="@drawable/baseline_delete_24" />
+
     <fragment
         android:id="@+id/hot_words_fragment"
         android:name="com.ariel.readme.HotWordFragment"

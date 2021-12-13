@@ -17,7 +17,7 @@ class settings : AppCompatActivity() {
         //move to hot words activity
         val hotWordsButton : Button = findViewById(R.id.hot_words_button)
         hotWordsButton.setOnClickListener{
-            val intent = Intent(this, hotWords::class.java)
+            val intent = Intent(this, HotWordsList::class.java)
             startActivity(intent)
         }
     }

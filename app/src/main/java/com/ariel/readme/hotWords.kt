@@ -15,7 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class hotWords : AppCompatActivity() {
 
-    private fun removeAll(){   //TODO: empty the hot word file
+    private fun removeAll(){
         val clearAlert = AlertDialog.Builder(this)
         clearAlert.setTitle("Warning")
         clearAlert.setMessage("removing all your hot words is irreversible, are you sure you want to proceed?")
