@@ -1,12 +1,17 @@
 package com.ariel.readme
 
+import android.content.Context
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.ariel.readme.data.repo.HotWordRepository
+import com.firebase.ui.auth.AuthUI.getApplicationContext
+import java.security.AccessController.getContext
 
 class RecyclerAdapter(private val list : List<String>) : RecyclerView.Adapter<RecyclerAdapter.Holder>() {
 
@@ -34,7 +39,15 @@ class RecyclerAdapter(private val list : List<String>) : RecyclerView.Adapter<Re
             imageView.setOnClickListener{
                 val position : Int = adapterPosition
                 val text : String = list[position]
-                HotWordRepository().removeHotWord(text)
+                val clearAlert = AlertDialog.Builder(itemView.getContext())
+                clearAlert.setTitle("Warning")
+                clearAlert.setMessage("are you sure you want to remove $text?")
+                clearAlert.setCancelable(false)
+                clearAlert.setPositiveButton("Yes") { dialogInterface: DialogInterface, i: Int ->
+                    HotWordRepository().removeHotWord(text)
+                }
+                clearAlert.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
+                clearAlert.show()
             }
         }
     }

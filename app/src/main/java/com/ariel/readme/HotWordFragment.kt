@@ -34,7 +34,7 @@ class HotWordFragment : Fragment() {
     fun updateView(){
         viewModel.hotWords.observe(viewLifecycleOwner, Observer { item ->
             binding.wordList.adapter = RecyclerAdapter(item!!)
-            binding.wordList.layoutManager = LinearLayoutManager(HotWordsList())
+            binding.wordList.layoutManager = LinearLayoutManager(this.context)
         })
     }
 
