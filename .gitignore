@@ -4,7 +4,7 @@
 /cloud-functions/.idea/*
 /cloud-functions/functions/.idea/*
 /cloud-functions/*.log
-/cloud-functions/functions/node_modules/.*
+/cloud-functions/functions/node_modules/
 /cloud-functions/functions/lib
 
 
