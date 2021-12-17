@@ -6,4 +6,8 @@ object StoragePathFactory {
     fun getProfilePicPath(u: User): String {
         return "profiles/${u.uid!!}"
     }
+
+    fun getVoiceMessagePath(mid: String, suffix: String): String {
+        return "/transcriptions/audio-files/${mid}${suffix}"
+    }
 }

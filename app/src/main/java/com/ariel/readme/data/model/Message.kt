@@ -12,5 +12,6 @@ data class Message(
     val text: String = "",
     val translation: String? = null,
     val voice: Boolean = false,
-    val translationStatus: TranslationStatus = TranslationStatus.PENDING
+    val translationStatus: JobStatus = JobStatus.PENDING,
+    val transcriptStatus: JobStatus = JobStatus.PENDING
 ): ManagedModel()

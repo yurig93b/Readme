@@ -5,5 +5,8 @@
     <string name="err_failed_profile_save">Failed saving profile!</string>
     <string name="success_save_profile">Saved profile!</string>
     <string name="err_public_image_upload">Failed upload image.</string>
+    <string name="button_record">Record</string>
+    <string name="button_recording">Recording</string>
+    <string name="button_uploading">Uploading</string>
 
 </resources>
