@@ -131,15 +131,14 @@ class UserProfileActivity : AppCompatActivity() {
                     getApplicationContext(),
                     getString(R.string.success_save_profile),
                     Toast.LENGTH_SHORT
-                )
-                    .show()
+                ).show()
+
             }?.addOnFailureListener {
                 Toast.makeText(
                     getApplicationContext(),
                     getString(R.string.err_failed_profile_save),
                     Toast.LENGTH_SHORT
-                )
-                    .show()
+                ).show()
             }
         }
 
@@ -174,8 +173,7 @@ class UserProfileActivity : AppCompatActivity() {
                     getApplicationContext(),
                     getString(R.string.err_public_image_upload),
                     Toast.LENGTH_SHORT
-                )
-                    .show()
+                ).show()
             }
         }
     }
@@ -188,13 +186,7 @@ class UserProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.title = getString(R.string.title_profile)
-
         registerListeners()
         _vm!!.loadUser()
-
-//        val url = URL("https://www.erimusib.com/png/erimus-logo-vertical.png")
-//        val imageStream: InputStream = BufferedInputStream(url.openStream())
-//        val b = BitmapFactory.decodeStream(imageStream)
-//        binding.imageView.setImageBitmap(b)
     }
 }

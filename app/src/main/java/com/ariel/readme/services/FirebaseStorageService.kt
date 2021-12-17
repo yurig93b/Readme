@@ -17,7 +17,7 @@ class FirebaseStorageService: IStorageService {
         return storageRef.child(path).putStream(data)
     }
 
-    fun putFile(path: String,  file: Uri): UploadTask {
+    fun putFile(path: String, file: Uri): UploadTask {
         return storageRef.child(path).putFile(file)
     }
 
