@@ -6,6 +6,7 @@ import com.ariel.readme.data.model.User
 import com.ariel.readme.data.repo.interfaces.IGetChangedModels
 import com.ariel.readme.data.repo.interfaces.IHotWordRepository
 import com.ariel.readme.hotWords
+import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -34,17 +35,17 @@ class HotWordRepository : FirebaseRepository<HotWord>(), IHotWordRepository {
     }
 
     override fun createHotWord(hotword: HotWord): Task<DocumentReference> {
-        TODO("may be replaced by addHotWord")
+        return collRef.add(hotword)
     }
 
-    fun addHotWord(hotword:HotWord) = CoroutineScope(Dispatchers.IO).launch {
-        //val hotWordColl = collRef.whereEqualTo(HotWord::uid.name, FirebaseAuth.getInstance().currentUser!!.uid)
-        val hotWordColl = collRef.whereEqualTo(HotWord::uid.name, "1234")
+    fun addHotWord(hotword:HotWord) {
+        //collRef.whereEqualTo(HotWord::uid.name, FirebaseAuth.getInstance().currentUser!!.uid)
+        collRef.whereEqualTo(HotWord::uid.name, "1234")
             .whereEqualTo(HotWord::word.name, hotword.word)
-            .get().await()
-        if(hotWordColl.documents.isEmpty()){
-            collRef.add(hotword)
-        }
+            .get().addOnSuccessListener { res -> if(res.isEmpty){
+                collRef.add(hotword)
+                }
+            }
     }
 
     override fun listenOnHotWords(uid: String,listener: IGetChangedModels<HotWord>): ListenerRegistration {
@@ -55,28 +56,26 @@ class HotWordRepository : FirebaseRepository<HotWord>(), IHotWordRepository {
         return listenOnHotWords(user.uid!!, listener)
     }
 
-    fun removeHotWord(word: String) = CoroutineScope(Dispatchers.IO).launch{
-        //val hotWordColl = collRef.whereEqualTo(HotWord::uid.name, FirebaseAuth.getInstance().currentUser!!.uid)
-        val hotWordColl = collRef.whereEqualTo(HotWord::uid.name, "1234")
+    fun removeHotWord(word: String){
+        //collRef.whereEqualTo(HotWord::uid.name, FirebaseAuth.getInstance().currentUser!!.uid)
+        collRef.whereEqualTo(HotWord::uid.name, "1234")
             .whereEqualTo(HotWord::word.name, word)
-            .get().await()
-        if(hotWordColl.documents.isNotEmpty()){
-            for(doc in hotWordColl){
-                try{
-                    collRef.document(doc.id).delete().await()
+            .get().addOnSuccessListener {
+                res -> for(doc in res.documents){
+                    try{
+                        collRef.document(doc.id).delete()
+                    }
+                    catch(e: Exception){ }
                 }
-                catch(e: Exception){ }
             }
-        }
     }
 
-    fun clearHotWords() = CoroutineScope(Dispatchers.IO).launch{
-        //val hotWordColl = collRef.whereEqualTo(HotWord::uid.name, FirebaseAuth.getInstance().currentUser!!.uid).get().await()
-        val hotWordColl = collRef.whereEqualTo(HotWord::uid.name, "1234").get().await()
-        if(hotWordColl.documents.isNotEmpty()){
-            for(doc in hotWordColl){
+    fun clearHotWords(){
+        //collRef.whereEqualTo(HotWord::uid.name, FirebaseAuth.getInstance().currentUser!!.uid).get().await()
+        collRef.whereEqualTo(HotWord::uid.name, "1234").get().addOnSuccessListener {
+            res -> for(doc in res.documents){
                 try{
-                    collRef.document(doc.id).delete().await()
+                    collRef.document(doc.id).delete()
                 }
                 catch(e: Exception){ }
             }
