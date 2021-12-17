@@ -132,6 +132,7 @@ class UserProfileActivity : AppCompatActivity() {
                     getString(R.string.success_save_profile),
                     Toast.LENGTH_SHORT
                 ).show()
+
             }?.addOnFailureListener {
                 Toast.makeText(
                     getApplicationContext(),
