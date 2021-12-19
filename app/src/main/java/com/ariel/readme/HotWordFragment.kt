@@ -5,12 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ariel.readme.data.viewmodel.HotWordViewModel
 import com.ariel.readme.databinding.FragmentHotWordBinding
+import com.ariel.readme.services.AuthService
 
 class HotWordFragment : Fragment() {
     private var _binding: FragmentHotWordBinding? = null
@@ -21,7 +21,8 @@ class HotWordFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this).get(HotWordViewModel::class.java)
+        val uid : String = AuthService.getCurrentFirebaseUser()!!.uid
+        viewModel = ViewModelProvider(this).get(HotWordViewModel(uid)::class.java)
         _binding = FragmentHotWordBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,7 +34,7 @@ class HotWordFragment : Fragment() {
 
     fun updateView(){
         viewModel.hotWords.observe(viewLifecycleOwner, Observer { item ->
-            binding.wordList.adapter = RecyclerAdapter(item!!)
+            binding.wordList.adapter = HotWordsRecyclerAdapter(item!!)
             binding.wordList.layoutManager = LinearLayoutManager(this.context)
         })
     }

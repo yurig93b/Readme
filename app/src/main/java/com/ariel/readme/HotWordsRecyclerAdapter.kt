@@ -1,6 +1,5 @@
 package com.ariel.readme
 
-import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +9,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.ariel.readme.data.repo.HotWordRepository
-import com.firebase.ui.auth.AuthUI.getApplicationContext
-import java.security.AccessController.getContext
+import com.ariel.readme.services.AuthService
 
-class RecyclerAdapter(private val list : List<String>) : RecyclerView.Adapter<RecyclerAdapter.Holder>() {
+class HotWordsRecyclerAdapter(private val list : List<String>) : RecyclerView.Adapter<HotWordsRecyclerAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recycler_view_layout, parent, false)
@@ -44,7 +42,8 @@ class RecyclerAdapter(private val list : List<String>) : RecyclerView.Adapter<Re
                 clearAlert.setMessage("are you sure you want to remove $text?")
                 clearAlert.setCancelable(false)
                 clearAlert.setPositiveButton("Yes") { dialogInterface: DialogInterface, i: Int ->
-                    HotWordRepository().removeHotWord(text)
+                    HotWordRepository().removeHotWord(text, AuthService.getCurrentFirebaseUser()!!.uid)
+                    //HotWordRepository().removeHotWord(text,"1234")
                 }
                 clearAlert.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
                 clearAlert.show()

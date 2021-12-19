@@ -10,10 +10,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.ariel.readme.data.model.HotWord
 import com.ariel.readme.data.repo.HotWordRepository
-import com.google.firebase.firestore.FirebaseFirestore
 
-
-class hotWords : AppCompatActivity() {
+//TODO remove this class
+class HotWordsActivity : AppCompatActivity() {
 
     private fun removeAll(){
         val clearAlert = AlertDialog.Builder(this)
@@ -21,7 +20,7 @@ class hotWords : AppCompatActivity() {
         clearAlert.setMessage("removing all your hot words is irreversible, are you sure you want to proceed?")
         clearAlert.setCancelable(false)
         clearAlert.setPositiveButton("Yes") { dialogInterface: DialogInterface, i: Int ->
-            HotWordRepository().clearHotWords()
+            HotWordRepository().clearHotWords("1234")
         }
         clearAlert.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
         clearAlert.show()
@@ -58,8 +57,8 @@ class hotWords : AppCompatActivity() {
                 }
             }
             Toast.makeText(this,"$text was added", Toast.LENGTH_LONG).show()
-            //HotWordRepository().createHotWord(HotWord(null, FirebaseAuth.getInstance().currentUser!!.uid , text))
-            HotWordRepository().addHotWord(HotWord(null, "1234" , text))
+            //HotWordRepository().addHotWord(HotWord(null, FirebaseAuth.getInstance().currentUser!!.uid , text))
+            HotWordRepository().addHotWord(HotWord(null, "1234" , text), "1234")
             return
         }
         Toast.makeText(this,"invalid word", Toast.LENGTH_LONG).show()
@@ -75,7 +74,7 @@ class hotWords : AppCompatActivity() {
             setView(dialogLayout)
             setCancelable(false)
             setPositiveButton("Remove") { dialogInterface: DialogInterface, i: Int ->
-                HotWordRepository().removeHotWord(editText.text.toString())}
+                HotWordRepository().removeHotWord(editText.text.toString(), "1234")}
             setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
             show()
         }
@@ -96,7 +95,7 @@ class hotWords : AppCompatActivity() {
         addWordButton.setOnClickListener{addWord()}
         removeWordButton.setOnClickListener{removeWord()}
         viewAllButton.setOnClickListener{
-            val intent = Intent(this, HotWordsList::class.java)
+            val intent = Intent(this, HotWordsListActivity::class.java)
             startActivity(intent)
         }
         removeAllButton.setOnClickListener{ removeAll() }

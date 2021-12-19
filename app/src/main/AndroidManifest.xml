@@ -19,17 +19,17 @@
             android:name=".profile.UserProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".HotWordsList"
+            android:name=".HotWordsListActivity"
             android:exported="false"
             android:theme="@style/Theme.Readme.NoActionBar"
-            android:parentActivityName=".settings"/>
+            android:parentActivityName=".SettingActivity"/>
         <activity
-            android:name=".hotWords"
+            android:name=".HotWordsActivity"
             android:exported="false"
-            android:parentActivityName=".settings"
+            android:parentActivityName=".SettingActivity"
             android:theme="@style/Theme.Readme.NoActionBar" />
         <activity
-            android:name=".settings"
+            android:name=".SettingActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.Readme.NoActionBar" />

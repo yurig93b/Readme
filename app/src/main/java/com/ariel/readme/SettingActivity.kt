@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 
-class settings : AppCompatActivity() {
+class SettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -17,7 +17,7 @@ class settings : AppCompatActivity() {
         //move to hot words activity
         val hotWordsButton : Button = findViewById(R.id.hot_words_button)
         hotWordsButton.setOnClickListener{
-            val intent = Intent(this, HotWordsList::class.java)
+            val intent = Intent(this, HotWordsListActivity::class.java)
             startActivity(intent)
         }
     }

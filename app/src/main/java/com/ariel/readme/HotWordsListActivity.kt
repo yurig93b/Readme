@@ -3,20 +3,17 @@ package com.ariel.readme
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.ariel.readme.data.model.HotWord
 import com.ariel.readme.data.repo.HotWordRepository
-import com.ariel.readme.data.repo.ModeledChangedDocuments
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.QuerySnapshot
+import com.ariel.readme.databinding.ActivityHotWordsListBinding
+import com.ariel.readme.services.AuthService
 
-class HotWordsList : AppCompatActivity() {
+class HotWordsListActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityHotWordsListBinding
 
     private fun removeAll(){
         val clearAlert = AlertDialog.Builder(this)
@@ -24,7 +21,7 @@ class HotWordsList : AppCompatActivity() {
         clearAlert.setMessage("removing all your hot words is irreversible, are you sure you want to proceed?")
         clearAlert.setCancelable(false)
         clearAlert.setPositiveButton("Yes") { dialogInterface: DialogInterface, i: Int ->
-            HotWordRepository().clearHotWords()
+            HotWordRepository().clearHotWords(AuthService.getCurrentFirebaseUser()!!.uid)
         }
         clearAlert.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
         clearAlert.show()
@@ -61,8 +58,8 @@ class HotWordsList : AppCompatActivity() {
                 }
             }
             Toast.makeText(this,"$text was added", Toast.LENGTH_LONG).show()
-            //HotWordRepository().createHotWord(HotWord(null, FirebaseAuth.getInstance().currentUser!!.uid , text))
-            HotWordRepository().addHotWord(HotWord(null, "1234" , text))
+            //HotWordRepository().createHotWord(HotWord(null, FirebaseAuth.getInstance().currentUser!!.uid , text), FirebaseAuth.getInstance().currentUser!!.uid)
+            HotWordRepository().addHotWord(HotWord(null, "1234" , text), "1234")
             return
         }
         Toast.makeText(this,"invalid word", Toast.LENGTH_LONG).show()
@@ -70,15 +67,13 @@ class HotWordsList : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityHotWordsListBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_hot_words_list)
 
         setSupportActionBar(findViewById(R.id.toolbar_hotWordsList))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val addWordButton : ImageView = findViewById(R.id.image_add)
-        val removeAllButton : ImageView = findViewById(R.id.image_delete)
-
-        addWordButton.setOnClickListener{ addWord() }
-        removeAllButton.setOnClickListener{ removeAll() }
+        binding.imageAdd.setOnClickListener{ addWord() }
+        binding.imageDelete.setOnClickListener{ removeAll() }
     }
 }
