@@ -6,14 +6,13 @@ import com.ariel.readme.data.model.HotWord
 import com.ariel.readme.data.repo.HotWordRepository
 import com.ariel.readme.data.repo.ModeledDocumentChange
 import com.ariel.readme.data.repo.interfaces.IGetChangedModels
-import com.ariel.readme.services.AuthService
 import com.google.firebase.firestore.QuerySnapshot
 
 
 class HotWordViewModel(uid:String) : ViewModel() {
 
     val hotWords : MutableLiveData<MutableList<String>> = MutableLiveData()
-    val _uid : String = uid
+    private val _uid : String = uid
 
     init {
         hotWords.value = mutableListOf()
