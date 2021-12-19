@@ -11,6 +11,7 @@ import com.google.firebase.firestore.QuerySnapshot
 interface IUserRepository {
     fun getUserByPhone(phone: String): Task<QuerySnapshot>
     fun getAllManagers(): Task<ModeledChangedDocuments<User>>
+    fun getUserById(uid: String): Task<ModeledDocument<User>>
     fun getCurrentUser(user: FirebaseUser): Task<ModeledDocument<User>>
     fun listenOnUsersChanges(listener: IGetChangedModels<User>): ListenerRegistration
     fun listenOnUserChanges(uid: String, listener: IGetChangedModel<User>): ListenerRegistration

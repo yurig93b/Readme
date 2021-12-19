@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.firestoreSettings
 import com.google.firebase.ktx.Firebase
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
@@ -20,11 +21,14 @@ abstract class FirebaseRepository<Model> {
     protected fun HookGetDocumentSnapshot(
         t: Task<DocumentSnapshot>
     ): Task<ModeledDocument<Model>> {
-        return t.continueWith(object: Continuation<DocumentSnapshot, ModeledDocument<Model>>{
+        return t.continueWith(object : Continuation<DocumentSnapshot, ModeledDocument<Model>> {
             override fun then(tres: Task<DocumentSnapshot>): ModeledDocument<Model> {
-               if(tres.exception != null) { throw tres.exception!!}
+                if (tres.exception != null) {
+                    throw tres.exception!!
+                }
 
-                val res = if (tres.getResult() != null) tres.getResult()!!.toObject(getModelClass()) else null
+                val res = if (tres.getResult() != null) tres.getResult()!!
+                    .toObject(getModelClass()) else null
                 return ModeledDocument(res, t.getResult())
             }
         })
@@ -34,11 +38,13 @@ abstract class FirebaseRepository<Model> {
         t: Task<QuerySnapshot>,
     ): Task<ModeledChangedDocuments<Model>> {
 
-        return t.continueWith(object: Continuation<QuerySnapshot, ModeledChangedDocuments<Model>>{
+        return t.continueWith(object : Continuation<QuerySnapshot, ModeledChangedDocuments<Model>> {
             override fun then(tres: Task<QuerySnapshot>): ModeledChangedDocuments<Model> {
-                if(tres.exception != null) { throw tres.exception!!}
+                if (tres.exception != null) {
+                    throw tres.exception!!
+                }
 
-                val docChanges = if (tres.result != null ) tres.result!!.documentChanges else null
+                val docChanges = if (tres.result != null) tres.result!!.documentChanges else null
                 return ModeledChangedDocuments(fromDocumentChanges(docChanges), tres.getResult())
 
             }
@@ -93,6 +99,9 @@ abstract class FirebaseRepository<Model> {
     }
 
     init {
+        Firebase.firestore.firestoreSettings = firestoreSettings {
+            isPersistenceEnabled = false
+        }
         collRef = Firebase.firestore.collection(rootNode)
     }
 }

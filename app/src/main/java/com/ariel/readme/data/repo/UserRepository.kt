@@ -20,8 +20,12 @@ class UserRepository : FirebaseRepository<User>(), IUserRepository {
         return HookQuery(collRef.whereEqualTo(User::manager.name, true).get())
     }
 
+    override fun getUserById(uid: String): Task<ModeledDocument<User>> {
+        return HookGetDocumentSnapshot(collRef.document(uid).get())
+    }
+
     override fun getCurrentUser(user: FirebaseUser): Task<ModeledDocument<User>> {
-        return HookGetDocumentSnapshot(collRef.document(user.uid).get())
+        return getUserById(user.uid)
     }
 
     override fun listenOnUsersChanges(listener: IGetChangedModels<User>): ListenerRegistration {
