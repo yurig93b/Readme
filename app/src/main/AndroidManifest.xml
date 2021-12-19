@@ -24,11 +24,6 @@
             android:theme="@style/Theme.Readme.NoActionBar"
             android:parentActivityName=".SettingActivity"/>
         <activity
-            android:name=".HotWordsActivity"
-            android:exported="false"
-            android:parentActivityName=".SettingActivity"
-            android:theme="@style/Theme.Readme.NoActionBar" />
-        <activity
             android:name=".SettingActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity"
