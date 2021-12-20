@@ -12,8 +12,8 @@ class UserRepository : FirebaseRepository<User>(), IUserRepository {
     override val rootNode: String
         get() = "users"
 
-    override fun getUserByPhone(phone: String): Task<QuerySnapshot> {
-        return collRef.whereEqualTo(User::phone.name, phone).get()
+    override fun getUserByPhone(phone: String):Task<ModeledChangedDocuments<User>> {
+        return HookQuery(collRef.whereEqualTo(User::phone.name, phone).get())
     }
 
     override fun getAllManagers(): Task<ModeledChangedDocuments<User>> {
