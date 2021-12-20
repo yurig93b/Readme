@@ -18,7 +18,7 @@ class EmptyActivity : AppCompatActivity() {
             setReorderingAllowed(true)
             val bund = Bundle()
             bund.putString(MessageListFragment.ARG_BUNDLE_CHAT_ID, "k8KMmQLiGtlJiUSDDAjl")
-            bund.putString("userId", "2jp4oKeG1kHZzZ3DrDaA")
+            bund.putString("userId", "NbwGIdmjRLaAaM6NUAnoTbzxngT2")
 
             add<MessageListFragment>(R.id.fragmentContainerView2, null ,bund)
             add<VoiceRecorderFragment>(R.id.fragmentContainerView2, null ,bund)

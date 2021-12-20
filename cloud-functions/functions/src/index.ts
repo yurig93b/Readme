@@ -9,9 +9,8 @@ import AudioEncoding = google.cloud.speech.v1.RecognitionConfig.AudioEncoding;
 
 initializeApp({
   credential: applicationDefault(),
-  databaseURL: "https://readme-33c9e.firebaseio.com",
+  databaseURL: "https://readmenew-2528d.firebaseio.com",
 });
-
 
 const PATH_AUDIO_FILES = "transcriptions/audio-files";
 
@@ -33,7 +32,7 @@ exports.onNewSoundFile = functions.storage.object().onFinalize(async (object) =>
 
   await messageRef.update({transcriptStatus: "RUNNING"});
 
-  const gcsUri = `gs://readme-33c9e.appspot.com/${PATH_AUDIO_FILES}/${fileName}`;
+  const gcsUri = `gs://readmenew-2528d.appspot.com/${PATH_AUDIO_FILES}/${fileName}`;
   const audio = {
     uri: gcsUri,
   };

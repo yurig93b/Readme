@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "459035697055",
-    "project_id": "readme-33c9e",
-    "storage_bucket": "readme-33c9e.appspot.com"
+    "project_number": "870544040541",
+    "project_id": "readmenew-2528d",
+    "storage_bucket": "readmenew-2528d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:459035697055:android:00dd4da0b41178b8f7a7aa",
+        "mobilesdk_app_id": "1:870544040541:android:f299f836b48eda025ee3b4",
         "android_client_info": {
           "package_name": "com.ariel.readme"
         }
       },
       "oauth_client": [
         {
-          "client_id": "459035697055-jd4satqcace2frckqrfsq5envvmoeke0.apps.googleusercontent.com",
+          "client_id": "870544040541-m5af66ug2bnn3cmvmuh6ce6gvjhmpfsp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDhK6bFsDkkluf0zx3zDCGaEakWDNbSLF8"
+          "current_key": "AIzaSyBP84cjtnKcGQPsRJBlcNx8OPBJgvhshVs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "459035697055-jd4satqcace2frckqrfsq5envvmoeke0.apps.googleusercontent.com",
+              "client_id": "870544040541-m5af66ug2bnn3cmvmuh6ce6gvjhmpfsp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
