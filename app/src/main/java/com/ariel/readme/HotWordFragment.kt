@@ -22,7 +22,7 @@ class HotWordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val uid : String = AuthService.getCurrentFirebaseUser()!!.uid
-        viewModel = ViewModelProvider(this).get(HotWordViewModel(uid)::class.java)
+        viewModel = ViewModelProvider(this).get(HotWordViewModel::class.java)
         _binding = FragmentHotWordBinding.inflate(inflater, container, false)
         return binding.root
     }
