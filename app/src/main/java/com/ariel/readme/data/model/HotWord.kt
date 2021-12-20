@@ -4,6 +4,6 @@ import com.google.firebase.firestore.DocumentId
 
 data class HotWord(
     @DocumentId val hwid: String? = null,
-    val uid: String,
-    val word: String,
+    val uid: String?  = null,
+    val word: String = "error!",
 ): ManagedModel()

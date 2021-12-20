@@ -3,6 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/elobl/AndroidStudioProjects/Readme/app/src/main/res/layout/activity_example.xml" value="0.16614583333333333" />
+        <entry key="..\:/Users/elobl/AndroidStudioProjects/Readme/app/src/main/res/layout/activity_hot_words.xml" value="0.2" />
+        <entry key="..\:/Users/elobl/AndroidStudioProjects/Readme/app/src/main/res/layout/activity_hot_words_list.xml" value="0.264" />
+        <entry key="..\:/Users/elobl/AndroidStudioProjects/Readme/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/elobl/AndroidStudioProjects/Readme/app/src/main/res/layout/activity_settings.xml" value="0.2" />
+        <entry key="..\:/Users/elobl/AndroidStudioProjects/Readme/app/src/main/res/layout/blank_fragment.xml" value="0.16614583333333333" />
+        <entry key="..\:/Users/elobl/AndroidStudioProjects/Readme/app/src/main/res/layout/content_scrolling.xml" value="0.16614583333333333" />
+        <entry key="..\:/Users/elobl/AndroidStudioProjects/Readme/app/src/main/res/layout/edit_text_layout.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/elobl/AndroidStudioProjects/Readme/app/src/main/res/layout/fragment_hot_word.xml" value="0.17" />
+        <entry key="..\:/Users/elobl/AndroidStudioProjects/Readme/app/src/main/res/layout/fragment_scrolling.xml" value="0.16614583333333333" />
+        <entry key="..\:/Users/elobl/AndroidStudioProjects/Readme/app/src/main/res/layout/recycler_view_layout.xml" value="0.136" />
+        <entry key="..\:/Users/elobl/AndroidStudioProjects/Readme/app/src/main/res/layout/user_profile_fragment.xml" value="0.16614583333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.26419582569594646" />
         <entry key="app/src/main/res/layout/user_profile_fragment.xml" value="0.21458333333333332" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.23072916666666668" />

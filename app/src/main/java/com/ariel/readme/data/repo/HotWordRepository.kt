@@ -19,8 +19,18 @@ class HotWordRepository : FirebaseRepository<HotWord>(), IHotWordRepository {
         return getHotWords(user.uid!!)
     }
 
-    override fun createHotWord(hotword:HotWord): Task<DocumentReference> {
+    override fun createHotWord(hotword: HotWord): Task<DocumentReference> {
         return collRef.add(hotword)
+    }
+
+    fun addHotWord(hotword:HotWord, uid: String): Task<QuerySnapshot> {
+        return collRef.whereEqualTo(HotWord::uid.name, uid)
+        //collRef.whereEqualTo(HotWord::uid.name, "1234")
+            .whereEqualTo(HotWord::word.name, hotword.word)
+            .get().addOnSuccessListener { res -> if(res.isEmpty){
+                collRef.add(hotword)
+                }
+            }
     }
 
     override fun listenOnHotWords(uid: String,listener: IGetChangedModels<HotWord>): ListenerRegistration {
@@ -29,6 +39,26 @@ class HotWordRepository : FirebaseRepository<HotWord>(), IHotWordRepository {
 
     override fun listenOnHotWords(user: User, listener: IGetChangedModels<HotWord>): ListenerRegistration {
         return listenOnHotWords(user.uid!!, listener)
+    }
+
+    fun removeHotWord(word: String, uid: String): Task<QuerySnapshot> {
+        return collRef.whereEqualTo(HotWord::uid.name, uid)
+        //collRef.whereEqualTo(HotWord::uid.name, "1234")
+            .whereEqualTo(HotWord::word.name, word)
+            .get().addOnSuccessListener {
+                res -> for(doc in res.documents){
+                    collRef.document(doc.id).delete()
+                }
+            }
+    }
+
+    fun clearHotWords(uid: String): Task<QuerySnapshot> {
+        return collRef.whereEqualTo(HotWord::uid.name, uid).get().addOnSuccessListener {
+        //collRef.whereEqualTo(HotWord::uid.name, "1234").get().addOnSuccessListener {
+            res -> for(doc in res.documents){
+                collRef.document(doc.id).delete()
+            }
+        }
     }
 
 }
