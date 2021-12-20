@@ -18,11 +18,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.ariel.readme.R
 import com.ariel.readme.databinding.VoiceRecorderFragmentBinding
 import java.io.IOException
+import java.lang.Exception
 
 class VoiceRecorderFragment : Fragment() {
+
+
     private val REQUEST_RECORD_AUDIO_PERMISSION = 200
 
     companion object {
+        val ARG_BUNDLE_CHAT_ID = "chatId"
+        val ARG_BUNDLE_USER_ID = "userId"
+
         fun newInstance() = VoiceRecorderFragment()
     }
 
@@ -31,6 +37,9 @@ class VoiceRecorderFragment : Fragment() {
     private var permissions: Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
     private var _binding: VoiceRecorderFragmentBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var _from: String
+    private lateinit var _chat: String
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -57,10 +66,12 @@ class VoiceRecorderFragment : Fragment() {
 
     private fun handleButtonUp(){
         binding.recordButton.text = getString(R.string.button_record)
-        viewModel.stopRecording()
-        viewModel.upload("c-12313", "123123")
-    }
+        try {
+            viewModel.stopRecording()
+            viewModel.upload(_chat, _from)
+        } catch (e: Exception){}
 
+    }
 
     private fun registerLoadingObserver(){
         viewModel.loading.observe(viewLifecycleOwner, { isLoading ->
@@ -120,6 +131,10 @@ class VoiceRecorderFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(VoiceRecorderViewModel::class.java)
         requestPermissions(permissions, REQUEST_RECORD_AUDIO_PERMISSION)
+
+        _chat = requireArguments().getString(ARG_BUNDLE_CHAT_ID)!!
+        _from = requireArguments().getString(ARG_BUNDLE_USER_ID)!!
+
         registerListeners()
     }
 }

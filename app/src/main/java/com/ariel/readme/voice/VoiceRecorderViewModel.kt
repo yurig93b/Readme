@@ -19,7 +19,6 @@ class VoiceRecorderViewModel : ViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     private val _recording: MutableLiveData<Boolean> = MutableLiveData(false)
-    val recording: LiveData<Boolean> = _recording
 
     private val _error: MutableLiveData<Exception> = MutableLiveData()
     val error: LiveData<Exception> = _error
@@ -34,8 +33,15 @@ class VoiceRecorderViewModel : ViewModel() {
     }
 
     fun stopRecording() {
-        _record_context.value?.stop()
-        _recording.value = false
+        try {
+            _record_context.value?.stop()
+
+        } catch (e: java.lang.RuntimeException) {
+            throw e
+        } finally {
+            _recording.value = false
+
+        }
     }
 
     fun upload(chatId: String, from: String) {
@@ -43,23 +49,28 @@ class VoiceRecorderViewModel : ViewModel() {
             throw RuntimeException("You can't upload while recording or uploading.")
         }
         _loading.value = true
-
         val msg = Message(cid = chatId, from = from, voice = true)
 
+        // Create msg
         RepositoryFactory.getMessageRepository().createMessage(msg).addOnSuccessListener { dref ->
             val uri = Uri.parse("file://" + _record_context.value!!.outputFile.absolutePath)
-            val storagePath = StoragePathFactory.getVoiceMessagePath(dref.id, VoiceRecordingController.DEFAULT_SUFFIX)
-            _loading.value = true
+            val storagePath = StoragePathFactory.getVoiceMessagePath(
+                dref.id,
+                VoiceRecordingController.DEFAULT_SUFFIX
+            )
 
+            // Upload file
+            _loading.value = true
             StorageFactory.getStorage().putFile(storagePath, uri)
                 .addOnCompleteListener {
                     _loading.value = false
-                }.addOnFailureListener{ e ->
+                }.addOnFailureListener { e ->
                     _error.value = e
                 }
-        }.addOnCompleteListener{
+
+        }.addOnCompleteListener {
             _loading.value = false
-        }.addOnFailureListener{ e ->
+        }.addOnFailureListener { e ->
             _error.value = e
         }
     }

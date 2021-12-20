@@ -12,16 +12,20 @@ class UserRepository : FirebaseRepository<User>(), IUserRepository {
     override val rootNode: String
         get() = "users"
 
-    override fun getUserByPhone(phone: String): Task<QuerySnapshot> {
-        return collRef.whereEqualTo(User::phone.name, phone).get()
+    override fun getUserByPhone(phone: String):Task<ModeledChangedDocuments<User>> {
+        return HookQuery(collRef.whereEqualTo(User::phone.name, phone).get())
     }
 
     override fun getAllManagers(): Task<ModeledChangedDocuments<User>> {
         return HookQuery(collRef.whereEqualTo(User::manager.name, true).get())
     }
 
+    override fun getUserById(uid: String): Task<ModeledDocument<User>> {
+        return HookGetDocumentSnapshot(collRef.document(uid).get())
+    }
+
     override fun getCurrentUser(user: FirebaseUser): Task<ModeledDocument<User>> {
-        return HookGetDocumentSnapshot(collRef.document(user.uid).get())
+        return getUserById(user.uid)
     }
 
     override fun listenOnUsersChanges(listener: IGetChangedModels<User>): ListenerRegistration {
