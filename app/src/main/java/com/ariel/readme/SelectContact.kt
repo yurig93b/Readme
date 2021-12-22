@@ -67,14 +67,14 @@ class SelectContact : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-//        if (requestCode == Contact_Permission) {
-//            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == Contact_Permission) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 pickContact()
-//            } else {
-//                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT)
-//                    .show()//אם הלקוח לא אשר
-//            }
-//        }
+            } else {
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT)
+                    .show()//אם הלקוח לא אשר
+            }
+        }
     }
 
     @SuppressLint("Range")
