@@ -24,6 +24,7 @@ class HotWordFragment : Fragment() {
         val uid : String = AuthService.getCurrentFirebaseUser()!!.uid
         viewModel = ViewModelProvider(this).get(HotWordViewModel::class.java)
         _binding = FragmentHotWordBinding.inflate(inflater, container, false)
+        viewModel.listenOnHotWords(uid)
         return binding.root
     }
 
