@@ -30,6 +30,7 @@ class HotWordFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        loading()
         updateView()
     }
 
@@ -37,6 +38,18 @@ class HotWordFragment : Fragment() {
         viewModel.hotWords.observe(viewLifecycleOwner, Observer { item ->
             binding.wordList.adapter = HotWordsRecyclerAdapter(item!!)
             binding.wordList.layoutManager = LinearLayoutManager(this.context)
+        })
+    }
+
+    fun loading(){
+        viewModel.loading.observe(viewLifecycleOwner, { isLoading ->
+            if (isLoading) {
+                binding.wordList.isEnabled = false
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.wordList.isEnabled = true
+                binding.progressBar.visibility = View.INVISIBLE
+            }
         })
     }
 
