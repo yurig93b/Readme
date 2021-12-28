@@ -186,6 +186,7 @@ class UserProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.title = getString(R.string.title_profile)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         registerListeners()
         _vm!!.loadUser()
     }

@@ -20,7 +20,8 @@
             android:exported="false" />
         <activity
             android:name=".profile.UserProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".SettingActivity"/>
         <activity
             android:name=".HotWordsListActivity"
             android:exported="false"
