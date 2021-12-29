@@ -17,4 +17,5 @@ interface IUserRepository {
     fun listenOnUserChanges(uid: String, listener: IGetChangedModel<User>): ListenerRegistration
     fun listenOnUserChanges(user: User, listener: IGetChangedModel<User>): ListenerRegistration
     fun registerUser(user: User): Task<Void>
+    fun getcontact(phone: String): Task<QuerySnapshot>
 }
