@@ -1,9 +1,12 @@
 package com.ariel.readme.data.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ariel.readme.data.model.HotWord
 import com.ariel.readme.data.model.User
+import com.ariel.readme.data.repo.HotWordRepository
 import com.ariel.readme.data.repo.ModeledChangedDocuments
 import com.ariel.readme.data.repo.ModeledDocument
 import com.ariel.readme.data.repo.UserRepository
@@ -20,7 +23,7 @@ class ManagerViewModel : ViewModel(){
     private val _targetUser: MutableLiveData<User> = MutableLiveData()
     val targetUser: MutableLiveData<User> = _targetUser
 
-    private val _loading: MutableLiveData<Boolean> = MutableLiveData(true)
+    private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
     fun checkUser(): Task<ModeledDocument<User>> {
@@ -31,8 +34,30 @@ class ManagerViewModel : ViewModel(){
         return task
     }
 
+    private fun checkText(text : String): Boolean {    //check for bad input mainly code injections
+        if(text.length <= 24 && text != "") {
+            val badChars: List<Char> = listOf(
+                ' ', ';', '$', '|', '&',
+                '(', ')', '[', ']', '{',
+                '}', '<', '>', '\\', '/',
+                '\n', '\t', '\r',
+                '.','!','=','?'
+            )
+            for (char in badChars) {
+                if (char in text) {
+                    return false
+                }
+            }
+            return true
+        }
+        return false
+    }
+
     fun setTarget(phone: String): Task<ModeledChangedDocuments<User>> {
-        val task = UserRepository().getUserByPhone(phone)
+        val number : String
+        if(checkText(phone)){ number = phone}
+        else{ number = "-1"}
+        val task = UserRepository().getUserByPhone(number)
         task.addOnSuccessListener { doc ->
             if(doc.changes.isNotEmpty()){
                 _targetUser.value = doc.changes[0].obj
@@ -42,29 +67,35 @@ class ManagerViewModel : ViewModel(){
     }
 
     fun setManager(): Task<Void>? {
-        val s = _user.value != null
-        val r = _targetUser.value != null
-        val g = _user.value!!.manager
         if(_user.value != null && _targetUser.value != null && _user.value!!.manager){
             val updatedUser = _targetUser.value!!.copy(manager = true)
-            return RepositoryFactory.getUserRepository().registerUser(updatedUser)
+            return RepositoryFactory.getUserRepository().registerUser(updatedUser).addOnCompleteListener {
+                _loading.value = false
+            }
         }
+        _loading.value = false
         return null
     }
 
     fun setBanned(): Task<Void>? {
         if(_user.value != null && _targetUser.value != null && _user.value!!.manager){
             val updatedUser = _targetUser.value!!.copy(banned = true)
-            return RepositoryFactory.getUserRepository().registerUser(updatedUser)
+            return RepositoryFactory.getUserRepository().registerUser(updatedUser).addOnCompleteListener {
+                _loading.value = false
+            }
         }
+        _loading.value = false
         return null
     }
 
     fun setUnbanned(): Task<Void>? {
         if(_user.value != null && _targetUser.value != null && _user.value!!.manager){
             val updatedUser = _targetUser.value!!.copy(banned = false)
-            return RepositoryFactory.getUserRepository().registerUser(updatedUser)
+            return RepositoryFactory.getUserRepository().registerUser(updatedUser).addOnCompleteListener {
+                _loading.value = false
+            }
         }
+        _loading.value = false
         return null
     }
 }

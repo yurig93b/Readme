@@ -3,6 +3,7 @@ package com.ariel.readme
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -30,7 +31,24 @@ class ManagerActivity : AppCompatActivity() {
         _binding!!.addManButton.setOnClickListener { addManager() }
     }
 
+    private fun observeLoading() {
+        _vm!!.loading.observe(this, { isLoading ->
+            if (isLoading) {
+                binding!!.banButton.isEnabled = false
+                binding!!.unbanButton.isEnabled = false
+                binding!!.addManButton.isEnabled = false
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding!!.banButton.isEnabled = true
+                binding!!.unbanButton.isEnabled = true
+                binding!!.addManButton.isEnabled = true
+                binding.progressBar.visibility = View.INVISIBLE
+            }
+        })
+    }
+
     fun addManager(){
+        observeLoading()
         val addAlert = AlertDialog.Builder(this)
         addAlert.setTitle("Please insert users' phone number")
         val inflater = layoutInflater
@@ -66,6 +84,7 @@ class ManagerActivity : AppCompatActivity() {
     }
 
     fun banUser(){
+        observeLoading()
         val banAlert = AlertDialog.Builder(this)
         banAlert.setTitle("You are banning a user!\n Please insert users' phone number")
         val inflater = layoutInflater
@@ -101,6 +120,7 @@ class ManagerActivity : AppCompatActivity() {
     }
 
     fun unbanUser(){
+        observeLoading()
         val banAlert = AlertDialog.Builder(this)
         banAlert.setTitle("Please insert users' phone number")
         val inflater = layoutInflater
