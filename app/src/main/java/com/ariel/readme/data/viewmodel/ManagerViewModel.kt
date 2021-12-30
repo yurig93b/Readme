@@ -1,11 +1,16 @@
 package com.ariel.readme.data.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ariel.readme.data.model.User
+import com.ariel.readme.data.repo.ModeledChangedDocuments
+import com.ariel.readme.data.repo.ModeledDocument
+import com.ariel.readme.data.repo.UserRepository
 import com.ariel.readme.factories.RepositoryFactory
 import com.ariel.readme.services.AuthService
 import com.google.android.gms.tasks.Task
+import java.lang.Thread.sleep
 
 class ManagerViewModel : ViewModel(){
 
@@ -15,37 +20,49 @@ class ManagerViewModel : ViewModel(){
     private val _targetUser: MutableLiveData<User> = MutableLiveData()
     val targetUser: MutableLiveData<User> = _targetUser
 
-    private fun setUsers(phone: String): Boolean{
+    private val _loading: MutableLiveData<Boolean> = MutableLiveData(true)
+    val loading: LiveData<Boolean> = _loading
+
+    fun checkUser(): Task<ModeledDocument<User>> {
+        _loading.value = true
         val curUser = AuthService.getCurrentFirebaseUser()
-        RepositoryFactory.getUserRepository().getCurrentUser(curUser!!).addOnSuccessListener { doc ->
-            _user.value = doc.obj }
-        RepositoryFactory.getUserRepository().getUserByPhone(phone).addOnSuccessListener { doc ->
+        val task = UserRepository().getCurrentUser(curUser!!)
+        task.addOnSuccessListener { doc -> _user.value = doc.obj }
+        return task
+    }
+
+    fun setTarget(phone: String): Task<ModeledChangedDocuments<User>> {
+        val task = UserRepository().getUserByPhone(phone)
+        task.addOnSuccessListener { doc ->
             if(doc.changes.isNotEmpty()){
                 _targetUser.value = doc.changes[0].obj
             }
         }
-        return (_user.value != null && _targetUser.value != null)
+        return task
     }
 
-    fun setManager(phone: String): Task<Void>? {
-        if(setUsers(phone) && user.value!!.manager){
-            val updatedUser = targetUser.value!!.copy(manager = true)
+    fun setManager(): Task<Void>? {
+        val s = _user.value != null
+        val r = _targetUser.value != null
+        val g = _user.value!!.manager
+        if(_user.value != null && _targetUser.value != null && _user.value!!.manager){
+            val updatedUser = _targetUser.value!!.copy(manager = true)
             return RepositoryFactory.getUserRepository().registerUser(updatedUser)
         }
         return null
     }
 
-    fun setBanned(phone: String): Task<Void>? {
-        if(setUsers(phone) && user.value!!.manager){
-            val updatedUser = targetUser.value!!.copy(banned = true)
+    fun setBanned(): Task<Void>? {
+        if(_user.value != null && _targetUser.value != null && _user.value!!.manager){
+            val updatedUser = _targetUser.value!!.copy(banned = true)
             return RepositoryFactory.getUserRepository().registerUser(updatedUser)
         }
         return null
     }
 
-    fun setUnbanned(phone: String): Task<Void>? {
-        if(setUsers(phone) && user.value!!.manager){
-            val updatedUser = targetUser.value!!.copy(banned = false)
+    fun setUnbanned(): Task<Void>? {
+        if(_user.value != null && _targetUser.value != null && _user.value!!.manager){
+            val updatedUser = _targetUser.value!!.copy(banned = false)
             return RepositoryFactory.getUserRepository().registerUser(updatedUser)
         }
         return null

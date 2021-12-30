@@ -39,15 +39,27 @@ class ManagerActivity : AppCompatActivity() {
         with(addAlert){
             setView(dialogLayout)
             setCancelable(false)
-            setPositiveButton("Add") { dialog, which -> val res : Task<Void>? = _vm!!.setManager(editText.text.toString())
-                res?.addOnSuccessListener { Toast.makeText(
-                    getApplicationContext(),
-                    getString(R.string.success_add_man),
-                    Toast.LENGTH_SHORT
-                ).show() }!!.addOnFailureListener { Toast.makeText(
-                    getApplicationContext(),
-                    getString(R.string.failure_add_man),
-                    Toast.LENGTH_SHORT).show() }}
+            setPositiveButton("Add") { dialog, which -> _vm!!.checkUser().addOnCompleteListener {
+                _vm!!.setTarget(editText.text.toString()).addOnCompleteListener {
+                    val res : Task<Void>? = _vm!!.setManager()
+                        if(res != null){
+                            res?.addOnSuccessListener { Toast.makeText(
+                                getApplicationContext(),
+                                getString(R.string.success_add_man),
+                                Toast.LENGTH_SHORT
+                            ).show() }!!.addOnFailureListener { Toast.makeText(
+                                getApplicationContext(),
+                                getString(R.string.failure_add_man),
+                                Toast.LENGTH_SHORT).show() }}
+                        else{
+                            Toast.makeText(
+                                getApplicationContext(),
+                                getString(R.string.failure_add_man),
+                                Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
             setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
             show()
         }
@@ -62,15 +74,27 @@ class ManagerActivity : AppCompatActivity() {
         with(banAlert){
             setView(dialogLayout)
             setCancelable(false)
-            setPositiveButton("Ban") { dialog, which -> val res : Task<Void>? = _vm!!.setBanned(editText.text.toString())
-                res?.addOnSuccessListener { Toast.makeText(
-                    getApplicationContext(),
-                    getString(R.string.success_ban_user),
-                    Toast.LENGTH_SHORT
-                ).show() }!!.addOnFailureListener { Toast.makeText(
-                    getApplicationContext(),
-                    getString(R.string.failure_ban_user),
-                    Toast.LENGTH_SHORT).show() }}
+            setPositiveButton("Ban") { dialog, which -> _vm!!.checkUser().addOnCompleteListener {
+                _vm!!.setTarget(editText.text.toString()).addOnCompleteListener {
+                    val res : Task<Void>? = _vm!!.setBanned()
+                    if(res != null){
+                        res?.addOnSuccessListener { Toast.makeText(
+                            getApplicationContext(),
+                            getString(R.string.success_ban_user),
+                            Toast.LENGTH_SHORT
+                        ).show() }!!.addOnFailureListener { Toast.makeText(
+                            getApplicationContext(),
+                            getString(R.string.failure_ban_user),
+                            Toast.LENGTH_SHORT).show() }}
+                    else{
+                        Toast.makeText(
+                            getApplicationContext(),
+                            getString(R.string.failure_ban_user),
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            }
             setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
             show()
         }
@@ -85,15 +109,27 @@ class ManagerActivity : AppCompatActivity() {
         with(banAlert){
             setView(dialogLayout)
             setCancelable(false)
-            setPositiveButton("Unban") { dialog, which -> val res : Task<Void>? = _vm!!.setUnbanned(editText.text.toString())
-                res?.addOnSuccessListener { Toast.makeText(
-                    getApplicationContext(),
-                    getString(R.string.success_unban_user),
-                    Toast.LENGTH_SHORT
-                ).show() }!!.addOnFailureListener { Toast.makeText(
-                    getApplicationContext(),
-                    getString(R.string.failure_unban_user),
-                    Toast.LENGTH_SHORT).show() }}
+            setPositiveButton("Unban") { dialog, which -> _vm!!.checkUser().addOnCompleteListener {
+                _vm!!.setTarget(editText.text.toString()).addOnCompleteListener {
+                    val res : Task<Void>? = _vm!!.setUnbanned()
+                    if(res != null){
+                        res?.addOnSuccessListener { Toast.makeText(
+                            getApplicationContext(),
+                            getString(R.string.success_unban_user),
+                            Toast.LENGTH_SHORT
+                        ).show() }!!.addOnFailureListener { Toast.makeText(
+                            getApplicationContext(),
+                            getString(R.string.failure_unban_user),
+                            Toast.LENGTH_SHORT).show() }}
+                    else{
+                        Toast.makeText(
+                            getApplicationContext(),
+                            getString(R.string.failure_unban_user),
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            }
             setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
             show()
         }
