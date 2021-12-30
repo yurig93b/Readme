@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
 //        MessageHandlingService().ensureUserTokenIsSet()
 
-        val intent = Intent(this, SettingActivity::class.java)
+        val intent = Intent(this, ManagerActivity::class.java)
         startActivity(intent)
     }
 

@@ -60,7 +60,6 @@ class HotWordsListActivity : AppCompatActivity() {
             Toast.makeText(this,"$text was added", Toast.LENGTH_LONG).show()
             val uid : String = AuthService.getCurrentFirebaseUser()!!.uid
             HotWordRepository().addHotWord(HotWord(null, uid, text), uid)
-            //HotWordRepository().addHotWord(HotWord(null, "1234" , text), "1234")
             return
         }
         Toast.makeText(this,"invalid word", Toast.LENGTH_LONG).show()

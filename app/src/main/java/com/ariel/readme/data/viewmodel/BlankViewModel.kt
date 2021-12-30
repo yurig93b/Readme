@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.ariel.readme.data.model.User
 import com.ariel.readme.data.repo.UserRepository
 import com.ariel.readme.data.repo.interfaces.IGetChangedModel
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 

@@ -8,6 +8,7 @@ data class User(
     val phone: String? = null,
     val firstName: String? = null,
     val lastName: String? = null,
+    val banned: Boolean = false,
     val manager: Boolean = false,
     val token: String? = null
 ): ManagedModel()

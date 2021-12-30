@@ -8,4 +8,15 @@
     <string name="button_record">Record</string>
     <string name="button_recording">Recording</string>
     <string name="button_uploading">Uploading</string>
+    <string name="ban_user">ban user</string>
+    <string name="add_new_manager">add new manager</string>
+    <string name="empty_list">empty list</string>
+    <string name="remove_word">remove word</string>
+    <string name="unban_user">unban user</string>
+    <string name="success_ban_user">banned User</string>
+    <string name="failure_ban_user">error! user was not banned</string>
+    <string name="success_unban_user">unbanned User</string>
+    <string name="failure_unban_user">error! user was not unbanned</string>
+    <string name="success_add_man">new manager was added</string>
+    <string name="failure_add_man">error! failed to add manager</string>
 </resources>
