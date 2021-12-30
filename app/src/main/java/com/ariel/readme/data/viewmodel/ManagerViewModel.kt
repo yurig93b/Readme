@@ -1,19 +1,16 @@
 package com.ariel.readme.data.viewmodel
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ariel.readme.data.model.HotWord
 import com.ariel.readme.data.model.User
-import com.ariel.readme.data.repo.HotWordRepository
 import com.ariel.readme.data.repo.ModeledChangedDocuments
 import com.ariel.readme.data.repo.ModeledDocument
 import com.ariel.readme.data.repo.UserRepository
 import com.ariel.readme.factories.RepositoryFactory
 import com.ariel.readme.services.AuthService
 import com.google.android.gms.tasks.Task
-import java.lang.Thread.sleep
+
 
 class ManagerViewModel : ViewModel(){
 
@@ -34,7 +31,8 @@ class ManagerViewModel : ViewModel(){
         return task
     }
 
-    private fun checkText(text : String): Boolean {    //check for bad input mainly code injections
+    private fun checkText(text : String): Boolean {    //check for bad input
+        if(text == _user.value!!.phone){ return false}
         if(text.length <= 24 && text != "") {
             val badChars: List<Char> = listOf(
                 ' ', ';', '$', '|', '&',
@@ -54,9 +52,11 @@ class ManagerViewModel : ViewModel(){
     }
 
     fun setTarget(phone: String): Task<ModeledChangedDocuments<User>> {
-        val number : String
-        if(checkText(phone)){ number = phone}
-        else{ number = "-1"}
+        val number : String = if(checkText(phone)){
+            phone
+        } else{
+            "-1"
+        }
         val task = UserRepository().getUserByPhone(number)
         task.addOnSuccessListener { doc ->
             if(doc.changes.isNotEmpty()){

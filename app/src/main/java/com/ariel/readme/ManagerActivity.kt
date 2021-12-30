@@ -34,25 +34,25 @@ class ManagerActivity : AppCompatActivity() {
     private fun observeLoading() {
         _vm!!.loading.observe(this, { isLoading ->
             if (isLoading) {
-                binding!!.banButton.isEnabled = false
-                binding!!.unbanButton.isEnabled = false
-                binding!!.addManButton.isEnabled = false
+                binding.banButton.isEnabled = false
+                binding.unbanButton.isEnabled = false
+                binding.addManButton.isEnabled = false
                 binding.progressBar.visibility = View.VISIBLE
             } else {
-                binding!!.banButton.isEnabled = true
-                binding!!.unbanButton.isEnabled = true
-                binding!!.addManButton.isEnabled = true
+                binding.banButton.isEnabled = true
+                binding.unbanButton.isEnabled = true
+                binding.addManButton.isEnabled = true
                 binding.progressBar.visibility = View.INVISIBLE
             }
         })
     }
 
-    fun addManager(){
+    private fun addManager(){
         observeLoading()
         val addAlert = AlertDialog.Builder(this)
         addAlert.setTitle("Please insert users' phone number")
         val inflater = layoutInflater
-        val dialogLayout = inflater.inflate(R.layout.edit_text_layout, null)
+        val dialogLayout = inflater.inflate(R.layout.edit_text_layout,null)
         val editText : EditText = dialogLayout.findViewById(R.id.edit_text_add)
         with(addAlert){
             setView(dialogLayout)
@@ -61,17 +61,17 @@ class ManagerActivity : AppCompatActivity() {
                 _vm!!.setTarget(editText.text.toString()).addOnCompleteListener {
                     val res : Task<Void>? = _vm!!.setManager()
                         if(res != null){
-                            res?.addOnSuccessListener { Toast.makeText(
-                                getApplicationContext(),
+                            res.addOnSuccessListener { Toast.makeText(
+                                applicationContext,
                                 getString(R.string.success_add_man),
                                 Toast.LENGTH_SHORT
-                            ).show() }!!.addOnFailureListener { Toast.makeText(
-                                getApplicationContext(),
+                            ).show() }.addOnFailureListener { Toast.makeText(
+                                applicationContext,
                                 getString(R.string.failure_add_man),
                                 Toast.LENGTH_SHORT).show() }}
                         else{
                             Toast.makeText(
-                                getApplicationContext(),
+                                applicationContext,
                                 getString(R.string.failure_add_man),
                                 Toast.LENGTH_SHORT).show()
                         }
@@ -83,12 +83,12 @@ class ManagerActivity : AppCompatActivity() {
         }
     }
 
-    fun banUser(){
+    private fun banUser(){
         observeLoading()
         val banAlert = AlertDialog.Builder(this)
-        banAlert.setTitle("You are banning a user!\n Please insert users' phone number")
+        banAlert.setTitle("You are banning a user!\nPlease insert users' phone number")
         val inflater = layoutInflater
-        val dialogLayout = inflater.inflate(R.layout.edit_text_layout, null)
+        val dialogLayout = inflater.inflate(R.layout.edit_text_layout,null)
         val editText : EditText = dialogLayout.findViewById(R.id.edit_text_add)
         with(banAlert){
             setView(dialogLayout)
@@ -97,17 +97,17 @@ class ManagerActivity : AppCompatActivity() {
                 _vm!!.setTarget(editText.text.toString()).addOnCompleteListener {
                     val res : Task<Void>? = _vm!!.setBanned()
                     if(res != null){
-                        res?.addOnSuccessListener { Toast.makeText(
-                            getApplicationContext(),
+                        res.addOnSuccessListener { Toast.makeText(
+                            applicationContext,
                             getString(R.string.success_ban_user),
                             Toast.LENGTH_SHORT
-                        ).show() }!!.addOnFailureListener { Toast.makeText(
-                            getApplicationContext(),
+                        ).show() }.addOnFailureListener { Toast.makeText(
+                            applicationContext,
                             getString(R.string.failure_ban_user),
                             Toast.LENGTH_SHORT).show() }}
                     else{
                         Toast.makeText(
-                            getApplicationContext(),
+                            applicationContext,
                             getString(R.string.failure_ban_user),
                             Toast.LENGTH_SHORT).show()
                     }
@@ -119,7 +119,7 @@ class ManagerActivity : AppCompatActivity() {
         }
     }
 
-    fun unbanUser(){
+    private fun unbanUser(){
         observeLoading()
         val banAlert = AlertDialog.Builder(this)
         banAlert.setTitle("Please insert users' phone number")
@@ -133,17 +133,17 @@ class ManagerActivity : AppCompatActivity() {
                 _vm!!.setTarget(editText.text.toString()).addOnCompleteListener {
                     val res : Task<Void>? = _vm!!.setUnbanned()
                     if(res != null){
-                        res?.addOnSuccessListener { Toast.makeText(
-                            getApplicationContext(),
+                        res.addOnSuccessListener { Toast.makeText(
+                            applicationContext,
                             getString(R.string.success_unban_user),
                             Toast.LENGTH_SHORT
-                        ).show() }!!.addOnFailureListener { Toast.makeText(
-                            getApplicationContext(),
+                        ).show() }.addOnFailureListener { Toast.makeText(
+                            applicationContext,
                             getString(R.string.failure_unban_user),
                             Toast.LENGTH_SHORT).show() }}
                     else{
                         Toast.makeText(
-                            getApplicationContext(),
+                            applicationContext,
                             getString(R.string.failure_unban_user),
                             Toast.LENGTH_SHORT).show()
                     }
