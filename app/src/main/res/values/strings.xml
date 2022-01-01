@@ -19,4 +19,5 @@
     <string name="failure_unban_user">error! user was not unbanned</string>
     <string name="success_add_man">new manager was added</string>
     <string name="failure_add_man">error! failed to add manager</string>
+    <string name="refresh">Refresh</string>
 </resources>

@@ -3,13 +3,16 @@ package com.ariel.readme.data.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ariel.readme.data.model.Message
 import com.ariel.readme.data.model.User
+import com.ariel.readme.data.repo.MessageRepository
 import com.ariel.readme.data.repo.ModeledChangedDocuments
 import com.ariel.readme.data.repo.ModeledDocument
 import com.ariel.readme.data.repo.UserRepository
 import com.ariel.readme.factories.RepositoryFactory
 import com.ariel.readme.services.AuthService
 import com.google.android.gms.tasks.Task
+import java.text.SimpleDateFormat
 
 
 class ManagerViewModel : ViewModel(){
@@ -23,6 +26,15 @@ class ManagerViewModel : ViewModel(){
     private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
+    private val utc = 2
+
+    private val _dataPoints: MutableLiveData<Array<Array<Double>>> = MutableLiveData(arrayOf(arrayOf(0.0,0.0),
+        arrayOf(1.0,0.0),arrayOf(2.0,0.0),arrayOf(3.0,0.0),arrayOf(4.0,0.0),arrayOf(5.0,0.0),arrayOf(6.0,0.0),
+        arrayOf(7.0,0.0),arrayOf(8.0,0.0),arrayOf(9.0,0.0),arrayOf(10.0,0.0),arrayOf(11.0,0.0),arrayOf(12.0,0.0),
+        arrayOf(13.0,0.0),arrayOf(14.0,0.0),arrayOf(15.0,0.0),arrayOf(16.0,0.0),arrayOf(17.0,0.0),arrayOf(18.0,0.0),
+        arrayOf(19.0,0.0),arrayOf(20.0,0.0),arrayOf(21.0,0.0),arrayOf(22.0,0.0),arrayOf(23.0,0.0)))
+    val dataPoints: MutableLiveData<Array<Array<Double>>> = _dataPoints
+
     fun checkUser(): Task<ModeledDocument<User>> {
         _loading.value = true
         val curUser = AuthService.getCurrentFirebaseUser()
@@ -34,7 +46,7 @@ class ManagerViewModel : ViewModel(){
     private fun checkText(text : String): Boolean {    //check for bad input
         if(text == _user.value!!.phone){ return false}
         if(text.length <= 24 && text != "") {
-            val badChars: List<Char> = listOf(
+            val badChars: List<Char> = mutableListOf(
                 ' ', ';', '$', '|', '&',
                 '(', ')', '[', ']', '{',
                 '}', '<', '>', '\\', '/',
@@ -97,5 +109,21 @@ class ManagerViewModel : ViewModel(){
         }
         _loading.value = false
         return null
+    }
+
+    fun setGraph(time: com.google.firebase.Timestamp): Task<ModeledChangedDocuments<Message>> {
+        return MessageRepository().getChatMessagesByTime(time).addOnSuccessListener { doc ->
+            _dataPoints.value!!.forEach {
+                point -> point[1] = 0.0
+            }
+            doc.changes.forEach { msg ->
+                val hour = SimpleDateFormat("HH").format(msg.obj.ts!!.toDate()).toInt() + utc
+                for (i in 0..23){
+                    if(hour == i){
+                        _dataPoints.value!![i][1] = _dataPoints.value!![i][1]+1
+                    }
+                }
+            }
+        }
     }
 }
