@@ -8,41 +8,34 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ariel.readme.data.model.Chat
 import com.ariel.readme.data.repo.ChatRepository
-import com.ariel.readme.services.AuthService
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.LifecycleOwner
 
 
-class Adapter(private val theList:  List<Chat>) :
+class Adapter( private val ListChats:  List<Chat>) :
     RecyclerView.Adapter<Adapter.ChatHolder>() {
-    //הפונקציה הזו מכינה את כל הדברים ויתן אותם ChatHolder
+    //This function prepares all things and gives them to ChatHolder
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatHolder {
-        val view = LayoutInflater.from(parent.context)
+        val view :View= LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_card_view, parent, false)
         return ChatHolder(view)
     }
 
-    //עכשיו הכול נמצא בtheList
+    //Everything is on theList
     override fun onBindViewHolder(holder: ChatHolder, position: Int) {
         //holder.imageView.setImageResource(ItemsViewModel.image)
         // sets the text to the textview from our itemHolder class
-        holder.onDataBind(theList[position])
+        holder.onDataBind(ListChats[position])
     }
 
     // return the number of the items in the list
     override fun getItemCount(): Int {
-        return theList.size
+        return ListChats.size
     }
 
-    // Holds the views for adding it to image and text
-    class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.UserProfile)
-        val textView: TextView = itemView.findViewById(R.id.UserName2)
-    }
-
-
-    inner class ChatHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ChatHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {//for card view
 
         val TheUserName: TextView
         val profileImage: ImageView
@@ -54,7 +47,6 @@ class Adapter(private val theList:  List<Chat>) :
             TheUserName.text=chat.cid
             }
 
-        //Remains the part of clicking chat
         init {
             TheUserName = itemView.findViewById(R.id.UserName2)
             profileImage = itemView.findViewById(R.id.UserProfile)
