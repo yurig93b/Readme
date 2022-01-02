@@ -13,7 +13,7 @@ class Card_viewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_card_view, container, false)
+        return inflater.inflate(R.layout.chat_card_view_fragment, container, false)
     }
 
     companion object {

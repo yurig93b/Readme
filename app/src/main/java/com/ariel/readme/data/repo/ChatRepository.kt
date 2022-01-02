@@ -31,7 +31,7 @@ class ChatRepository : FirebaseRepository<Chat>(), IChatRepository {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    fun getChatsByUsers(participants:List<String>): Task<ModeledChangedDocuments<Chat>> {
+    override fun getChatsByUsers(participants:List<String>): Task<ModeledChangedDocuments<Chat>> {
         val participantsStr = participants.sorted().stream().collect(Collectors.joining(","))
         return HookQuery(collRef.whereEqualTo(Chat::participantsStr.name, participantsStr).get())
     }

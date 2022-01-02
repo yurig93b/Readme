@@ -14,46 +14,109 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.ViewModelProvider
+import com.ariel.readme.data.model.Chat
+import com.ariel.readme.data.repo.ModeledDocumentChange
+import com.ariel.readme.data.repo.interfaces.IGetChangedModels
 import com.ariel.readme.data.viewmodel.SelectContactViewModel
-import com.ariel.readme.databinding.ActivitySelectContactBinding
+import com.ariel.readme.databinding.FragmentChatListBinding
+import com.ariel.readme.factories.RepositoryFactory
+import com.ariel.readme.services.AuthService
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.QuerySnapshot
 
 class SelectContact : AppCompatActivity() {
-    lateinit var binding: ActivitySelectContactBinding
+    lateinit var _binding: FragmentChatListBinding
+    private val binding get() = _binding
+    private val chats: MutableList<Chat> = mutableListOf()
     private lateinit var viewModel: SelectContactViewModel
+
     private val Contact_Permission = 1//הרשאה
     private val Contact_Pick = 2
 
+
     @RequiresApi(Build.VERSION_CODES.N)
-    override fun onCreate(savedInstanceState: Bundle?) {//From here click to select a contact
+    override fun onCreate(savedInstanceState: Bundle?
+    ) {//From here click to select a contact
         super.onCreate(savedInstanceState)
-        binding = ActivitySelectContactBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        _binding = FragmentChatListBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
         viewModel = ViewModelProvider(this).get(SelectContactViewModel::class.java)
-        viewModel.checktest()
+
+
+        initBindings()
+        initAdapter()
+        initListenChat()
+    }
+
+    fun initBindings(){
         //Checks if the button was pressed
-        binding.addCon.setOnClickListener {
-            if (check()) {
-                //allow
+        binding.addContactButton.setOnClickListener {
+            if (hasContactPermissions()) {
                 pickContact()
             } else {
-                //not
-                requestContact()
+                requestContactPermissions()
             }
 
         }
     }
+
+    fun initAdapter() {
+        binding.ChatList.adapter = ChatListAdapter(chats, applicationContext)
+        binding.ChatList.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun err(s: String?) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
+    }
+
+
+    //to load the list
+    private fun initListenChat() {
+        RepositoryFactory.getChatRepository().listenOnChats(AuthService.getCurrentFirebaseUser()?.uid!!, object : IGetChangedModels<Chat> {
+            override fun onSuccess(d: List<ModeledDocumentChange<Chat>>, raw: QuerySnapshot?) {
+
+                d.forEach { chat ->
+                    when (chat.changeType) {//like swish
+                        DocumentChange.Type.ADDED -> {
+                            chat.obj.cid?.let {
+                                chats.add(chat.obj)
+                            }
+                        }
+                        DocumentChange.Type.REMOVED -> {
+                            chat.obj.cid?.let {
+                               chats.remove(chat.obj)
+                            }
+                        }
+                    }
+                }
+                _binding.ChatList.adapter?.notifyDataSetChanged()
+            }
+
+            override fun onFailure(e: Exception) {//if failure error Toast
+                err(e.message)
+            }
+        })
+
+
+    }
+
     private fun pickContact() {//Selects a contact
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE
         startActivityForResult(intent, Contact_Pick)
     }
-    private fun requestContact() {//Requests permission to contact
+
+    private fun requestContactPermissions() {//Requests permission to contact
         val permission = arrayOf(android.Manifest.permission.READ_CONTACTS)
         ActivityCompat.requestPermissions(this, permission, Contact_Permission)
 
     }
-    private fun check(): Boolean {//Checking contact permission
+
+    private fun hasContactPermissions(): Boolean {//Checking contact permission
         return ContextCompat.checkSelfPermission(
             this,
             android.Manifest.permission.READ_CONTACTS
@@ -86,66 +149,18 @@ class SelectContact : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == Contact_Pick) {
-                binding.listContacts.text = ""
                 val cursor1: Cursor
-                val cursor2: Cursor?
                 val uri: Uri? = data?.data//Get data from intent
                 cursor1 = contentResolver.query(uri!!, null, null, null, null)!!
                 if (cursor1.moveToFirst()) {//מקבלים פרטים ליצירת איש קשר
-                    val contactId =
-                        cursor1.getString(cursor1.getColumnIndex(ContactsContract.Contacts._ID))
-                    val contactName =
-                        cursor1.getString(cursor1.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
                     val contactNumber =
                         cursor1.getString(cursor1.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
 
-                    val contactPhoto =
-                        cursor1.getString(cursor1.getColumnIndex(ContactsContract.Contacts.PHOTO_THUMBNAIL_URI))
-                    val idResult =
-                        cursor1.getString(cursor1.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))
-                    val idResultHold = idResult.toInt()
-
-
                     viewModel.ensureChat(contactNumber)
-
-                    //binding.listContacts.append("\nId:$contactId")
-                    //What is written in the text defines the details
-//                    binding.listContacts.append("\nName:$contactName")
-//                    binding.listContacts.append("\nPhone: $contactNumber")
-                    // binding.listContacts.append("\nImage:$contactPhoto")
-                    //מגדיר תמונה
-//                        if(contactPhoto!=null){
-//                            binding.photoo.setImageURI(Uri.parse(contactPhoto))      //If there is a picture define it
-//                        }
-//                        else{
-//                            binding.photoo.setImageResource(R.drawable.userpro)//If there is no image choose a dipulatory image
-//
-//                        }
-// // Check if the contact has a phone number
-//                        if(idResultHold==1){
-//                            cursor2=contentResolver.query(
-//                                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,
-//                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID+" "+contactId,null,
-//                                null)
-//                        //If the same contact has more than one number
-//                            while(cursor2!!.moveToNext()){
-//                                //get phone num
-//                                val contactNum=cursor2.getString(cursor2.getColumnIndex(
-//                                    ContactsContract.CommonDataKinds.Phone.NUMBER))
-//                                //SET THE NUM PHONE
-//                                binding.listContacts.append("\nPhone: $contactNum")
-//                            }
-//                            cursor2.close()
-//
-//                        }
-//                        cursor1.close()
-//                    }
-
                 }
             } else {
                 //Cancel contact selection
                 Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show()
-
             }
         }
     }

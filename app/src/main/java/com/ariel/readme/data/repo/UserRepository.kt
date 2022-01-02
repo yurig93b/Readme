@@ -43,9 +43,5 @@ class UserRepository : FirebaseRepository<User>(), IUserRepository {
     override fun registerUser(user:User): Task<Void> {//מקבל אופיקט של יוזר
         return collRef.document(user.uid!!).set(user)
     }
-    override fun getcontact(phone: String): Task<QuerySnapshot> {
-        return collRef.whereEqualTo(User::phone.name, phone).get()
-    }
-
 }
 

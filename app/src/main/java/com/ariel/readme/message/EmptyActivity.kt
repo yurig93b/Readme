@@ -10,6 +10,9 @@ import com.ariel.readme.R
 import com.ariel.readme.voice.VoiceRecorderFragment
 
 class EmptyActivity : AppCompatActivity() {
+    companion object {
+        val ARG_CHAT_ID = "chatId"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_empty)
@@ -17,7 +20,8 @@ class EmptyActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             val bund = Bundle()
-            bund.putString(MessageListFragment.ARG_BUNDLE_CHAT_ID, "k8KMmQLiGtlJiUSDDAjl")
+            bund.putString(MessageListFragment.ARG_BUNDLE_CHAT_ID, savedInstanceState?.getString(
+                MessageListFragment.ARG_BUNDLE_CHAT_ID)!!)
             bund.putString("userId", "NbwGIdmjRLaAaM6NUAnoTbzxngT2")
 
             add<MessageListFragment>(R.id.fragmentContainerView2, null ,bund)
