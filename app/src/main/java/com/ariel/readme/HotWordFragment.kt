@@ -34,14 +34,14 @@ class HotWordFragment : Fragment() {
         updateView()
     }
 
-    fun updateView(){
+    private fun updateView(){
         viewModel.hotWords.observe(viewLifecycleOwner, Observer { item ->
             binding.wordList.adapter = HotWordsRecyclerAdapter(item!!)
             binding.wordList.layoutManager = LinearLayoutManager(this.context)
         })
     }
 
-    fun loading(){
+    private fun loading(){
         viewModel.loading.observe(viewLifecycleOwner, { isLoading ->
             if (isLoading) {
                 binding.wordList.isEnabled = false
