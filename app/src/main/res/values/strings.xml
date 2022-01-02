@@ -21,4 +21,6 @@
     <string name="failure_add_man">error! failed to add manager</string>
     <string name="refresh">Refresh</string>
     <string name="failure_load_graph">error! failed to load graph</string>
+    <string name="edit_profile">edit profile</string>
+    <string name="hot_words">hot words</string>
 </resources>
