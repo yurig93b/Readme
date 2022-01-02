@@ -15,7 +15,6 @@ class SettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //setContentView(R.layout.activity_settings)
 
         setSupportActionBar(findViewById(R.id.toolbar_setting))
         //supportActionBar?.setDisplayHomeAsUpEnabled(true)       //TODO when main page is implemented

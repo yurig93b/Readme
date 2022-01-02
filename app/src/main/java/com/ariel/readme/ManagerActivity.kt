@@ -176,10 +176,9 @@ class ManagerActivity : AppCompatActivity() {
         val start = " 00:00:00"
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date()) + start
-        //val simpleDateFormat = SimpleDateFormat("yyyy:MM:dd HH:mm:ss", Locale.getDefault())
         val time = SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(currentDate)
         //val time = SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("30-12-2021 00:00:00")
-        _vm!!.setGraph(Timestamp(time)).addOnCompleteListener {
+        _vm!!.setGraph(Timestamp(time)).addOnSuccessListener {
             val array = _vm!!.dataPoints.value!!
             val dp: Array<DataPoint> = arrayOf(DataPoint(array[0][0],array[0][1]),
                 DataPoint(array[1][0],array[1][1]),DataPoint(array[2][0],array[2][1]),DataPoint(array[3][0],array[3][1]),
@@ -192,7 +191,10 @@ class ManagerActivity : AppCompatActivity() {
                 DataPoint(array[22][0],array[22][1]),DataPoint(array[23][0],array[23][1]))
             val series = LineGraphSeries(dp)
             initGraph(series)
-        }
+        }.addOnFailureListener{ Toast.makeText(
+            applicationContext,
+            getString(R.string.failure_load_graph),
+            Toast.LENGTH_SHORT).show() }
     }
 
     private fun initGraph(series: LineGraphSeries<DataPoint>){

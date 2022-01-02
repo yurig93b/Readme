@@ -45,7 +45,7 @@ class ManagerViewModel : ViewModel(){
 
     private fun checkText(text : String): Boolean {    //check for bad input
         if(text == _user.value!!.phone){ return false}
-        if(text.length <= 24 && text != "") {
+        if(text.length <= 12 && text != "") {
             val badChars: List<Char> = mutableListOf(
                 ' ', ';', '$', '|', '&',
                 '(', ')', '[', ']', '{',
@@ -113,6 +113,7 @@ class ManagerViewModel : ViewModel(){
 
     fun setGraph(time: com.google.firebase.Timestamp): Task<ModeledChangedDocuments<Message>> {
         return MessageRepository().getChatMessagesByTime(time).addOnSuccessListener { doc ->
+            _loading.value = true
             _dataPoints.value!!.forEach {
                 point -> point[1] = 0.0
             }
@@ -124,6 +125,6 @@ class ManagerViewModel : ViewModel(){
                     }
                 }
             }
-        }
+        }.addOnCompleteListener { _loading.value = false }
     }
 }
