@@ -11,9 +11,12 @@ import com.ariel.readme.data.repo.ChatRepository
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 
 
-class Adapter( private val ListChats:  List<Chat>) :
+class Adapter(private val ListChats:  List<Chat>,
+              private val values: List<LiveData<Chat>>,
+) :
     RecyclerView.Adapter<Adapter.ChatHolder>() {
     //This function prepares all things and gives them to ChatHolder
 
@@ -37,23 +40,22 @@ class Adapter( private val ListChats:  List<Chat>) :
 
     inner class ChatHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {//for card view
 
-        val TheUserName: TextView
+        val theUserName: TextView
         val profileImage: ImageView
         val ButDeleteChat: ImageView
          var chat1:Chat?=null
 
         fun onDataBind(chat:Chat) {
             chat1=chat
-            TheUserName.text=chat.cid
+            theUserName.text=chat.cid
             }
 
         init {
-            TheUserName = itemView.findViewById(R.id.UserName2)
+            theUserName = itemView.findViewById(R.id.UserName2)
             profileImage = itemView.findViewById(R.id.UserProfile)
             ButDeleteChat = itemView.findViewById(R.id.delete)
             ButDeleteChat.setOnClickListener {
                 val builder=AlertDialog.Builder(itemView.context)
-                val position: Int = adapterPosition
                 //if the user click in the garb ask them if he is sure
                 builder.setTitle("Are you sure!")
                 builder.setMessage("are you sure you want to remove the chat?")
