@@ -16,6 +16,8 @@ class EmptyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_empty)
+        var bundle :Bundle ?=intent.extras
+        var themessage = bundle!!.getString("ChatId")
 
         supportFragmentManager.commit {
             setReorderingAllowed(true)

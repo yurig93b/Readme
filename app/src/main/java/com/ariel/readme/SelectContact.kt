@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.ViewModelProvider
 import com.ariel.readme.data.model.Chat
@@ -22,6 +23,7 @@ import com.ariel.readme.data.repo.interfaces.IGetChangedModels
 import com.ariel.readme.data.viewmodel.SelectContactViewModel
 import com.ariel.readme.databinding.FragmentChatListBinding
 import com.ariel.readme.factories.RepositoryFactory
+import com.ariel.readme.message.EmptyActivity
 import com.ariel.readme.services.AuthService
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.QuerySnapshot
@@ -35,7 +37,9 @@ class SelectContact : AppCompatActivity() {
     private val Contact_Permission = 1//הרשאה
     private val Contact_Pick = 2
 
-
+    companion object {
+        val ARG_BUNDLE_CHAT_ID = "chatId"
+    }
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?
     ) {//From here click to select a contact
@@ -50,7 +54,21 @@ class SelectContact : AppCompatActivity() {
         initBindings()
         initAdapter()
         initListenChat()
+        val intent = Intent(this, EmptyActivity::class.java)
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            val bund = Bundle()
+            bund.putString(ARG_BUNDLE_CHAT_ID,savedInstanceState?.getString(ARG_BUNDLE_CHAT_ID))
+            bund.putString("ChatId","B2TWMD88E0Xx2ETUSyIXH8Uznuz2,NbwGIdmjRLaAaM6NUAnoTbzxngT2")
+            intent.putExtras(bund)
+        }
+            startActivity(intent)
+
+      // viewModel.ensureChat(binding.ChatList.)
+
+
     }
+
 
     fun initBindings(){
         //Checks if the button was pressed
@@ -103,6 +121,8 @@ class SelectContact : AppCompatActivity() {
 
 
     }
+
+
 
     private fun pickContact() {//Selects a contact
         val intent = Intent(Intent.ACTION_PICK)
