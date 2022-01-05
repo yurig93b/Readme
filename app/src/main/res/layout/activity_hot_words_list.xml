@@ -10,7 +10,7 @@
         android:id="@+id/toolbar_hotWordsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="#CE6C3975"
         android:minHeight="?attr/actionBarSize"
         android:textAlignment="textStart"
         android:theme="?attr/actionBarTheme"
