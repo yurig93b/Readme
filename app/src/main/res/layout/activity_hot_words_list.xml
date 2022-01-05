@@ -10,7 +10,7 @@
         android:id="@+id/toolbar_hotWordsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#CE0858A8"
+        android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:textAlignment="textStart"
         android:theme="?attr/actionBarTheme"
@@ -18,36 +18,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/actionModeCloseDrawable"
-        app:title="Hot Words view"
+        app:title="@string/title_hot_words"
         app:titleMargin="4dp"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <ImageView
-        android:id="@+id/image_add"
-        android:layout_width="39dp"
-        android:layout_height="43dp"
-        android:clickable="true"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar_hotWordsList"
-        app:layout_constraintEnd_toEndOf="@id/toolbar_hotWordsList"
-        app:layout_constraintTop_toTopOf="@id/toolbar_hotWordsList"
-        app:srcCompat="@drawable/addhot" />
-
-    <ImageView
-        android:id="@+id/image_delete"
-        android:layout_width="33dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="4dp"
-        android:clickable="true"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar_hotWordsList"
-        app:layout_constraintEnd_toStartOf="@id/image_add"
-        app:layout_constraintTop_toTopOf="@id/toolbar_hotWordsList"
-        app:srcCompat="@drawable/baseline_delete_24" />
-
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/hot_words_fragment"
         android:name="com.ariel.readme.HotWordFragment"
         android:layout_width="match_parent"

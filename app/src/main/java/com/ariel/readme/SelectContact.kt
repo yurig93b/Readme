@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.ViewModelProvider
 import com.ariel.readme.data.model.Chat
@@ -23,7 +22,6 @@ import com.ariel.readme.data.repo.interfaces.IGetChangedModels
 import com.ariel.readme.data.viewmodel.SelectContactViewModel
 import com.ariel.readme.databinding.FragmentChatListBinding
 import com.ariel.readme.factories.RepositoryFactory
-import com.ariel.readme.message.EmptyActivity
 import com.ariel.readme.services.AuthService
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.QuerySnapshot
@@ -49,23 +47,24 @@ class SelectContact : AppCompatActivity() {
         setContentView(view)
 
         viewModel = ViewModelProvider(this).get(SelectContactViewModel::class.java)
+        requestContactPermissions()
 
-
-        initBindings()
-        initAdapter()
-        initListenChat()
     }
 
+    private fun ensurePermissionsAndInits(){
+        if(hasContactPermissions()){
+            initBindings()
+            initAdapter()
+            initListenChat()
+        } else {
+            requestContactPermissions()
+        }
+    }
 
     fun initBindings(){
         //Checks if the button was pressed
         binding.addContactButton.setOnClickListener {
-            if (hasContactPermissions()) {
-                pickContact()
-            } else {
-                requestContactPermissions()
-            }
-
+            pickContact()
         }
     }
 
@@ -81,9 +80,8 @@ class SelectContact : AppCompatActivity() {
 
     //to load the list
     private fun initListenChat() {
-        RepositoryFactory.getChatRepository().listenOnChats(AuthService.getCurrentFirebaseUser()?.uid!!, object : IGetChangedModels<Chat> {
+        RepositoryFactory.getChatRepository().listenOnChats(AuthService.getCurrentFirebaseUser()!!.uid, object : IGetChangedModels<Chat> {
             override fun onSuccess(d: List<ModeledDocumentChange<Chat>>, raw: QuerySnapshot?) {
-
                 d.forEach { chat ->
                     when (chat.changeType) {//like swish
                         DocumentChange.Type.ADDED -> {
@@ -137,7 +135,7 @@ class SelectContact : AppCompatActivity() {
 
         if (requestCode == Contact_Permission) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                pickContact()
+                ensurePermissionsAndInits()
             } else {
                 Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT)
                     .show()//אם הלקוח לא אשר

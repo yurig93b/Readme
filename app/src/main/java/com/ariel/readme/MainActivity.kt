@@ -1,41 +1,107 @@
 package com.ariel.readme
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.ariel.readme.data.repo.StatisticsRepository
 import com.ariel.readme.data.model.User
-import com.ariel.readme.data.repo.ChatRepository
-import com.ariel.readme.data.repo.UserRepository
+import com.ariel.readme.factories.RepositoryFactory
+import com.ariel.readme.message.ChatActivity
 import com.ariel.readme.profile.UserProfileActivity
 import com.ariel.readme.services.AuthService
 import com.ariel.readme.services.MessageHandlingService
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.jjoe64.graphview.series.DataPoint
+import java.text.SimpleDateFormat
+import java.time.Duration
+import java.time.Instant
+import java.util.*
+import java.util.stream.Collectors
+import android.app.AlarmManager
+
+import android.app.PendingIntent
+import android.content.Context
+
 
 class MainActivity : AppCompatActivity() {
-
-    private fun goToExampleActivity(){
-        AuthService.getCurrentFirebaseUser()?.let {
-            UserRepository().registerUser(
-                User(uid=it.uid, it.phoneNumber, firstName = "rawan",
-                lastName = "shareef" )
-            ).addOnSuccessListener{
-                MessageHandlingService().ensureUserTokenIsSet()
-            }
-        }
-
-       // MessageHandlingService().ensureUserTokenIsSet(
-        val intent = Intent(this, UserProfileActivity::class.java)
-        startActivity(intent)
+    companion object {
+        val CHANNEL_ID_HOT_WORDS = "hotwords"
     }
 
+
+    private fun initNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create the NotificationChannel
+            val name = "Hot words alerts"
+            val descriptionText = "Channel for alerting on hot word messages."
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val mChannel = NotificationChannel(CHANNEL_ID_HOT_WORDS, name, importance)
+            mChannel.description = descriptionText
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
+        }
+    }
+
+    private fun goToExampleActivity() {
+        initNotificationChannels()
+        val userFb = AuthService.getCurrentFirebaseUser()
+
+        RepositoryFactory.getUserRepository().getUserById(userFb!!.uid)
+            .addOnSuccessListener { userObj ->
+                if (userObj.obj === null) {
+                    val myNewUser = User(userFb.uid, userFb.phoneNumber, "", "", false)
+                    RepositoryFactory.getUserRepository().registerUser(myNewUser)
+                        .addOnSuccessListener {
+                            Toast.makeText(
+                                getApplicationContext(),
+                                "User registered!",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                            val intent = Intent(this, UserProfileActivity::class.java)
+                            startActivity(intent)
+                        }.addOnFailureListener { e ->
+                            Toast.makeText(
+                                getApplicationContext(),
+                                "Something went wrong with user registration.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                } else {
+                    if(userObj.obj.banned){
+                        Toast.makeText(
+                            getApplicationContext(),
+                            "You are banned from the system.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        FirebaseAuth.getInstance().signOut()
+                        this.finish();
+                    }
+
+                    MessageHandlingService().ensureUserTokenIsSet()
+                    val intent = Intent(this, HotWordsListActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val user = FirebaseAuth.getInstance().currentUser//אופיקט מפיירביס שיש  בתוכו UID ומספר טלפון
+        val user = FirebaseAuth.getInstance().currentUser
 
         if (user == null) {
             val signInIntent = AuthUI.getInstance()
@@ -49,21 +115,9 @@ class MainActivity : AppCompatActivity() {
                 goToExampleActivity()
             }
             signInLauncher.launch(signInIntent)
-        }
-
-        else{
+        } else {
             goToExampleActivity()
         }
-        val chat_repo= ChatRepository()
-        val user_repo= UserRepository()
-
-        //איך שולפים מידע מפיירביס
-
-        // chat_repo.getChatsByUser(user_repo.getCurrentUser(user!!))
-//        val newChat:Chat=Chat("hjfudf")
-//        chat_repo.createChat(newChat).addOnCanceledListener {
-//
-//        }
 // ...
     }
 }

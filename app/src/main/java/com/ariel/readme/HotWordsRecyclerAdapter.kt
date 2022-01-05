@@ -43,7 +43,6 @@ class HotWordsRecyclerAdapter(private val list : List<String>) : RecyclerView.Ad
                 clearAlert.setCancelable(false)
                 clearAlert.setPositiveButton("Yes") { dialogInterface: DialogInterface, i: Int ->
                     HotWordRepository().removeHotWord(text, AuthService.getCurrentFirebaseUser()!!.uid)
-                    //HotWordRepository().removeHotWord(text,"1234")
                 }
                 clearAlert.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
                 clearAlert.show()

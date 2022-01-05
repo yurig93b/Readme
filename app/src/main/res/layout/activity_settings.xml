@@ -10,45 +10,51 @@
         android:id="@+id/toolbar_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#CE0858A8"
+        android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/actionModeCloseDrawable"
-        app:title="Settings"
-        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"/>
+        app:title="@string/title_settings"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <Button
         android:id="@+id/hot_words_button"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="hot words"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/hot_words"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_setting"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <ImageView
-        android:id="@+id/bell_icon_setting"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:importantForAccessibility="no"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hot_words_button"
-        app:srcCompat="@drawable/ic_baseline_notifications" />
+        app:layout_constraintTop_toBottomOf="@id/profile_button" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/notification_switch"
-        android:layout_width="0dp"
+    <Button
+        android:id="@+id/profile_button"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:checked="true"
-        android:text="notifications"
+        android:layout_marginTop="10dp"
+        android:text="@string/edit_profile"
+        android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/bell_icon_setting"
-        app:layout_constraintTop_toBottomOf="@+id/hot_words_button"
-        app:switchTextAppearance="@style/TextAppearance.AppCompat.Large" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_setting" />
+
+    <Button
+        android:id="@+id/manager_button"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/manger_page"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hot_words_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

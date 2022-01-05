@@ -17,7 +17,7 @@ import com.ariel.readme.databinding.ChatCardViewFragmentBinding
 import com.ariel.readme.factories.RepositoryFactory
 import com.ariel.readme.factories.StorageFactory
 import com.ariel.readme.factories.StoragePathFactory
-import com.ariel.readme.message.EmptyActivity
+import com.ariel.readme.message.ChatActivity
 import com.ariel.readme.services.AuthService
 import com.squareup.picasso.Picasso
 
@@ -98,10 +98,10 @@ class ChatListAdapter(
             }
             _binding.UserName2.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
-                    val intent = Intent(_context, EmptyActivity::class.java)
+                    val intent = Intent(_context, ChatActivity::class.java)
                     val bund = Bundle()
                     bund.putString(
-                        EmptyActivity.ARG_CHAT_ID, currentChat!!.cid
+                        ChatActivity.ARG_CHAT_ID, currentChat!!.cid
                     )
                    intent.putExtras(bund)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

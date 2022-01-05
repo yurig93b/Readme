@@ -39,12 +39,12 @@ class ChatRepository : FirebaseRepository<Chat>(), IChatRepository {
 //        return collRef.whereArrayContains(Chat::participants.name, user.uid!!).addSnapshotListener(listener)
 //    }
     override fun listenOnChats(uid: String, listener: IGetChangedModels<Chat>): ListenerRegistration {
-        return HookListenQuery(collRef.whereArrayContains(Chat::participants.name, uid!!),listener)
+        return HookListenQuery(collRef.whereArrayContains(Chat::participants.name, uid),listener)
     }
 
     fun removeChat( cid: String): Task<Void> {
         return collRef.document(cid).delete()
     }
-            }
+}
 
 

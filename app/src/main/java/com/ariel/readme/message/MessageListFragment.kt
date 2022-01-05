@@ -15,6 +15,7 @@ import com.ariel.readme.data.model.Message
 import com.ariel.readme.data.repo.ModeledDocumentChange
 import com.ariel.readme.data.repo.interfaces.IGetChangedModels
 import com.ariel.readme.databinding.FragmentMessageListBinding
+import com.ariel.readme.services.AuthService
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.QuerySnapshot
 
@@ -32,15 +33,12 @@ class MessageListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMessageListBinding.inflate(inflater, container, false)
+
         return _binding.root
     }
 
     private fun err(s: String?){
-        Toast.makeText(
-            context,
-            s,
-            Toast.LENGTH_SHORT
-        ).show()
+        Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
     }
     private fun observeErrors() {
         viewModel.error.observe(viewLifecycleOwner, { e ->
@@ -49,9 +47,9 @@ class MessageListFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        with(_binding.root) {
+        with(_binding.list) {
             layoutManager = LinearLayoutManager(context)
-            adapter = MessagesViewAdapter(viewLifecycleOwner, msgs, viewModel.userInfo.value!!)
+            adapter = MessagesViewAdapter(viewLifecycleOwner, msgs, viewModel.userInfo.value!!, AuthService.getCurrentFirebaseUser()!!.uid)
         }
     }
 
@@ -80,9 +78,12 @@ class MessageListFragment : Fragment() {
                         }
                     }
                 }
-                _binding.root.apply {
-                    adapter?.notifyItemRangeInserted(prevSize, msgs.size - prevSize)
-                    scrollToPosition(msgs.size - 1)
+                _binding.list.apply {
+                    if(msgs.size - prevSize >0){
+                        adapter?.notifyItemRangeInserted(prevSize, msgs.size - prevSize)
+                    }
+
+                    scrollToPosition(msgs.size -1)
                 }
             }
             override fun onFailure(e: Exception) {
@@ -111,8 +112,12 @@ class MessageListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(MessageListViewModel::class.java)
-        registerListeners()
-        viewModel.loadChatInfo(requireArguments().getString(ARG_BUNDLE_CHAT_ID)!!)
+        val chatId = arguments?.getString(ARG_BUNDLE_CHAT_ID)
+
+        chatId?.apply {
+            registerListeners()
+            viewModel.loadChatInfo(this)
+        }
     }
 
     companion object {

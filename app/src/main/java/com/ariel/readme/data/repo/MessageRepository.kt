@@ -2,14 +2,14 @@ package com.ariel.readme.data.repo
 
 import com.ariel.readme.data.model.Chat
 import com.ariel.readme.data.model.Message
-import com.ariel.readme.data.model.User
 import com.ariel.readme.data.repo.interfaces.IGetChangedModels
 import com.ariel.readme.data.repo.interfaces.IMessageRepository
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
+
 
 class MessageRepository : FirebaseRepository<Chat>(), IMessageRepository {
     override val rootNode: String
@@ -29,6 +29,10 @@ class MessageRepository : FirebaseRepository<Chat>(), IMessageRepository {
 
     override fun getChatMessages(chat: Chat): Task<ModeledChangedDocuments<Message>> {
         return getChatMessages(chat.cid!!)
+    }
+
+    fun getChatMessagesByTime(time: Timestamp): Task<ModeledChangedDocuments<Message>>{
+        return HookQuery(collRef.whereGreaterThan(Message::ts.name, time).get())
     }
 
 }

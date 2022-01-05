@@ -29,7 +29,6 @@ class MessageHandlingService : FirebaseMessagingService() {
         super.onNewToken(token)
 
         Log.d(TAG, "Refreshed token: $token")
-
         val user = AuthService.getCurrentFirebaseUser()
         val userRepo = UserRepository()
 
