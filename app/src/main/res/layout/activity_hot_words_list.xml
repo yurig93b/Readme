@@ -10,7 +10,7 @@
         android:id="@+id/toolbar_hotWordsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#CE6C3975"
+        android:background="#CE0858A8"
         android:minHeight="?attr/actionBarSize"
         android:textAlignment="textStart"
         android:theme="?attr/actionBarTheme"
@@ -24,27 +24,28 @@
 
     <ImageView
         android:id="@+id/image_add"
-        android:layout_width="48dp"
-        android:layout_height="44dp"
+        android:layout_width="39dp"
+        android:layout_height="43dp"
         android:clickable="true"
         android:minWidth="48dp"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="@id/toolbar_hotWordsList"
         app:layout_constraintEnd_toEndOf="@id/toolbar_hotWordsList"
         app:layout_constraintTop_toTopOf="@id/toolbar_hotWordsList"
-        app:srcCompat="@drawable/addword" />
+        app:srcCompat="@drawable/addhot" />
 
     <ImageView
         android:id="@+id/image_delete"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
+        android:layout_width="33dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="4dp"
         android:clickable="true"
         android:minWidth="48dp"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="@id/toolbar_hotWordsList"
         app:layout_constraintEnd_toStartOf="@id/image_add"
         app:layout_constraintTop_toTopOf="@id/toolbar_hotWordsList"
-        app:srcCompat="@drawable/delete" />
+        app:srcCompat="@drawable/baseline_delete_24" />
 
     <fragment
         android:id="@+id/hot_words_fragment"

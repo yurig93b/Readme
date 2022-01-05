@@ -7,15 +7,16 @@
     tools:context=".profile.UserProfileActivity">
 
     <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="413dp"
-        android:layout_height="301dp"
+        android:id="@+id/imageView3"
+        android:layout_width="401dp"
+        android:layout_height="222dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/capture" />
+        app:srcCompat="@drawable/logo" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -34,10 +35,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
+        android:background="#2196F3"
         android:enabled="false"
-        android:shadowColor="@color/purple_200"
-        android:textColorHighlight="@color/purple_200"
         android:text="Save"
+        app:iconTint="@color/black"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,44 +52,51 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:backgroundTint="#9C27B0"
+        android:backgroundTint="#153083"
         android:visibility="visible"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/save" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/firstName"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="348dp"
-        android:enabled="false"
-        android:hint="First Name:"
-        android:minHeight="48dp"
-        android:singleLine="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        android:shadowColor="@color/purple_200"
-        android:textColorHint="@color/purple_500"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/lastName"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:background="@color/purple_200"
+        android:backgroundTint="#FEFFFF"
         android:enabled="false"
         android:hint="Last Name:"
         android:minHeight="48dp"
+        android:shadowColor="#124CC1"
         android:singleLine="true"
-        android:textColorHint="@color/purple_500"
-
+        android:textColor="@color/black"
+        android:textColorHint="#0E1DA3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/firstName" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/firstName"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="348dp"
+        android:background="@color/purple_200"
+        android:backgroundTint="@color/white"
+        android:enabled="false"
+        android:hint="First Name:"
+        android:minHeight="48dp"
+        android:textColorHint="#0E1DA3"
+        android:shadowColor="#124CC1"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -96,13 +106,13 @@
         android:fitsSystemWindows="false"
         android:focusable="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/profile"
+        android:src="@drawable/user"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.452"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.358"
+        app:layout_constraintVertical_bias="0.27"
         tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

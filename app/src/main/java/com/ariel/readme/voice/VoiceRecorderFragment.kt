@@ -60,12 +60,12 @@ class VoiceRecorderFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun handleButtonDown(){
-        binding.recordButton.text = getString(R.string.button_recording)
+        //binding.recordButton.text = getString(R.string.button_recording)
         viewModel.record(activity?.applicationContext!!)
     }
 
     private fun handleButtonUp(){
-        binding.recordButton.text = getString(R.string.button_record)
+       // binding.recordButton.text = getString(R.string.button_record)
         try {
             viewModel.stopRecording()
             viewModel.upload(_chat, _from)
@@ -77,10 +77,10 @@ class VoiceRecorderFragment : Fragment() {
         viewModel.loading.observe(viewLifecycleOwner, { isLoading ->
             if(isLoading == true){
                 binding.recordButton.isEnabled = false
-                binding.recordButton.text = getString(R.string.button_uploading)
+               // binding.recordButton.text = getString(R.string.button_uploading)
             } else{
                 binding.recordButton.isEnabled = true
-                binding.recordButton.text = getString(R.string.button_record)
+               // binding.recordButton.text = getString(R.string.button_record)
 
             }
         })
