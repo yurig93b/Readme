@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.ariel.readme.data.model.User
 import com.ariel.readme.data.repo.ChatRepository
 import com.ariel.readme.data.repo.UserRepository
+import com.ariel.readme.profile.UserProfileActivity
 import com.ariel.readme.services.AuthService
 import com.ariel.readme.services.MessageHandlingService
 import com.firebase.ui.auth.AuthUI
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         }
 
        // MessageHandlingService().ensureUserTokenIsSet(
-        val intent = Intent(this, SelectContact::class.java)
+        val intent = Intent(this, UserProfileActivity::class.java)
         startActivity(intent)
     }
 
