@@ -40,4 +40,6 @@
     <string name="invalid_word">Invalid_word</string>
     <string name="manger_page">Manger page</string>
     <string name="word_was_added">" was added"</string>
+    <string name="active_users">AU</string>
+    <string name="messages_per_round">MPR</string>
 </resources>

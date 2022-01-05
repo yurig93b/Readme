@@ -29,23 +29,31 @@ class ManagerViewModel : ViewModel(){
     private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
-    private val _loadedDataPoints: MutableLiveData<Array<DataPoint>> = MutableLiveData()
-    val loadedDataPoint: LiveData<Array<DataPoint>> = _loadedDataPoints
+    private val _loadedDataPointsAU: MutableLiveData<Array<DataPoint>> = MutableLiveData()
+    val loadedDataPointAU: LiveData<Array<DataPoint>> = _loadedDataPointsAU
+
+    private val _loadedDataPointsMPR: MutableLiveData<Array<DataPoint>> = MutableLiveData()
+    val loadedDataPointMPR: LiveData<Array<DataPoint>> = _loadedDataPointsMPR
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun loadStatistics(){
-        val to2 = Instant.now()
-        val from2 = to2.minus(Duration.ofDays(1))
+        val to = Instant.now()
+        val from = to.minus(Duration.ofDays(1))
 
         StatisticsRepository().getStatisticsBetweenTimestamp(
-            Timestamp(Date.from(from2)), Timestamp(
-                Date.from(to2))
+            Timestamp(Date.from(from)), Timestamp(
+                Date.from(to))
         ).addOnSuccessListener { data ->
 
             val mapped = data.changes.stream().map{s -> DataPoint(s.obj.ts?.toDate(), s.obj.active_users.toDouble()) }.toList()
-            _loadedDataPoints.value = mapped.toTypedArray()
-        }.addOnFailureListener { _loadedDataPoints.value = arrayOf(DataPoint(0.0,0.0)) }
+            _loadedDataPointsAU.value = mapped.toTypedArray()
+            val mappedMPR = data.changes.stream().map{s -> DataPoint(s.obj.ts?.toDate(), s.obj.mpr.toDouble()) }.toList()
+            _loadedDataPointsMPR.value = mappedMPR.toTypedArray()
+        }.addOnFailureListener {
+            _loadedDataPointsAU.value = arrayOf(DataPoint(0.0,0.0))
+            _loadedDataPointsMPR.value = arrayOf(DataPoint(0.0,0.0))
+        }
     }
 
     fun checkUser(): Task<ModeledDocument<User>> {
@@ -80,7 +88,7 @@ class ManagerViewModel : ViewModel(){
         val number : String = if(checkText(phone)){
             phone
         } else{
-            "-1"
+            "failed"
         }
         val task = UserRepository().getUserByPhone(number)
         task.addOnSuccessListener { doc ->

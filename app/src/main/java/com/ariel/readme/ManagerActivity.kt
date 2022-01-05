@@ -1,6 +1,7 @@
 package com.ariel.readme
 
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -25,6 +26,7 @@ class ManagerActivity : AppCompatActivity() {
     private val binding get() = _binding!!
 
     private var _vm: ManagerViewModel? = null
+    private var type: Boolean = true
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +48,16 @@ class ManagerActivity : AppCompatActivity() {
         _binding!!.unbanButton.setOnClickListener { unbanUser() }
         _binding!!.addManButton.setOnClickListener { addManager() }
         _binding!!.refreshButton.setOnClickListener { refresh() }
+        _binding!!.switchButton.setOnClickListener {
+            if(type){
+                _binding!!.switchButton.text = getString(R.string.messages_per_round)
+            }
+            else{
+                _binding!!.switchButton.text = getString(R.string.active_users)
+            }
+            type = !type
+            refresh()
+        }
     }
 
     private fun observeLoading() {
@@ -56,6 +68,7 @@ class ManagerActivity : AppCompatActivity() {
                 binding.addManButton.isEnabled = false
                 binding.refreshButton.isEnabled = false
                 binding.graph.isEnabled = false
+                binding.switchButton.isEnabled = false
                 binding.progressBar.visibility = View.VISIBLE
             } else {
                 binding.banButton.isEnabled = true
@@ -63,6 +76,7 @@ class ManagerActivity : AppCompatActivity() {
                 binding.addManButton.isEnabled = true
                 binding.refreshButton.isEnabled = true
                 binding.graph.isEnabled = true
+                binding.switchButton.isEnabled = true
                 binding.progressBar.visibility = View.INVISIBLE
             }
         })
@@ -178,9 +192,17 @@ class ManagerActivity : AppCompatActivity() {
 
     // listen for graph changes
     private fun initListeners(){
-        _vm!!.loadedDataPoint!!.observe(this, { data ->
+        _vm!!.loadedDataPointAU!!.observe(this, { data ->
             val series = LineGraphSeries(data)
-            initGraph(series)
+            if(type){
+                initGraph(series)
+            }
+        })
+        _vm!!.loadedDataPointMPR!!.observe(this, { data ->
+            val series = LineGraphSeries(data)
+            if(!type){
+                initGraph(series)
+            }
         })
     }
 
@@ -193,10 +215,11 @@ class ManagerActivity : AppCompatActivity() {
     private fun initGraph(series: LineGraphSeries<DataPoint>){
         binding.graph.removeAllSeries()
         series.setAnimated(true)
+        if(!type){ series.setColor(Color.argb(255, 255, 60, 60))}
         binding.graph.addSeries(series)
         binding.graph.viewport.isXAxisBoundsManual = true
         binding.graph.viewport.isScalable = true
-        if(_vm!!.loadedDataPoint.value!!.size == 1 && _vm!!.loadedDataPoint.value!![0].x == 0.0 && _vm!!.loadedDataPoint.value!![0].y == 0.0){
+        if(_vm!!.loadedDataPointAU.value!!.size == 1 && _vm!!.loadedDataPointAU.value!![0].x == 0.0 && _vm!!.loadedDataPointAU.value!![0].y == 0.0){
             Toast.makeText(applicationContext,
                 getString(R.string.failure_load_graph),
                 Toast.LENGTH_SHORT).show()
