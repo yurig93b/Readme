@@ -3,17 +3,17 @@ package com.ariel.readme
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.ariel.readme.data.model.HotWord
 import com.ariel.readme.data.repo.HotWordRepository
-import com.ariel.readme.databinding.ActivityHotWordsListBinding
 import com.ariel.readme.services.AuthService
 
 class HotWordsListActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityHotWordsListBinding
 
     private fun removeAll(){
         val clearAlert = AlertDialog.Builder(this)
@@ -68,13 +68,24 @@ class HotWordsListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHotWordsListBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_hot_words_list)
 
         setSupportActionBar(findViewById(R.id.toolbar_hotWordsList))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.imageAdd.setOnClickListener{ addWord() }
-        binding.imageDelete.setOnClickListener{ removeAll() }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.hot_words_toolbar_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var itemView = item.itemId
+        when(itemView){
+            R.id.add_word -> addWord()
+            R.id.clear_list -> removeAll()
+        }
+        return false
     }
 }
