@@ -54,19 +54,6 @@ class SelectContact : AppCompatActivity() {
         initBindings()
         initAdapter()
         initListenChat()
-        val intent = Intent(this, EmptyActivity::class.java)
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            val bund = Bundle()
-            bund.putString(ARG_BUNDLE_CHAT_ID,savedInstanceState?.getString(ARG_BUNDLE_CHAT_ID))
-            bund.putString("ChatId","B2TWMD88E0Xx2ETUSyIXH8Uznuz2,NbwGIdmjRLaAaM6NUAnoTbzxngT2")
-            intent.putExtras(bund)
-        }
-            startActivity(intent)
-
-      // viewModel.ensureChat(binding.ChatList.)
-
-
     }
 
 
@@ -121,8 +108,6 @@ class SelectContact : AppCompatActivity() {
 
 
     }
-
-
 
     private fun pickContact() {//Selects a contact
         val intent = Intent(Intent.ACTION_PICK)
