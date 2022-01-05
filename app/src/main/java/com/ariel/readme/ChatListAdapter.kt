@@ -103,6 +103,9 @@ class ChatListAdapter(
                     bund.putString(
                         ChatActivity.ARG_CHAT_ID, currentChat!!.cid
                     )
+                    bund.putString(
+                        ChatActivity.ARG_DISPLAY_NAME, _binding.UserName2.text.toString()
+                    )
                    intent.putExtras(bund)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(_context, intent,bund )
