@@ -8,12 +8,14 @@ import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.ariel.readme.data.model.HotWord
+import androidx.lifecycle.ViewModelProvider
 import com.ariel.readme.data.repo.HotWordRepository
+import com.ariel.readme.data.viewmodel.HotWordViewModel
 import com.ariel.readme.services.AuthService
 
 class HotWordsListActivity : AppCompatActivity() {
 
+    private var _vm: HotWordViewModel? = null
 
     private fun removeAll(){
         val clearAlert = AlertDialog.Builder(this)
@@ -58,8 +60,7 @@ class HotWordsListActivity : AppCompatActivity() {
                 }
             }
             Toast.makeText(this,"$text"+getString(R.string.word_was_added), Toast.LENGTH_LONG).show()
-            val uid : String = AuthService.getCurrentFirebaseUser()!!.uid
-            HotWordRepository().addHotWord(HotWord(null, uid, text), uid)
+            _vm!!.addWord(text)
             return
         }
         Toast.makeText(this,getString(R.string.invalid_word), Toast.LENGTH_LONG).show()
@@ -67,6 +68,7 @@ class HotWordsListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        _vm = ViewModelProvider(this).get(HotWordViewModel::class.java)
         setContentView(R.layout.activity_hot_words_list)
 
         setSupportActionBar(findViewById(R.id.toolbar_hotWordsList))
