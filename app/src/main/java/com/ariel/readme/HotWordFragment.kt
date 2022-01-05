@@ -13,6 +13,7 @@ import com.ariel.readme.databinding.FragmentHotWordBinding
 import com.ariel.readme.services.AuthService
 
 class HotWordFragment : Fragment() {
+
     private var _binding: FragmentHotWordBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: HotWordViewModel

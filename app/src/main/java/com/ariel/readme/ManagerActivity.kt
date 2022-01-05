@@ -176,6 +176,7 @@ class ManagerActivity : AppCompatActivity() {
         }
     }
 
+    // listen for graph changes
     private fun initListeners(){
         _vm!!.loadedDataPoint!!.observe(this, { data ->
             val series = LineGraphSeries(data)
@@ -188,6 +189,7 @@ class ManagerActivity : AppCompatActivity() {
         _vm!!.loadStatistics()
     }
 
+    // set graph's options and check for failure
     private fun initGraph(series: LineGraphSeries<DataPoint>){
         binding.graph.removeAllSeries()
         series.setAnimated(true)

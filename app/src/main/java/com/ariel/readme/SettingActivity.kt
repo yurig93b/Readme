@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.ariel.readme.data.viewmodel.ManagerViewModel
 import com.ariel.readme.databinding.ActivitySettingsBinding
 import com.ariel.readme.profile.UserProfileActivity
-import com.jjoe64.graphview.series.LineGraphSeries
 
 class SettingActivity : AppCompatActivity() {
 
@@ -44,6 +43,7 @@ class SettingActivity : AppCompatActivity() {
         }
     }
 
+    //check if user is manager
     private fun listenToManager(){
         _vm!!.checkUser()
         _vm!!.user!!.observe(this, { user ->

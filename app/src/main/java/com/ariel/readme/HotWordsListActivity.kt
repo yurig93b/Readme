@@ -76,11 +76,13 @@ class HotWordsListActivity : AppCompatActivity() {
 
     }
 
+    // set custom toolbar
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.hot_words_toolbar_menu, menu)
         return true
     }
 
+    // set toolbar click listeners
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         var itemView = item.itemId
         when(itemView){
