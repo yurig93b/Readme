@@ -21,14 +21,25 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_width="132dp"
+        android:layout_height="136dp"
+        android:layout_marginTop="172dp"
         app:cardCornerRadius="100dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="133dp"
+            android:layout_height="135dp"
+            android:clickable="true"
+            android:fitsSystemWindows="false"
+            android:focusable="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/user"
+            tools:ignore="SpeakableTextPresentCheck" />
     </androidx.cardview.widget.CardView>
 
     <Button
@@ -84,7 +95,7 @@
         android:id="@+id/firstName"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="348dp"
+        android:layout_marginTop="44dp"
         android:background="@color/purple_200"
         android:backgroundTint="@color/white"
         android:enabled="false"
@@ -99,22 +110,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:clickable="true"
-        android:fitsSystemWindows="false"
-        android:focusable="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/user"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.452"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.27"
-        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
