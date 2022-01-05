@@ -35,14 +35,8 @@ class ManagerActivity : AppCompatActivity() {
         _vm = ViewModelProvider(this).get(ManagerViewModel::class.java)
         setContentView(binding.root)
 
-
         _binding!!.graph.gridLabelRenderer.gridStyle = GridLabelRenderer.GridStyle.HORIZONTAL
-        _binding!!.graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(_binding!!.graph.getContext())
-        //_binding!!.graph.viewport.setScalable(true)
-        //_binding!!.graph.viewport.setScrollable(true)
-        //_binding!!.graph.viewport.setScalableY(true)
-        //_binding!!.graph.viewport.setScrollableY(true)
-        //_binding!!.graph.gridLabelRenderer.numHorizontalLabels = 6
+        _binding!!.graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(this,SimpleDateFormat("HH:mm"))
 
         initListeners()
         refresh() // set the graph
@@ -51,8 +45,6 @@ class ManagerActivity : AppCompatActivity() {
         _binding!!.unbanButton.setOnClickListener { unbanUser() }
         _binding!!.addManButton.setOnClickListener { addManager() }
         _binding!!.refreshButton.setOnClickListener { refresh() }
-
-
     }
 
     private fun observeLoading() {
@@ -78,14 +70,14 @@ class ManagerActivity : AppCompatActivity() {
     private fun addManager(){
         observeLoading()
         val addAlert = AlertDialog.Builder(this)
-        addAlert.setTitle("Please insert users' phone number")
+        addAlert.setTitle(getString(R.string.phone_request))
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.edit_text_layout,null)
         val editText : EditText = dialogLayout.findViewById(R.id.edit_text_add)
         with(addAlert){
             setView(dialogLayout)
             setCancelable(false)
-            setPositiveButton("Add") { dialog, which -> _vm!!.checkUser().addOnCompleteListener {
+            setPositiveButton(getString(R.string.add)) { dialog, which -> _vm!!.checkUser().addOnCompleteListener {
                 _vm!!.setTarget(editText.text.toString()).addOnCompleteListener {
                     val res : Task<Void>? = _vm!!.setManager()
                         if(res != null){
@@ -106,7 +98,7 @@ class ManagerActivity : AppCompatActivity() {
                     }
                 }
             }
-            setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
+            setNegativeButton(getString(R.string.cancel)) { dialogInterface: DialogInterface, i: Int -> }
             show()
         }
     }
@@ -114,14 +106,14 @@ class ManagerActivity : AppCompatActivity() {
     private fun banUser(){
         observeLoading()
         val banAlert = AlertDialog.Builder(this)
-        banAlert.setTitle("You are banning a user!\nPlease insert users' phone number")
+        banAlert.setTitle(getString(R.string.ban_warning))
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.edit_text_layout,null)
         val editText : EditText = dialogLayout.findViewById(R.id.edit_text_add)
         with(banAlert){
             setView(dialogLayout)
             setCancelable(false)
-            setPositiveButton("Ban") { dialog, which -> _vm!!.checkUser().addOnCompleteListener {
+            setPositiveButton(getString(R.string.ban)) { dialog, which -> _vm!!.checkUser().addOnCompleteListener {
                 _vm!!.setTarget(editText.text.toString()).addOnCompleteListener {
                     val res : Task<Void>? = _vm!!.setBanned()
                     if(res != null){
@@ -142,7 +134,7 @@ class ManagerActivity : AppCompatActivity() {
                 }
             }
             }
-            setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
+            setNegativeButton(getString(R.string.cancel)) { dialogInterface: DialogInterface, i: Int -> }
             show()
         }
     }
@@ -150,14 +142,14 @@ class ManagerActivity : AppCompatActivity() {
     private fun unbanUser(){
         observeLoading()
         val banAlert = AlertDialog.Builder(this)
-        banAlert.setTitle("Please insert users' phone number")
+        banAlert.setTitle(getString(R.string.phone_request))
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.edit_text_layout, null)
         val editText : EditText = dialogLayout.findViewById(R.id.edit_text_add)
         with(banAlert){
             setView(dialogLayout)
             setCancelable(false)
-            setPositiveButton("Unban") { dialog, which -> _vm!!.checkUser().addOnCompleteListener {
+            setPositiveButton(getString(R.string.unban)) { dialog, which -> _vm!!.checkUser().addOnCompleteListener {
                 _vm!!.setTarget(editText.text.toString()).addOnCompleteListener {
                     val res : Task<Void>? = _vm!!.setUnbanned()
                     if(res != null){
@@ -178,7 +170,7 @@ class ManagerActivity : AppCompatActivity() {
                 }
             }
             }
-            setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
+            setNegativeButton(getString(R.string.cancel)) { dialogInterface: DialogInterface, i: Int -> }
             show()
         }
     }
@@ -199,5 +191,12 @@ class ManagerActivity : AppCompatActivity() {
         binding.graph.removeAllSeries()
         series.setAnimated(true)
         binding.graph.addSeries(series)
+        binding.graph.viewport.isXAxisBoundsManual = true
+        binding.graph.viewport.isScalable = true
+        if(_vm!!.loadedDataPoint.value!!.size == 1 && _vm!!.loadedDataPoint.value!![0].x == 0.0 && _vm!!.loadedDataPoint.value!![0].y == 0.0){
+            Toast.makeText(applicationContext,
+                getString(R.string.failure_load_graph),
+                Toast.LENGTH_SHORT).show()
+        }
     }
 }

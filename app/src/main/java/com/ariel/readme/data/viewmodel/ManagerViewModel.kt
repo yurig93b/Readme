@@ -31,9 +31,9 @@ class ManagerViewModel : ViewModel(){
     private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
-
     private val _loadedDataPoints: MutableLiveData<Array<DataPoint>> = MutableLiveData()
     val loadedDataPoint: LiveData<Array<DataPoint>> = _loadedDataPoints
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun loadStatistics(){
@@ -47,10 +47,7 @@ class ManagerViewModel : ViewModel(){
 
             val mapped = data.changes.stream().map{s -> DataPoint(s.obj.ts?.toDate(), s.obj.active_users.toDouble()) }.toList()
             _loadedDataPoints.value = mapped.toTypedArray()
-        }.addOnFailureListener { e ->
-            TODO("HAndle")
-            e.toString()
-        }
+        }.addOnFailureListener { _loadedDataPoints.value = arrayOf(DataPoint(0.0,0.0)) }
     }
 
     fun checkUser(): Task<ModeledDocument<User>> {

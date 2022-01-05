@@ -23,4 +23,10 @@
     <string name="failure_load_graph">Error! Failed to load graph</string>
     <string name="edit_profile">Edit profile</string>
     <string name="hot_words">Hot words</string>
+    <string name="ban_warning">You are banning a user!\nPlease insert users\' phone number</string>
+    <string name="phone_request">Please insert users\' phone number</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="ban">Ban</string>
+    <string name="unban">Unban</string>
 </resources>
