@@ -48,7 +48,7 @@ class ManagerActivity : AppCompatActivity() {
         _binding!!.unbanButton.setOnClickListener { unbanUser() }
         _binding!!.addManButton.setOnClickListener { addManager() }
         _binding!!.refreshButton.setOnClickListener { refresh() }
-        _binding!!.switchButton.setOnClickListener {
+        _binding!!.switchButton.setOnClickListener {  //switch type of graph
             if(type){
                 _binding!!.switchButton.text = getString(R.string.messages_per_round)
             }
