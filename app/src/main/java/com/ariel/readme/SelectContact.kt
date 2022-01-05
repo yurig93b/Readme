@@ -35,9 +35,6 @@ class SelectContact : AppCompatActivity() {
     private val Contact_Permission = 1//הרשאה
     private val Contact_Pick = 2
 
-    companion object {
-        val ARG_BUNDLE_CHAT_ID = "chatId"
-    }
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?
     ) {//From here click to select a contact
