@@ -8,28 +8,16 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.ariel.readme.data.repo.StatisticsRepository
 import com.ariel.readme.data.model.User
 import com.ariel.readme.factories.RepositoryFactory
-import com.ariel.readme.message.ChatActivity
 import com.ariel.readme.profile.UserProfileActivity
 import com.ariel.readme.services.AuthService
 import com.ariel.readme.services.MessageHandlingService
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
-import com.jjoe64.graphview.series.DataPoint
-import java.text.SimpleDateFormat
-import java.time.Duration
-import java.time.Instant
 import java.util.*
-import java.util.stream.Collectors
-import android.app.AlarmManager
-
-import android.app.PendingIntent
-import android.content.Context
 
 
 class MainActivity : AppCompatActivity() {
@@ -70,6 +58,8 @@ class MainActivity : AppCompatActivity() {
                             )
                                 .show()
                             val intent = Intent(this, UserProfileActivity::class.java)
+                            intent.putExtra(UserProfileActivity.ARG_NEW_USER, true)
+                            intent.setFlags(intent.flags or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             startActivity(intent)
                         }.addOnFailureListener { e ->
                             Toast.makeText(
@@ -79,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                             ).show()
                         }
                 } else {
-                    if(userObj.obj.banned){
+                    if (userObj.obj.banned) {
                         Toast.makeText(
                             getApplicationContext(),
                             "You are banned from the system.",
@@ -91,7 +81,8 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     MessageHandlingService().ensureUserTokenIsSet()
-                    val intent = Intent(this, HotWordsListActivity::class.java)
+                    val intent = Intent(this, SelectContact::class.java)
+                    intent.setFlags(intent.flags or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent)
                 }
             }

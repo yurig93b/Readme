@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.ariel.readme.R
+import com.ariel.readme.SelectContact
 import com.ariel.readme.databinding.ActivityUserProfileBinding
 import com.ariel.readme.factories.StorageFactory
 import com.ariel.readme.factories.StoragePathFactory
@@ -20,15 +21,19 @@ import com.squareup.picasso.Picasso
 
 
 class UserProfileActivity : AppCompatActivity() {
+
+    companion object{
+        val ARG_NEW_USER = "newUser"
+    }
+
     private val _ERR_COULD_INIT_CAMERA = "Could not init camera."
+    private val REQUEST_IMAGE_CAPTURE = 1
 
     private var _binding: ActivityUserProfileBinding? = null
     private var _vm: UserProfileViewModel? = null
     private val binding get() = _binding!!
 
-
-    private val REQUEST_IMAGE_CAPTURE = 1
-
+    private var isNewUser: Boolean = false
 
     private fun updateSaveButtonStatus() {
         binding.save.isEnabled = _vm!!.errors.value!!.size == 0 && _vm!!.loading.value == false
@@ -133,6 +138,12 @@ class UserProfileActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
 
+                if(isNewUser){
+                    val intent = Intent(this, SelectContact::class.java)
+                    intent.setFlags(intent.flags or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                }
+
             }?.addOnFailureListener {
                 Toast.makeText(
                     getApplicationContext(),
@@ -183,6 +194,10 @@ class UserProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityUserProfileBinding.inflate(layoutInflater)
         _vm = ViewModelProvider(this).get(UserProfileViewModel::class.java)
+
+        intent.extras?.apply {
+            isNewUser = this.getBoolean(ARG_NEW_USER, false)
+        }
         setContentView(binding.root)
 
         supportActionBar?.title = getString(R.string.title_profile)
