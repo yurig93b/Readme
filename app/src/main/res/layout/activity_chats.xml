@@ -11,7 +11,7 @@
         android:id="@+id/toolbarChats"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="#CE6C3975"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toBottomOf="parent"
