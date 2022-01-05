@@ -1,18 +1,23 @@
 package com.ariel.readme.data.viewmodel
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ariel.readme.data.model.Message
 import com.ariel.readme.data.model.User
-import com.ariel.readme.data.repo.MessageRepository
-import com.ariel.readme.data.repo.ModeledChangedDocuments
-import com.ariel.readme.data.repo.ModeledDocument
-import com.ariel.readme.data.repo.UserRepository
+import com.ariel.readme.data.repo.*
 import com.ariel.readme.factories.RepositoryFactory
 import com.ariel.readme.services.AuthService
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
+import com.jjoe64.graphview.series.DataPoint
 import java.text.SimpleDateFormat
+import java.time.Duration
+import java.time.Instant
+import java.util.*
+import kotlin.streams.toList
 
 
 class ManagerViewModel : ViewModel(){
@@ -26,14 +31,27 @@ class ManagerViewModel : ViewModel(){
     private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
-    private val utc = 2
 
-    private val _dataPoints: MutableLiveData<Array<Array<Double>>> = MutableLiveData(arrayOf(arrayOf(0.0,0.0),
-        arrayOf(1.0,0.0),arrayOf(2.0,0.0),arrayOf(3.0,0.0),arrayOf(4.0,0.0),arrayOf(5.0,0.0),arrayOf(6.0,0.0),
-        arrayOf(7.0,0.0),arrayOf(8.0,0.0),arrayOf(9.0,0.0),arrayOf(10.0,0.0),arrayOf(11.0,0.0),arrayOf(12.0,0.0),
-        arrayOf(13.0,0.0),arrayOf(14.0,0.0),arrayOf(15.0,0.0),arrayOf(16.0,0.0),arrayOf(17.0,0.0),arrayOf(18.0,0.0),
-        arrayOf(19.0,0.0),arrayOf(20.0,0.0),arrayOf(21.0,0.0),arrayOf(22.0,0.0),arrayOf(23.0,0.0)))
-    val dataPoints: MutableLiveData<Array<Array<Double>>> = _dataPoints
+    private val _loadedDataPoints: MutableLiveData<Array<DataPoint>> = MutableLiveData()
+    val loadedDataPoint: LiveData<Array<DataPoint>> = _loadedDataPoints
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun loadStatistics(){
+        val to2 = Instant.now()
+        val from2 = to2.minus(Duration.ofDays(1))
+
+        StatisticsRepository().getStatisticsBetweenTimestamp(
+            Timestamp(Date.from(from2)), Timestamp(
+                Date.from(to2))
+        ).addOnSuccessListener { data ->
+
+            val mapped = data.changes.stream().map{s -> DataPoint(s.obj.ts?.toDate(), s.obj.active_users.toDouble()) }.toList()
+            _loadedDataPoints.value = mapped.toTypedArray()
+        }.addOnFailureListener { e ->
+            TODO("HAndle")
+            e.toString()
+        }
+    }
 
     fun checkUser(): Task<ModeledDocument<User>> {
         _loading.value = true
@@ -111,20 +129,4 @@ class ManagerViewModel : ViewModel(){
         return null
     }
 
-    fun setGraph(time: com.google.firebase.Timestamp): Task<ModeledChangedDocuments<Message>> {
-        return MessageRepository().getChatMessagesByTime(time).addOnSuccessListener { doc ->
-            _loading.value = true
-            _dataPoints.value!!.forEach {
-                point -> point[1] = 0.0
-            }
-            doc.changes.forEach { msg ->
-                val hour = SimpleDateFormat("HH").format(msg.obj.ts!!.toDate()).toInt() + utc
-                for (i in 0..23){
-                    if(hour == i){
-                        _dataPoints.value!![i][1] = _dataPoints.value!![i][1]+1
-                    }
-                }
-            }
-        }.addOnCompleteListener { _loading.value = false }
-    }
 }
