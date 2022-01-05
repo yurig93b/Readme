@@ -14,5 +14,6 @@ interface IChatRepository {
     fun createChat(chat: Chat): Task<DocumentReference>
     fun getChat(cid: String): Task<ModeledDocument<Chat>>
     fun getChatsByUser(user: User): Task<ModeledChangedDocuments<Chat>>
-    fun listenOnChats(user: User, listener: EventListener<QuerySnapshot>): ListenerRegistration
+    fun getChatsByUsers(participants:List<String>): Task<ModeledChangedDocuments<Chat>>
+    fun listenOnChats(uid: String, listener: IGetChangedModels<Chat>): ListenerRegistration
 }

@@ -2,9 +2,6 @@
     <string name="app_name">Readme</string>
     <string name="frag">Fragment</string>
     <string name="title_profile">Profile</string>
-    <string name="title_manager">Manager page</string>
-    <string name="title_settings">Settings</string>
-    <string name="title_hot_words">Hot words view</string>
     <string name="err_failed_profile_save">Failed saving profile!</string>
     <string name="success_save_profile">Saved profile!</string>
     <string name="err_public_image_upload">Failed upload image.</string>
@@ -42,4 +39,8 @@
     <string name="word_was_added">" was added"</string>
     <string name="active_users">AU</string>
     <string name="messages_per_round">MPR</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_manager">Manager</string>
+    <string name="title_hot_words">Hot Words View</string>
+    <string name="unknown_user">Unknown user</string>
 </resources>

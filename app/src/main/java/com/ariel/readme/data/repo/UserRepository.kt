@@ -25,7 +25,7 @@ class UserRepository : FirebaseRepository<User>(), IUserRepository {
     }
 
     override fun getCurrentUser(user: FirebaseUser): Task<ModeledDocument<User>> {
-        return getUserById(user.uid)
+        return HookGetDocumentSnapshot(collRef.document(user.uid).get())
     }
 
     override fun listenOnUsersChanges(listener: IGetChangedModels<User>): ListenerRegistration {
@@ -40,9 +40,8 @@ class UserRepository : FirebaseRepository<User>(), IUserRepository {
         return listenOnUserChanges(user.uid!!, listener)
     }
 
-    override fun registerUser(user:User): Task<Void> {
+    override fun registerUser(user:User): Task<Void> {//מקבל אופיקט של יוזר
         return collRef.document(user.uid!!).set(user)
     }
-
 }
 
