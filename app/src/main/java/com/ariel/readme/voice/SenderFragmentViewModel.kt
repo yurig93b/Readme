@@ -14,9 +14,9 @@ import com.ariel.readme.factories.RepositoryFactory
 import com.ariel.readme.factories.StorageFactory
 import com.ariel.readme.factories.StoragePathFactory
 
-class VoiceRecorderViewModel : ViewModel() {
-    private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
-    val loading: LiveData<Boolean> = _loading
+class SenderFragmentViewModel : ViewModel() {
+    private val _loading_voice: MutableLiveData<Boolean> = MutableLiveData(false)
+    val loading_voice: LiveData<Boolean> = _loading_voice
 
     private val _recording: MutableLiveData<Boolean> = MutableLiveData(false)
 
@@ -35,7 +35,6 @@ class VoiceRecorderViewModel : ViewModel() {
     fun stopRecording() {
         try {
             _record_context.value?.stop()
-
         } catch (e: java.lang.RuntimeException) {
             throw e
         } finally {
@@ -44,11 +43,18 @@ class VoiceRecorderViewModel : ViewModel() {
         }
     }
 
+    fun sendMessage(chatId: String, from: String, msg: String) {
+        val msgObj = Message(cid = chatId, from = from, voice = false, text = msg)
+        RepositoryFactory.getMessageRepository().createMessage(msgObj).addOnFailureListener { e ->
+            _error.value = e
+        }
+    }
+
     fun upload(chatId: String, from: String) {
-        if (_recording.value == true || _loading.value == true) {
+        if (_recording.value == true || _loading_voice.value == true) {
             throw RuntimeException("You can't upload while recording or uploading.")
         }
-        _loading.value = true
+        _loading_voice.value = true
         val msg = Message(cid = chatId, from = from, voice = true)
 
         // Create msg
@@ -60,16 +66,16 @@ class VoiceRecorderViewModel : ViewModel() {
             )
 
             // Upload file
-            _loading.value = true
+            _loading_voice.value = true
             StorageFactory.getStorage().putFile(storagePath, uri)
                 .addOnCompleteListener {
-                    _loading.value = false
+                    _loading_voice.value = false
                 }.addOnFailureListener { e ->
                     _error.value = e
                 }
 
         }.addOnCompleteListener {
-            _loading.value = false
+            _loading_voice.value = false
         }.addOnFailureListener { e ->
             _error.value = e
         }

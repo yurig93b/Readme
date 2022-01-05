@@ -22,6 +22,7 @@
             android:parentActivityName=".SettingActivity"/>
         <activity
             android:name=".message.EmptyActivity"
+            android:name=".message.ChatActivity"
             android:exported="false" />
         <activity
             android:name=".profile.UserProfileActivity"

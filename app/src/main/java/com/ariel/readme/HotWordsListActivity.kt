@@ -16,7 +16,7 @@ import com.ariel.readme.services.AuthService
 class HotWordsListActivity : AppCompatActivity() {
 
     private var _vm: HotWordViewModel? = null
-
+  
     private fun removeAll(){
         val clearAlert = AlertDialog.Builder(this)
         clearAlert.setTitle(getString(R.string.warning))
@@ -69,6 +69,7 @@ class HotWordsListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _vm = ViewModelProvider(this).get(HotWordViewModel::class.java)
+
         setContentView(R.layout.activity_hot_words_list)
 
         setSupportActionBar(findViewById(R.id.toolbar_hotWordsList))
