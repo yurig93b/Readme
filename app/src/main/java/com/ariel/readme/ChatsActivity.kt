@@ -7,9 +7,9 @@ import androidx.lifecycle.MutableLiveData
 
 class ChatsActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chats)
-        supportActionBar?.hide()
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_chats)
+//        supportActionBar?.hide()
+//    }
 }

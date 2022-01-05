@@ -7,6 +7,7 @@
     tools:context=".profile.UserProfileActivity">
 
     <ImageView
+        android:shape="ring"
         android:id="@+id/imageView3"
         android:layout_width="401dp"
         android:layout_height="222dp"
@@ -20,27 +21,38 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_width="132dp"
+        android:layout_height="136dp"
+        android:layout_marginTop="172dp"
         app:cardCornerRadius="100dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="133dp"
+            android:layout_height="135dp"
+            android:clickable="true"
+            android:fitsSystemWindows="false"
+            android:focusable="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/user"
+            tools:ignore="SpeakableTextPresentCheck" />
     </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="24dp"
         android:background="#2196F3"
         android:enabled="false"
         android:text="Save"
-        app:iconTint="@color/black"
         android:textColor="@color/black"
         android:textStyle="bold"
+        app:iconTint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +63,7 @@
         style="?android:attr/toolbarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#153083"
         android:visibility="visible"
 
@@ -70,10 +82,10 @@
         android:enabled="false"
         android:hint="Last Name:"
         android:minHeight="48dp"
-        android:shadowColor="#124CC1"
+        android:shadowColor="#414F6A"
         android:singleLine="true"
         android:textColor="@color/black"
-        android:textColorHint="#0E1DA3"
+        android:textColorHint="#2F2F33"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,36 +95,20 @@
         android:id="@+id/firstName"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="348dp"
+        android:layout_marginTop="44dp"
         android:background="@color/purple_200"
         android:backgroundTint="@color/white"
         android:enabled="false"
         android:hint="First Name:"
         android:minHeight="48dp"
-        android:textColorHint="#0E1DA3"
-        android:shadowColor="#124CC1"
+        android:shadowColor="#414F6A"
         android:singleLine="true"
         android:textColor="@color/black"
+        android:textColorHint="#2F2F33"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:clickable="true"
-        android:fitsSystemWindows="false"
-        android:focusable="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/user"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.452"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.27"
-        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

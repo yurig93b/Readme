@@ -10,14 +10,16 @@
         android:id="@+id/toolbar_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
+        app:titleTextColor="@color/white"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/actionModeCloseDrawable"
         app:title="@string/title_settings"
+        android:background="#CE0858A8"
+
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <Button
@@ -26,8 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/hot_words"
+        app:seriesType="line"
         android:textAlignment="center"
-        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_button" />
@@ -39,7 +41,7 @@
         android:layout_marginTop="10dp"
         android:text="@string/edit_profile"
         android:textAlignment="center"
-        android:textSize="20sp"
+        app:seriesType="line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_setting" />
@@ -51,8 +53,8 @@
         android:layout_marginTop="10dp"
         android:text="@string/manger_page"
         android:textAlignment="center"
-        android:textSize="20sp"
         android:visibility="invisible"
+        app:seriesType="line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hot_words_button" />

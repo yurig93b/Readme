@@ -22,6 +22,7 @@ import com.ariel.readme.data.repo.interfaces.IGetChangedModels
 import com.ariel.readme.data.viewmodel.SelectContactViewModel
 import com.ariel.readme.databinding.FragmentChatListBinding
 import com.ariel.readme.factories.RepositoryFactory
+import com.ariel.readme.profile.UserProfileActivity
 import com.ariel.readme.services.AuthService
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.QuerySnapshot
@@ -39,7 +40,10 @@ class SelectContact : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?
     ) {//From here click to select a contact
         super.onCreate(savedInstanceState)
+        setSupportActionBar(findViewById(R.id.toolbarChats))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         _binding = FragmentChatListBinding.inflate(layoutInflater)
+
         val view = binding.root
         setContentView(view)
 
@@ -62,6 +66,11 @@ class SelectContact : AppCompatActivity() {
         //Checks if the button was pressed
         binding.addContactButton.setOnClickListener {
             pickContact()
+        }
+        binding.setting2.setOnClickListener{
+            val intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+
         }
     }
 

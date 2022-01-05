@@ -7,10 +7,11 @@
     tools:context=".ManagerActivity">
 
     <androidx.appcompat.widget.Toolbar
+        app:titleTextColor="@color/white"
         android:id="@+id/toolbar_manager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="#CE0858A8"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
