@@ -5,7 +5,6 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ariel.readme.data.model.Message
 import com.ariel.readme.data.model.User
 import com.ariel.readme.data.repo.*
 import com.ariel.readme.factories.RepositoryFactory
@@ -13,7 +12,6 @@ import com.ariel.readme.services.AuthService
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.jjoe64.graphview.series.DataPoint
-import java.text.SimpleDateFormat
 import java.time.Duration
 import java.time.Instant
 import java.util.*
