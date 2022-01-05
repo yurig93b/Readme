@@ -16,7 +16,7 @@ class SettingActivity : AppCompatActivity() {
         _binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(findViewById(R.id.toolbar_setting))
+        setSupportActionBar(_binding!!.toolbarSetting)
         //supportActionBar?.setDisplayHomeAsUpEnabled(true)       //TODO when main page is implemented
 
 
@@ -28,6 +28,11 @@ class SettingActivity : AppCompatActivity() {
 
         _binding!!.profileButton.setOnClickListener {
             val intent = Intent(this, UserProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        _binding!!.profileButton.setOnClickListener {
+            val intent = Intent(this, ManagerActivity::class.java)
             startActivity(intent)
         }
     }

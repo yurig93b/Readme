@@ -2,6 +2,9 @@
     <string name="app_name">Readme</string>
     <string name="frag">Fragment</string>
     <string name="title_profile">Profile</string>
+    <string name="title_manager">Manager page</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_hot_words">Hot words view</string>
     <string name="err_failed_profile_save">Failed saving profile!</string>
     <string name="success_save_profile">Saved profile!</string>
     <string name="err_public_image_upload">Failed upload image.</string>
@@ -29,4 +32,12 @@
     <string name="cancel">Cancel</string>
     <string name="ban">Ban</string>
     <string name="unban">Unban</string>
+    <string name="warning">Warning</string>
+    <string name="clear_words_warning">removing all your hot words is irreversible, are you sure you want to proceed?</string>
+    <string name="yes">Yes</string>
+    <string name="add_new_word">Add new word</string>
+    <string name="submit">Submit</string>
+    <string name="invalid_word">Invalid_word</string>
+    <string name="manger_page">Manger page</string>
+    <string name="word_was_added">" was added"</string>
 </resources>

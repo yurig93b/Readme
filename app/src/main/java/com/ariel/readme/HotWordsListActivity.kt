@@ -17,27 +17,27 @@ class HotWordsListActivity : AppCompatActivity() {
 
     private fun removeAll(){
         val clearAlert = AlertDialog.Builder(this)
-        clearAlert.setTitle("Warning")
-        clearAlert.setMessage("removing all your hot words is irreversible, are you sure you want to proceed?")
+        clearAlert.setTitle(getString(R.string.warning))
+        clearAlert.setMessage(getString(R.string.clear_words_warning))
         clearAlert.setCancelable(false)
-        clearAlert.setPositiveButton("Yes") { dialogInterface: DialogInterface, i: Int ->
+        clearAlert.setPositiveButton(R.string.yes) { dialogInterface: DialogInterface, i: Int ->
             HotWordRepository().clearHotWords(AuthService.getCurrentFirebaseUser()!!.uid)
         }
-        clearAlert.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
+        clearAlert.setNegativeButton(getString(R.string.cancel)) { dialogInterface: DialogInterface, i: Int -> }
         clearAlert.show()
     }
 
     private fun addWord(){
         val addAlert = AlertDialog.Builder(this)
-        addAlert.setTitle("add new word")
+        addAlert.setTitle(getString(R.string.add_new_word))
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.edit_text_layout, null)
         val editText : EditText = dialogLayout.findViewById(R.id.edit_text_add)
         with(addAlert){
             setView(dialogLayout)
             setCancelable(false)
-            setPositiveButton("Submit") { dialog, which -> checkText(editText.text.toString()) }
-            setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int -> }
+            setPositiveButton(getString(R.string.submit)) { dialog, which -> checkText(editText.text.toString()) }
+            setNegativeButton(getString(R.string.cancel)) { dialogInterface: DialogInterface, i: Int -> }
             show()
         }
     }
@@ -53,16 +53,16 @@ class HotWordsListActivity : AppCompatActivity() {
             )
             for (char in badChars) {
                 if (char in text) {
-                    Toast.makeText(this,"invalid word", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,getString(R.string.invalid_word), Toast.LENGTH_LONG).show()
                     return
                 }
             }
-            Toast.makeText(this,"$text was added", Toast.LENGTH_LONG).show()
+            Toast.makeText(this,"$text"+getString(R.string.word_was_added), Toast.LENGTH_LONG).show()
             val uid : String = AuthService.getCurrentFirebaseUser()!!.uid
             HotWordRepository().addHotWord(HotWord(null, uid, text), uid)
             return
         }
-        Toast.makeText(this,"invalid word", Toast.LENGTH_LONG).show()
+        Toast.makeText(this,getString(R.string.invalid_word), Toast.LENGTH_LONG).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

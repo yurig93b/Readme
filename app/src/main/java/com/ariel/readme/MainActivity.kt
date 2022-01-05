@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun goToExampleActivity(){
-        val intent = Intent(this, ManagerActivity::class.java)
+        val intent = Intent(this, SettingActivity::class.java)
         startActivity(intent)
     }
 

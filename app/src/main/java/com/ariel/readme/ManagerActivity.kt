@@ -13,13 +13,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.ariel.readme.data.viewmodel.ManagerViewModel
 import com.ariel.readme.databinding.ActivityManagerBinding
 import com.google.android.gms.tasks.Task
-import com.google.firebase.Timestamp
 import com.jjoe64.graphview.GridLabelRenderer
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import java.text.SimpleDateFormat
-import java.util.*
 
 class ManagerActivity : AppCompatActivity() {
 
@@ -34,6 +32,9 @@ class ManagerActivity : AppCompatActivity() {
         _binding = ActivityManagerBinding.inflate(layoutInflater)
         _vm = ViewModelProvider(this).get(ManagerViewModel::class.java)
         setContentView(binding.root)
+
+        setSupportActionBar(_binding!!.toolbarManager)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         _binding!!.graph.gridLabelRenderer.gridStyle = GridLabelRenderer.GridStyle.HORIZONTAL
         _binding!!.graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(this,SimpleDateFormat("HH:mm"))

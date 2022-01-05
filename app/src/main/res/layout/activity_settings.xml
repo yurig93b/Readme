@@ -13,15 +13,18 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/actionModeCloseDrawable"
-        app:title="Settings"
-        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"/>
+        app:title="@string/title_settings"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <Button
         android:id="@+id/hot_words_button"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/hot_words"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -31,13 +34,26 @@
 
     <Button
         android:id="@+id/profile_button"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/edit_profile"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_setting" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/manger_page"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hot_words_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
