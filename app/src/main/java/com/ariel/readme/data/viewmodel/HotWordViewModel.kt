@@ -1,5 +1,6 @@
 package com.ariel.readme.data.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ariel.readme.data.model.HotWord
@@ -13,23 +14,34 @@ import com.google.firebase.firestore.QuerySnapshot
 
 class HotWordViewModel() : ViewModel() {
 
-    val hotWords : MutableLiveData<MutableList<String>> = MutableLiveData()
+    private val _hotWords : MutableLiveData<MutableList<String>> = MutableLiveData()
+    val hotWords = _hotWords
+
+    private val _loading: MutableLiveData<Boolean> = MutableLiveData(true)
+    val loading: LiveData<Boolean> = _loading
 
     var _listener : ListenerRegistration? = null
 
     fun listenOnHotWords(uid: String){
+        _loading.value = true
         HotWordRepository().listenOnHotWords(uid, object : IGetChangedModels<HotWord> {
             override fun onSuccess(d: List<ModeledDocumentChange<HotWord>>, raw: QuerySnapshot?) {
                 d.forEach {
-                        word -> if(word.obj.word in hotWords.value!!){ hotWords.value!!.remove(word.obj.word)}
-                else{ hotWords.value!!.add(word.obj.word)}
+                        word -> if(word.obj.word in _hotWords.value!!){ _hotWords.value!!.remove(word.obj.word)}
+                else{ _hotWords.value!!.add(word.obj.word)}
                 }
-                hotWords.value = hotWords.value
-                hotWords.value!!.sort()
+                _hotWords.value = _hotWords.value
+                _hotWords.value!!.sort()
+                _loading.value = false
             }
             override fun onFailure(e: Exception) {
             }
         })
+    }
+
+    fun addWord(word: String){
+        val uid : String = AuthService.getCurrentFirebaseUser()!!.uid
+        HotWordRepository().addHotWord(HotWord(null, uid, word), uid)
     }
 
     override fun onCleared() {
@@ -40,6 +52,6 @@ class HotWordViewModel() : ViewModel() {
     }
 
     init {
-        hotWords.value = mutableListOf()
+        _hotWords.value = mutableListOf()
     }
 }

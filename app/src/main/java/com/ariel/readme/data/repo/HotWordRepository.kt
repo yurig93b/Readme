@@ -25,7 +25,6 @@ class HotWordRepository : FirebaseRepository<HotWord>(), IHotWordRepository {
 
     fun addHotWord(hotword:HotWord, uid: String): Task<QuerySnapshot> {
         return collRef.whereEqualTo(HotWord::uid.name, uid)
-        //collRef.whereEqualTo(HotWord::uid.name, "1234")
             .whereEqualTo(HotWord::word.name, hotword.word)
             .get().addOnSuccessListener { res -> if(res.isEmpty){
                 collRef.add(hotword)
@@ -43,7 +42,6 @@ class HotWordRepository : FirebaseRepository<HotWord>(), IHotWordRepository {
 
     fun removeHotWord(word: String, uid: String): Task<QuerySnapshot> {
         return collRef.whereEqualTo(HotWord::uid.name, uid)
-        //collRef.whereEqualTo(HotWord::uid.name, "1234")
             .whereEqualTo(HotWord::word.name, word)
             .get().addOnSuccessListener {
                 res -> for(doc in res.documents){
@@ -54,7 +52,6 @@ class HotWordRepository : FirebaseRepository<HotWord>(), IHotWordRepository {
 
     fun clearHotWords(uid: String): Task<QuerySnapshot> {
         return collRef.whereEqualTo(HotWord::uid.name, uid).get().addOnSuccessListener {
-        //collRef.whereEqualTo(HotWord::uid.name, "1234").get().addOnSuccessListener {
             res -> for(doc in res.documents){
                 collRef.document(doc.id).delete()
             }

@@ -16,16 +16,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Readme">
         <activity
+            android:name=".ManagerActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Readme.NoActionBar"
+            android:parentActivityName=".SettingActivity"/>
+        <activity
+            android:name=".message.EmptyActivity"
             android:name=".message.ChatActivity"
             android:exported="false" />
         <activity
             android:name=".profile.UserProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".SettingActivity" />
         <activity
             android:name=".HotWordsListActivity"
             android:exported="false"
-            android:theme="@style/Theme.Readme.NoActionBar"
-            android:parentActivityName=".SettingActivity"/>
+            android:parentActivityName=".SettingActivity"
+            android:theme="@style/Theme.Readme.NoActionBar" />
         <activity
             android:name=".SettingActivity"
             android:exported="true"
