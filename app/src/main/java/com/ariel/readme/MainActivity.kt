@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.ariel.readme.data.repo.StatisticsRepository
-import com.ariel.readme.message.EmptyActivity
 import com.ariel.readme.data.model.User
 import com.ariel.readme.factories.RepositoryFactory
 import com.ariel.readme.message.ChatActivity
@@ -27,6 +26,11 @@ import java.time.Duration
 import java.time.Instant
 import java.util.*
 import java.util.stream.Collectors
+import android.app.AlarmManager
+
+import android.app.PendingIntent
+import android.content.Context
+
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -75,8 +79,19 @@ class MainActivity : AppCompatActivity() {
                             ).show()
                         }
                 } else {
+                    if(userObj.obj.banned){
+                        Toast.makeText(
+                            getApplicationContext(),
+                            "You are banned from the system.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        FirebaseAuth.getInstance().signOut()
+                        this.finish();
+                    }
+
                     MessageHandlingService().ensureUserTokenIsSet()
-                    val intent = Intent(this, ChatActivity::class.java)
+                    val intent = Intent(this, SettingActivity::class.java)
                     startActivity(intent)
                 }
             }
