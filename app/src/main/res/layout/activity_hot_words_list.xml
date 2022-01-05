@@ -13,6 +13,7 @@
         android:minHeight="?attr/actionBarSize"
         android:textAlignment="textStart"
         android:background="#CE0858A8"
+        app:titleTextColor="@color/white"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
