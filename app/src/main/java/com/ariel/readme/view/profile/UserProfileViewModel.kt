@@ -1,4 +1,4 @@
-package com.ariel.readme.profile
+package com.ariel.readme.view.profile
 
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData

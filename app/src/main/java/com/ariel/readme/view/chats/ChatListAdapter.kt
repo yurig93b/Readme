@@ -1,4 +1,4 @@
-package com.ariel.readme
+package com.ariel.readme.view.chats
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,12 +12,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.startActivity
+import com.ariel.readme.R
 import com.ariel.readme.data.repo.ContactRepository
 import com.ariel.readme.databinding.ChatCardViewFragmentBinding
 import com.ariel.readme.factories.RepositoryFactory
 import com.ariel.readme.factories.StorageFactory
 import com.ariel.readme.factories.StoragePathFactory
-import com.ariel.readme.message.ChatActivity
+import com.ariel.readme.view.chat.ChatActivity
 import com.ariel.readme.services.AuthService
 import com.squareup.picasso.Picasso
 

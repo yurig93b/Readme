@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    tools:context=".message.MessageFragment">
+    tools:context=".view.chat.MessageFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

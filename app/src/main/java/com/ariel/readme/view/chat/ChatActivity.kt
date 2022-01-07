@@ -1,21 +1,14 @@
-package com.ariel.readme.message
+package com.ariel.readme.view.chat
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.ariel.readme.R
 import com.ariel.readme.services.AuthService
-import com.ariel.readme.voice.SenderFragment
-import android.text.Spannable
+import com.ariel.readme.view.sender.SenderFragment
 
-import android.text.style.ForegroundColorSpan
-
-import android.text.SpannableString
-import androidx.appcompat.app.ActionBar
 import com.ariel.readme.databinding.ActivityChatBinding
-import com.ariel.readme.databinding.FragmentChatListBinding
 
 
 class ChatActivity : AppCompatActivity() {

@@ -20,32 +20,32 @@
             android:name=".ChatsActivity"
             android:exported="false" />
         <activity
-            android:name=".SelectContact"
+            android:name=".view.chats.SelectContact"
             android:exported="false" />
         <activity
-            android:name=".ManagerActivity"
+            android:name=".view.manager.ManagerActivity"
             android:exported="false"
             android:theme="@style/Theme.Readme.NoActionBar"
-            android:parentActivityName=".SettingActivity"/>
+            android:parentActivityName=".view.settings.SettingActivity"/>
         <activity
-            android:name=".message.ChatActivity"
+            android:name="com.ariel.readme.view.chat.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".profile.UserProfileActivity"
+            android:name="com.ariel.readme.view.profile.UserProfileActivity"
             android:exported="false"
-            android:parentActivityName=".SettingActivity" />
+            android:parentActivityName=".view.settings.SettingActivity" />
         <activity
-            android:name=".HotWordsListActivity"
+            android:name=".view.hotwords.HotWordsListActivity"
             android:exported="false"
-            android:parentActivityName=".SettingActivity"
+            android:parentActivityName=".view.settings.SettingActivity"
             android:theme="@style/Theme.Readme.NoActionBar" />
         <activity
-            android:name=".SettingActivity"
+            android:name=".view.settings.SettingActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.Readme.NoActionBar" />
         <activity
-            android:name=".ExampleActivity"
+            android:name=".understand.ExampleActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

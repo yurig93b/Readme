@@ -1,4 +1,4 @@
-package com.ariel.readme.message
+package com.ariel.readme.view.chat
 
 import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
@@ -7,7 +7,6 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.MediaController
 import android.widget.RelativeLayout
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LifecycleOwner
@@ -22,7 +21,6 @@ import com.ariel.readme.data.model.User
 import com.ariel.readme.databinding.MessageFragmentBinding
 import com.ariel.readme.factories.ServiceFactory
 import com.ariel.readme.factories.StoragePathFactory
-import com.ariel.readme.services.FirebaseStorageService
 import com.google.firebase.Timestamp
 import java.lang.IllegalStateException
 

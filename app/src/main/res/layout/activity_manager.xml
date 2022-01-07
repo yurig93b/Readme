@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ManagerActivity">
+    tools:context=".view.manager.ManagerActivity">
 
     <androidx.appcompat.widget.Toolbar
-        app:titleTextColor="@color/white"
         android:id="@+id/toolbar_manager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#CE0858A8"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:theme="@style/BaseTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/title_manager" />
+        app:title="@string/title_manager"
+        app:titleTextColor="@color/white" />
 
     <Button
         android:id="@+id/ban_button"

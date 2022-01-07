@@ -1,4 +1,4 @@
-package com.ariel.readme
+package com.ariel.readme.view.hotwords
 
 import android.content.DialogInterface
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import com.ariel.readme.R
 import com.ariel.readme.data.repo.HotWordRepository
 import com.ariel.readme.services.AuthService
 

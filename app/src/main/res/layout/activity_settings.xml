@@ -4,23 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingActivity">
+    tools:context=".view.settings.SettingActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#CE0858A8"
         android:minHeight="?attr/actionBarSize"
-        app:titleTextColor="@color/white"
-        android:theme="?attr/actionBarTheme"
+        android:theme="@style/BaseTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/actionModeCloseDrawable"
         app:title="@string/title_settings"
-        android:background="#CE0858A8"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
 
-        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large" />
+        app:titleTextColor="@color/white" />
 
     <Button
         android:id="@+id/hot_words_button"

@@ -4,28 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HotWordsListActivity">
+    tools:context=".view.hotwords.HotWordsListActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_hotWordsList"
+        style="@style/BaseTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#CE0858A8"
         android:minHeight="?attr/actionBarSize"
         android:textAlignment="textStart"
-        android:background="#CE0858A8"
-        app:titleTextColor="@color/white"
-        android:theme="?attr/actionBarTheme"
+        android:theme="@style/BaseTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/actionModeCloseDrawable"
         app:title="@string/title_hot_words"
         app:titleMargin="4dp"
-        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large" />
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
+        app:titleTextColor="@color/white" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/hot_words_fragment"
-        android:name="com.ariel.readme.HotWordFragment"
+        android:name="com.ariel.readme.view.hotwords.HotWordFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

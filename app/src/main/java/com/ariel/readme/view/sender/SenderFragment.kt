@@ -1,4 +1,4 @@
-package com.ariel.readme.voice
+package com.ariel.readme.view.sender
 
 import android.Manifest
 import android.annotation.SuppressLint

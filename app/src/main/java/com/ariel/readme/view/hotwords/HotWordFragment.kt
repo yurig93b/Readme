@@ -1,4 +1,4 @@
-package com.ariel.readme
+package com.ariel.readme.view.hotwords
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ariel.readme.data.viewmodel.HotWordViewModel
 import com.ariel.readme.databinding.FragmentHotWordBinding
 import com.ariel.readme.services.AuthService
 

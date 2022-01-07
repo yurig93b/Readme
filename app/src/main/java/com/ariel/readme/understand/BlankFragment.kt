@@ -1,4 +1,4 @@
-package com.ariel.readme
+package com.ariel.readme.understand
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.ariel.readme.data.viewmodel.BlankViewModel
 import com.ariel.readme.databinding.BlankFragmentBinding
 
 class BlankFragment : Fragment() {

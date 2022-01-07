@@ -1,4 +1,4 @@
-package com.ariel.readme.profile
+package com.ariel.readme.view.profile
 
 //import com.squareup.picasso.Picasso
 import android.content.ActivityNotFoundException
@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.ariel.readme.R
-import com.ariel.readme.SelectContact
+import com.ariel.readme.view.chats.SelectContact
 import com.ariel.readme.databinding.ActivityUserProfileBinding
 import com.ariel.readme.factories.StorageFactory
 import com.ariel.readme.factories.StoragePathFactory
@@ -90,7 +90,7 @@ class UserProfileActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s!!.isEmpty()) {
-                    binding.firstName.error = "First name can't be empty"
+                    binding.firstName.error = getString(R.string.err_first_name_empty)
                     _vm!!.errors.value!!.add(binding.firstName.id)
                     _vm!!.errors.value = _vm!!.errors.value
                 } else {
@@ -110,7 +110,7 @@ class UserProfileActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s!!.isEmpty()) {
-                    binding.lastName.error = "Last name can't be empty"
+                    binding.lastName.error = getString(R.string.err_last_name_empty)
                     _vm!!.errors.value!!.add(binding.lastName.id)
                     _vm!!.errors.value = _vm!!.errors.value
                 } else {
