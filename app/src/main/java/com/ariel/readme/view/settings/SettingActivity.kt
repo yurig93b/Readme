@@ -1,13 +1,15 @@
-package com.ariel.readme
+package com.ariel.readme.view.settings
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import com.ariel.readme.data.viewmodel.ManagerViewModel
+import com.ariel.readme.view.manager.ManagerViewModel
 import com.ariel.readme.databinding.ActivitySettingsBinding
-import com.ariel.readme.profile.UserProfileActivity
+import com.ariel.readme.view.hotwords.HotWordsListActivity
+import com.ariel.readme.view.manager.ManagerActivity
+import com.ariel.readme.view.profile.UserProfileActivity
 
 class SettingActivity : AppCompatActivity() {
 
@@ -22,7 +24,6 @@ class SettingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(_binding!!.toolbarSetting)
-        //supportActionBar?.setDisplayHomeAsUpEnabled(true)       //TODO when main page is implemented
 
         listenToManager()
 

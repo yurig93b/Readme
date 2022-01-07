@@ -1,4 +1,4 @@
-package com.ariel.readme.data.viewmodel
+package com.ariel.readme.view.hotwords
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

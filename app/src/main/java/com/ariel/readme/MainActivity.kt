@@ -10,14 +10,14 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.ariel.readme.data.model.User
 import com.ariel.readme.factories.RepositoryFactory
-import com.ariel.readme.profile.UserProfileActivity
+import com.ariel.readme.view.profile.UserProfileActivity
 import com.ariel.readme.services.AuthService
 import com.ariel.readme.services.MessageHandlingService
+import com.ariel.readme.view.chats.SelectContact
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
     private fun initNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create the NotificationChannel
-            val name = "Hot words alerts"
-            val descriptionText = "Channel for alerting on hot word messages."
+            val name = getString(R.string.title_hot_word_alerts)
+            val descriptionText = getString(R.string.hot_words_description)
             val importance = NotificationManager.IMPORTANCE_HIGH
             val mChannel = NotificationChannel(CHANNEL_ID_HOT_WORDS, name, importance)
             mChannel.description = descriptionText
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                         .addOnSuccessListener {
                             Toast.makeText(
                                 getApplicationContext(),
-                                "User registered!",
+                                getString(R.string.ok_user_registered),
                                 Toast.LENGTH_SHORT
                             )
                                 .show()
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                         }.addOnFailureListener { e ->
                             Toast.makeText(
                                 getApplicationContext(),
-                                "Something went wrong with user registration.",
+                                getString(R.string.err_user_registration),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                     if (userObj.obj.banned) {
                         Toast.makeText(
                             getApplicationContext(),
-                            "You are banned from the system.",
+                            getString(R.string.err_banned),
                             Toast.LENGTH_SHORT
                         ).show()
 

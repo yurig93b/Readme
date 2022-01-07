@@ -6,8 +6,6 @@ import com.google.firebase.storage.UploadTask
 import java.io.InputStream
 
 interface IStorageService {
-
-
     fun putBytes(path: String,  data: ByteArray): UploadTask
     fun putStream(path: String,  data: InputStream): UploadTask
     fun putFile(path: String, file: Uri): UploadTask

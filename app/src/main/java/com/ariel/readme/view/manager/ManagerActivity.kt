@@ -1,4 +1,4 @@
-package com.ariel.readme
+package com.ariel.readme.view.manager
 
 import android.content.DialogInterface
 import android.graphics.Color
@@ -11,7 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.ariel.readme.data.viewmodel.ManagerViewModel
+import com.ariel.readme.R
 import com.ariel.readme.databinding.ActivityManagerBinding
 import com.google.android.gms.tasks.Task
 import com.jjoe64.graphview.GridLabelRenderer

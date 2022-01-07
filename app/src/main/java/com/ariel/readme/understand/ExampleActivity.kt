@@ -1,8 +1,9 @@
-package com.ariel.readme
+package com.ariel.readme.understand
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.ariel.readme.R
 import com.ariel.readme.data.model.User
 import com.ariel.readme.data.repo.UserRepository
 import com.ariel.readme.services.AuthService

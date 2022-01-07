@@ -1,4 +1,4 @@
-package com.ariel.readme.message
+package com.ariel.readme.view.chat
 
 import android.os.Bundle
 import android.view.LayoutInflater

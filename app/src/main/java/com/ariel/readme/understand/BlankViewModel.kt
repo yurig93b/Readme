@@ -1,4 +1,4 @@
-package com.ariel.readme.data.viewmodel
+package com.ariel.readme.understand
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

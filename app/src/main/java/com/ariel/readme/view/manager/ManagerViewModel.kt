@@ -1,4 +1,4 @@
-package com.ariel.readme.data.viewmodel
+package com.ariel.readme.view.manager
 
 import android.os.Build
 import androidx.annotation.RequiresApi

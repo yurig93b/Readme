@@ -1,4 +1,4 @@
-package com.ariel.readme
+package com.ariel.readme.view.chats
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -16,13 +16,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.ViewModelProvider
+import com.ariel.readme.R
+import com.ariel.readme.view.settings.SettingActivity
 import com.ariel.readme.data.model.Chat
 import com.ariel.readme.data.repo.ModeledDocumentChange
 import com.ariel.readme.data.repo.interfaces.IGetChangedModels
-import com.ariel.readme.data.viewmodel.SelectContactViewModel
 import com.ariel.readme.databinding.FragmentChatListBinding
 import com.ariel.readme.factories.RepositoryFactory
-import com.ariel.readme.profile.UserProfileActivity
 import com.ariel.readme.services.AuthService
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.QuerySnapshot
@@ -33,8 +33,8 @@ class SelectContact : AppCompatActivity() {
     private val chats: MutableList<Chat> = mutableListOf()
     private lateinit var viewModel: SelectContactViewModel
 
-    private val Contact_Permission = 1//הרשאה
-    private val Contact_Pick = 2
+    private val contactPermission = 1
+    private val contactPicked = 2
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?
@@ -86,6 +86,7 @@ class SelectContact : AppCompatActivity() {
 
     //to load the list
     private fun initListenChat() {
+        // Should go via VM but will lead to duplicate code with no benefit
         RepositoryFactory.getChatRepository().listenOnChats(AuthService.getCurrentFirebaseUser()!!.uid, object : IGetChangedModels<Chat> {
             override fun onSuccess(d: List<ModeledDocumentChange<Chat>>, raw: QuerySnapshot?) {
                 d.forEach { chat ->
@@ -116,12 +117,12 @@ class SelectContact : AppCompatActivity() {
     private fun pickContact() {//Selects a contact
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE
-        startActivityForResult(intent, Contact_Pick)
+        startActivityForResult(intent, contactPicked)
     }
 
     private fun requestContactPermissions() {//Requests permission to contact
         val permission = arrayOf(android.Manifest.permission.READ_CONTACTS)
-        ActivityCompat.requestPermissions(this, permission, Contact_Permission)
+        ActivityCompat.requestPermissions(this, permission, contactPermission)
 
     }
 
@@ -139,7 +140,7 @@ class SelectContact : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (requestCode == Contact_Permission) {
+        if (requestCode == contactPermission) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 ensurePermissionsAndInits()
             } else {
@@ -157,7 +158,7 @@ class SelectContact : AppCompatActivity() {
     ) {//Treats after choosing a contact
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == Contact_Pick) {
+            if (requestCode == contactPicked) {
                 val cursor1: Cursor
                 val uri: Uri? = data?.data//Get data from intent
                 cursor1 = contentResolver.query(uri!!, null, null, null, null)!!

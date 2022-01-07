@@ -43,4 +43,11 @@
     <string name="title_manager">Manager</string>
     <string name="title_hot_words">Hot Words View</string>
     <string name="unknown_user">Unknown user</string>
+    <string name="err_first_name_empty">First name can\'t be empty</string>
+    <string name="err_last_name_empty">Last name can\'t be empty</string>
+    <string name="ok_user_registered">User registered!</string>
+    <string name="err_user_registration">Something went wrong with user registration.</string>
+    <string name="err_banned">You are banned from the system.</string>
+    <string name="title_hot_word_alerts">Hot words alerts</string>
+    <string name="hot_words_description">Channel for alerting on hot word messages.</string>
 </resources>

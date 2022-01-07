@@ -1,4 +1,4 @@
-package com.ariel.readme
+package com.ariel.readme.view.hotwords
 
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +9,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import com.ariel.readme.R
 import com.ariel.readme.data.repo.HotWordRepository
-import com.ariel.readme.data.viewmodel.HotWordViewModel
 import com.ariel.readme.services.AuthService
 
 class HotWordsListActivity : AppCompatActivity() {
